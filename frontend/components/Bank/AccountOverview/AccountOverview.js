@@ -19,13 +19,17 @@ class AccountOverview extends React.Component {
     render() {
         return (
             <div className="AccountOverview">
-                <h2>Account Overview</h2>
+                <div className="__header">
+                    <h2>Account Overview</h2>
+                </div>
 
-                <FancyPieChart accounts={this.props.accounts} />
+                <div className="__content">
+                    <FancyPieChart accounts={this.props.accounts} />
 
-                {(this.props.accounts || []).map(account =>
-                    this.renderSingleAccount(account)
-                )}
+                    {(this.props.accounts || []).map(account =>
+                        this.renderSingleAccount(account)
+                    )}
+                </div>
             </div>
         )
     }

@@ -41,10 +41,7 @@ const FancyPieChart = ({accounts}) => {
                     })
                 }
             </Pie>
-            <Legend align="right" verticalAlign="middle" layout="vertical" cx="300"/>
-            <Text>
-                Total Balance: { totalBalance }
-            </Text>
+            {/* <Legend align="right" verticalAlign="middle" layout="vertical" cx="300"/> */}
         </PieChart>
     )
 }

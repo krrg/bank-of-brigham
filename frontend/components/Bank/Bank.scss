@@ -3,10 +3,19 @@
 
 .section-box {
     @include shadowed();
-    padding: 1em;
-    background-color: white;
     border-radius: 4px;
-    margin-top: 1em;
+    background-color: white;
+
+    .__content {
+        padding: 2em;
+        padding-top: 1em;
+        margin-top: 1em;
+    }
+
+    .__header {
+        border-bottom: 1px solid lightgrey;
+        padding: 1em 2em 0em 1em;
+    }
 }
 
 .BankIndex {
