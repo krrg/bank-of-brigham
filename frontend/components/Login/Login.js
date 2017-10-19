@@ -9,7 +9,7 @@ export default class Login extends React.Component {
         return (
             <div className="Login">
                 <div className="x-vertical-center">
-                    <div className="LogoLoginRow">
+                    <div className="LoginBox">
                         <img src="/img/bankiconhex.png" />
                         <div>
                             <h1>Bank of Brigham</h1>

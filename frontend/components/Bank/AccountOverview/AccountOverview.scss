@@ -1,0 +1,6 @@
+@import "shadowed.scss";
+@import "../Bank.scss";
+
+.AccountOverview {
+    @extend .section-box;
+}

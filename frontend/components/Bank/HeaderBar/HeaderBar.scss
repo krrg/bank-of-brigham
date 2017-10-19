@@ -1,0 +1,36 @@
+@import "colors.scss";
+@import "container.scss";
+@import "shadowed.scss";
+
+.HeaderBar {
+    background-color: $darkBackground;
+    @include shadowed;
+
+    .HeaderBar__content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 4.5em;
+
+        @extend .container;
+    }
+
+    .__logo {
+        color: whitesmoke;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        img {
+            width: 3em;
+            height: 3em;
+        }
+
+        h1 {
+            margin: 0;
+            margin-left: 0.3em;
+            font-size: 32pt;
+        }
+
+    }
+}

@@ -1,4 +1,5 @@
 @import "colors.scss";
+@import "shadowed.scss";
 
 .Login {
 
@@ -28,7 +29,7 @@
 
     height: 100vh;
 
-    .LogoLoginRow {
+    .LoginBox {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -40,8 +41,10 @@
             margin-right: 4em;
         }
 
-        border: 1px solid black;
+        // border: 1px solid $darkBackground;
         padding: 4em;
         background-color: white;
+        border-radius: 1px;
+        @include shadowed($darkBackground);
     }
 }

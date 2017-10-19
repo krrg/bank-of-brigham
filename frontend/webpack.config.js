@@ -50,7 +50,7 @@ module.exports = {
                     }, {
                         loader: "sass-loader",
                         options: {
-                            includePaths: ["./node_modules/", "./resources/scss/"]
+                            includePaths: ["./node_modules/", "./resources/scss/"],
                         }
                     }],
 

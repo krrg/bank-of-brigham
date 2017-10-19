@@ -1,0 +1,18 @@
+@import "container.scss";
+@import "shadowed.scss";
+
+.section-box {
+    @include shadowed();
+    padding: 1em;
+    background-color: white;
+    border-radius: 4px;
+    margin-top: 1em;
+}
+
+.BankIndex {
+    .BankIndex__content {
+        margin-top: 3em;
+        @extend .container;
+    }
+}
+
