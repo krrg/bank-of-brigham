@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import FancyPieChart from "./FancyPieChart";
 
 import "./AccountOverview.scss";
 
@@ -19,6 +20,9 @@ class AccountOverview extends React.Component {
         return (
             <div className="AccountOverview">
                 <h2>Account Overview</h2>
+
+                <FancyPieChart accounts={this.props.accounts} />
+
                 {(this.props.accounts || []).map(account =>
                     this.renderSingleAccount(account)
                 )}
