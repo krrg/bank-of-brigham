@@ -1,13 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FancyPieChart from "./FancyPieChart";
+import AccountListPropType from "../AccountsListPropType";
 import _ from "lodash";
 
 import Accounting from "../../../lib/accounting";
 
 import "./AccountOverview.scss";
 
-class AccountOverview extends React.Component {
+export default class AccountOverview extends React.Component {
+
+
+    static propTypes = {
+        accounts: AccountListPropType
+    }
 
     renderColorBlockTd = (color, type) => {
         if (type === "th") {
@@ -76,15 +82,4 @@ class AccountOverview extends React.Component {
     }
 
 }
-
-AccountOverview.propTypes = {
-    accounts: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.any.isRequired,
-        displayName: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(["checking", "savings", "certificate", "moneymarket"]),
-        balance: PropTypes.number.isRequired
-    }))
-}
-
-export default AccountOverview;
 
