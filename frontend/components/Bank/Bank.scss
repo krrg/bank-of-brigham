@@ -6,6 +6,8 @@
     border-radius: 4px;
     background-color: white;
 
+    margin-top: 3em;
+
     .__content {
         padding: 2em;
         padding-top: 1em;
@@ -24,7 +26,6 @@
 
 .BankIndex {
     .BankIndex__content {
-        margin-top: 3em;
         @extend .container;
     }
 }

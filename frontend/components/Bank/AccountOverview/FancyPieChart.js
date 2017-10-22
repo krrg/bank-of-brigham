@@ -2,6 +2,7 @@ import React from "react";
 import { PieChart, Pie, Cell, Text, Legend } from "recharts";
 import _ from "lodash";
 import Accounting from "../../../lib/accounting";
+import { accountTypesMap } from "../../../constants";
 
 import "./FancyPieChart.scss";
 
@@ -25,7 +26,7 @@ class FancyPieChart extends React.Component {
             return ({
                 name: account["displayName"],
                 value: account["balance"],
-                color: account["color"]
+                color: accountTypesMap[account["type"]]["color"],
             })
         })
 

@@ -1,0 +1,47 @@
+@import "../Bank.scss";
+
+.DetailsList {
+    @extend .section-box;
+
+    .__content {
+        h3 {
+            font-size: 14pt;
+        }
+        padding: 1em 1em 1em 1em;
+        margin: 0;
+
+        border-bottom: 1px solid lightgrey;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        tbody {
+            tr.__row {
+                background-color: white;
+                text-align: right;
+                .__apy {
+                    width: 6em;
+                }
+                .__interestYTD {
+                    width: 6em;
+                }
+                .__balance {
+                    width: 12em;
+                }
+                .__displayName {
+                    text-align: left;
+                }
+            }
+        }
+
+        tfoot {
+            tr.__row {
+                .__balance {
+                    width: 12em;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}

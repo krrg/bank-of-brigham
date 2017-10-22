@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FancyPieChart from "./FancyPieChart";
-import AccountListPropType from "../AccountsListPropType";
+import { TAccountList, accountTypesMap } from "../../../constants";
 import _ from "lodash";
 
 import Accounting from "../../../lib/accounting";
@@ -10,9 +10,8 @@ import "./AccountOverview.scss";
 
 export default class AccountOverview extends React.Component {
 
-
     static propTypes = {
-        accounts: AccountListPropType
+        accounts: TAccountList
     }
 
     renderColorBlockTd = (color, type) => {
@@ -30,7 +29,7 @@ export default class AccountOverview extends React.Component {
                 <td>{ accountObj["displayName"] }</td>
                 {/* <td>{ accountObj["type"] }</td> */}
                 <td>{ Accounting.formatMoney(accountObj["balance"]) }</td>
-                { this.renderColorBlockTd(accountObj["color"]) }
+                { this.renderColorBlockTd(accountTypesMap[accountObj["type"]]["color"]) }
             </tr>
         )
     }
@@ -69,7 +68,7 @@ export default class AccountOverview extends React.Component {
         return (
             <div className="AccountOverview">
                 <div className="__header">
-                    <h2>Account Overview</h2>
+                    <h2>Snapshot</h2>
                 </div>
 
                 <div className="__content">
