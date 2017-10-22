@@ -3,4 +3,21 @@
 
 .AccountOverview {
     @extend .section-box;
+
+    .__content {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        .__rows {
+            flex-grow: 1;
+            margin-left: 2em;
+
+            tfoot {
+                td.__total {
+                    text-align: right;
+                }
+            }
+        }
+    }
 }

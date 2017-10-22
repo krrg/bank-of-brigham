@@ -1,10 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import HeaderBar from "./HeaderBar/HeaderBar";
-
 import AccountOverview from "./AccountOverview/AccountOverview";
 
+import _ from "lodash";
+
 import "./Bank.scss";
+
+function assignAccountColor(account) {
+    const colors = {
+        "checking": "#F1C40F",
+        "savings": "#A04000",
+        "certificate": "#D68910",
+        "moneymarket": "#6E2C00"
+    }
+
+    const accountCopy = _.cloneDeep(account)
+    const assignedColor = colors[accountCopy["type"]]
+    accountCopy["color"] = assignedColor;
+    return accountCopy;
+}
 
 class BankIndex extends React.Component {
 
@@ -21,7 +36,14 @@ class BankIndex extends React.Component {
             displayName: "Interest Checking",
             type: "checking",
             balance: 2400
+        }, {
+            id: 240,
+            displayName: "Money Market",
+            type: "certificate",
+            balance: 3500
         }]
+
+        this.mockAccounts = this.mockAccounts.map(assignAccountColor);
     }
 
     render() {
