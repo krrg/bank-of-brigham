@@ -13,6 +13,8 @@ $foundation-palette: (
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
 @import url('https://fonts.googleapis.com/css?family=Cabin');
 
+@import "~react-select/dist/react-select.css";
+
 html {
     height: 100%;
 }

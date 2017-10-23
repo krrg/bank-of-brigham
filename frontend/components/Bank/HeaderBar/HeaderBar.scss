@@ -13,6 +13,19 @@
         height: 4.5em;
 
         @extend .container;
+
+        .__rightLinks {
+            margin-left: auto;
+            a {
+                color: whitesmoke;
+                margin-left: 2em;
+
+                &:hover, &:active {
+                    color: white;
+                    text-decoration: underline;
+                }
+            }
+        }
     }
 
     .__logo {

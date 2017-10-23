@@ -1,0 +1,7 @@
+@import "container.scss";
+@import "shadowed.scss";
+@import "../Bank.scss";
+
+.Transfers {
+    @extend .container;
+}
