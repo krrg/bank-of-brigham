@@ -16,31 +16,59 @@
             border-bottom: none;
         }
 
+        .__headerTable {
+            thead {
+                background-color: white;
+                border: none;
+                th {
+                   text-align: right;
+                   font-weight: 300;
+                }
+
+
+            }
+
+            th.__accountType {
+                padding-left: 0;
+                margin-left: 0;
+
+                h3 {
+                    text-align: left;
+                    margin: 0;
+                }
+            }
+
+            margin-bottom: 0;
+        }
+
+
         tbody {
             tr.__row {
                 background-color: white;
                 text-align: right;
-                .__apy {
-                    width: 6em;
-                }
-                .__interestYTD {
-                    width: 6em;
-                }
-                .__balance {
-                    width: 12em;
-                }
-                .__displayName {
-                    text-align: left;
-                }
             }
         }
 
-        tfoot {
-            tr.__row {
-                .__balance {
-                    width: 12em;
-                    font-weight: 700;
-                }
+        .__apy {
+            width: 6em;
+        }
+        .__interestYTD {
+            width: 12em;
+        }
+        .__balance {
+            width: 12em;
+        }
+        .__displayName {
+            text-align: left;
+        }
+
+        .TotalRow {
+            background-color: #efefef;
+            .__balance {
+                font-weight: 700;
+            }
+            td {
+                text-align: right;
             }
         }
     }
