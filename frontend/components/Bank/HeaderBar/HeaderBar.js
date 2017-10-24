@@ -15,6 +15,7 @@ export default class HeaderBar extends React.Component {
                     </Link>
 
                     <div className="__rightLinks">
+                        <Link to="/bank">Home</Link>
                         <Link to="/bank/transfers">Payments</Link>
                         <Link to="/bank/transfers">Transfers</Link>
                         <Link to="/bank/messages">Settings</Link>

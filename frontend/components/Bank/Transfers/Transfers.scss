@@ -5,3 +5,50 @@
 .Transfers {
     @extend .container;
 }
+
+.TransferOption {
+    // <span className="__colorBlock"></span>
+    // <span className="__displayName">{account["displayName"]}</span>
+    // <span className="__accountNumber">
+    //     { accountNumber.substring(accountNumber.length - 4) }
+    // </span>
+    // <span className="__balance">
+    //     { Accounting.formatMoney(account["balance"]) }
+    // </span>
+    // <span className="__colorBlock"></span>
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid lightgrey;
+
+    .__colorBlock {
+        width: 1em;
+        height: 3em;
+    }
+
+    font-size: 13pt;
+
+    .__displayName {
+        margin-left: 1em;
+        font-weight: 700;
+    }
+
+    .__accountNumber {
+        margin-left: 0.5em;
+    }
+
+    .__lineEnd {
+        margin-left: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        .__balance {
+            margin-right: 1em;
+        }
+    }
+
+}

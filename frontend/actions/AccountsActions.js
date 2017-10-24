@@ -1,8 +1,9 @@
 import AltInstance from "../alt";
 
-const AccountsActions = [
+const AccountsActions = AltInstance.generateActions(
     'get',
-    'getCompleted'
-]
+    'getCompleted',
+    'getErrored',
+);
 
-export default AltInstance.generateActions(AccountsActions);
+export default AccountsActions;
