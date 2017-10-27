@@ -49,6 +49,12 @@ const TransferOption = (props) => {
 
 }
 
+class TransferOption extends React.Component {
+    render() {
+
+    }
+}
+
 export default class Transfers extends React.Component {
 
     constructor() {
