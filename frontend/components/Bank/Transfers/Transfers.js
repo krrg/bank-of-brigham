@@ -87,6 +87,7 @@ export default class Transfers extends React.Component {
             <Select
                 options={options}
                 optionComponent={TransferOption}
+                maxHeight={10}
             />
         )
     }
