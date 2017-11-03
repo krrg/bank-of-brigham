@@ -18,6 +18,5 @@ async def handle_root(request):
 async def handle_favicon(request):
     return
 
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002)
