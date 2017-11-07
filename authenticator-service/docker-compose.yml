@@ -1,9 +1,5 @@
 db:
-    image: postgres
-    environment:
-        POSTGRES_PASSWORD: password
-        POSTGRES_USER: isrl
+    image: mongo:3.4
     ports:
-        - 127.0.0.1:6432:5432
-    
-            
+        - 127.0.0.1:27017:27017
+

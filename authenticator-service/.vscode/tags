@@ -4,4 +4,53 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+Accounts	../controller/accounts.py	/^Accounts = Blueprint("accounts", url_prefix="\/api")$/;"	kind:variable	line:4
+Accounts	../main.py	/^from controller.accounts import Accounts$/;"	kind:namespace	line:4
+Blueprint	../controller/accounts.py	/^from sanic import Blueprint$/;"	kind:namespace	line:2
+ConnectionPoolInitializer	../db/cxpool.py	/^ConnectionPoolInitializer = sanic.blueprints.Blueprint('cxpool')$/;"	kind:variable	line:5
+ConnectionPoolInitializer	../main.py	/^from db.cxpool import ConnectionPoolInitializer$/;"	kind:namespace	line:5
+PG_DATABASE	../settings.py	/^PG_DATABASE = os.environ.get('PG_DATABASE', 'isrl')$/;"	kind:variable	line:5
+PG_HOST	../settings.py	/^PG_HOST = os.environ.get('PG_HOST', '127.0.0.1')$/;"	kind:variable	line:6
+PG_PASSWORD	../settings.py	/^PG_PASSWORD = os.environ.get('PG_PASSWORD', 'password')$/;"	kind:variable	line:4
+PG_PORT	../settings.py	/^PG_PORT = int(os.environ.get('PG_PORT', 6432))$/;"	kind:variable	line:7
+PG_USER	../settings.py	/^PG_USER = os.environ.get('PG_USER', 'isrl')$/;"	kind:variable	line:3
+Sanic	../main.py	/^from sanic import Sanic$/;"	kind:namespace	line:1
+__init__.py	../controller/__init__.py	1;"	kind:file	line:1
+__init__.py	../db/__init__.py	1;"	kind:file	line:1
+__init__.py	../db/migrations/__init__.py	1;"	kind:file	line:1
+__init__.py	../model/__init__.py	1;"	kind:file	line:1
+__main__	../migrate.py	/^import db.migrations.__main__$/;"	kind:namespace	line:1
+__main__.py	../db/migrations/__main__.py	1;"	kind:file	line:1
+accounts.py	../controller/accounts.py	1;"	kind:file	line:1
+accounts.py	../model/accounts.py	1;"	kind:file	line:1
+app	../main.py	/^app = Sanic()$/;"	kind:variable	line:7
+asyncio	../db/migrations/__main__.py	/^import asyncio$/;"	kind:namespace	line:1
+asyncpg	../db/cxpool.py	/^import asyncpg$/;"	kind:namespace	line:1
+blueprints	../db/cxpool.py	/^import sanic.blueprints$/;"	kind:namespace	line:3
+cxpool	../db/migrations/__main__.py	/^import db.cxpool$/;"	kind:namespace	line:3
+cxpool.py	../db/cxpool.py	1;"	kind:file	line:1
+db	../db/migrations/__main__.py	/^import db.cxpool$/;"	kind:namespace	line:3
+db	../migrate.py	/^import db.migrations.__main__$/;"	kind:namespace	line:1
+handle_create_account	../controller/accounts.py	/^async def handle_create_account(request):$/;"	kind:function	line:7
+handle_favicon	../main.py	/^async def handle_favicon(request):$/;"	kind:function	line:18
+handle_root	../main.py	/^async def handle_root(request):$/;"	kind:function	line:12
+json	../controller/accounts.py	/^from sanic.response import json$/;"	kind:namespace	line:1
+json	../main.py	/^from sanic.response import json$/;"	kind:namespace	line:2
+main	../db/migrations/__main__.py	/^def main():$/;"	kind:function	line:37
 main.py	../main.py	1;"	kind:file	line:1
+manually_setup_cxpool	../db/cxpool.py	/^async def manually_setup_cxpool():$/;"	kind:function	line:7
+manually_teardown_cxpool	../db/cxpool.py	/^async def manually_teardown_cxpool():$/;"	kind:function	line:17
+mig001	../db/migrations/__main__.py	/^from db.migrations import mig001$/;"	kind:namespace	line:2
+mig001.py	../db/migrations/mig001.py	1;"	kind:file	line:1
+migrate.py	../migrate.py	1;"	kind:file	line:1
+migrations	../db/migrations/__main__.py	/^migrations = [$/;"	kind:variable	line:5
+migrations	../migrate.py	/^import db.migrations.__main__$/;"	kind:namespace	line:1
+os	../settings.py	/^import os$/;"	kind:namespace	line:1
+reset_database	../db/migrations/__main__.py	/^async def reset_database(cx):$/;"	kind:function	line:10
+run_migrations	../db/migrations/__main__.py	/^async def run_migrations():$/;"	kind:function	line:15
+sanic	../db/cxpool.py	/^import sanic.blueprints$/;"	kind:namespace	line:3
+settings	../db/cxpool.py	/^import settings$/;"	kind:namespace	line:2
+settings.py	../settings.py	1;"	kind:file	line:1
+setup_cxpool	../db/cxpool.py	/^async def setup_cxpool(app, loop):$/;"	kind:function	line:21
+teardown_cxpool	../db/cxpool.py	/^async def teardown_cxpool(app, loop):$/;"	kind:function	line:25
+up	../db/migrations/mig001.py	/^async def up(cx):$/;"	kind:function	line:1

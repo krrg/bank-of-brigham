@@ -1,5 +1,4 @@
 aiofiles==0.3.2
-asyncpg==0.13.0
 httptools==0.0.9
 sanic==0.6.0
 ujson==1.35
