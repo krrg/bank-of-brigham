@@ -9,6 +9,9 @@ class Accounts(object):
     def __init__(self):
         self.accounts = db.cxpool.mongoclient["isrlauth"]["accounts"]
 
+    async def before_start(self):
+        self.accounts.create_index("username", unique=True, background=True)
+
     async def create_new_account(self, username, password):
         if await self.accounts.find_one({"username": username}) is not None:
             raise AccountAlreadyExistsException()
@@ -22,16 +25,23 @@ class Accounts(object):
         }
 
         await self.accounts.insert_one(document)
-
         return True
-        # Hash the password
+
+    async def verify_password(self, username, password):
+        account = await self.accounts.find_one({"username": username})
+        if account is None:
+            return False
+
+        stored_entry = account["hashed_pw"]
+        to_verify = password
+
+        return PasswordHashingHelpers.verify_password(stored_entry, to_verify)
+
 
 import nacl
 import nacl.pwhash
 
 class PasswordHashingHelpers(object):
-
-
 
     @staticmethod
     def hash_and_salt_password(password):
@@ -40,15 +50,13 @@ class PasswordHashingHelpers(object):
     @staticmethod
     def verify_password(stored_entry, to_verify):
         try:
-            nacl.pwhash.verify(stored_entry.encode(), to_verify.encode())
+            nacl.pwhash.verify(stored_entry, to_verify.encode())
+            return True
         except nacl.exceptions.InvalidkeyError as e:
-            # Want to avoid dependency leaking the nacl layer to the controller.
-            #  Therefore, we rebrand the exception as one of ours.
-            raise PasswordNotMatchException()
+            return False
 
 
 class AccountAlreadyExistsException(Exception):
     pass
 
-class PasswordNotMatchException(Exception):
-    pass
+

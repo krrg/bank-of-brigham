@@ -31,3 +31,5 @@ export const TAccountList = PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(accountTypeKeys),
     balance: PropTypes.number.isRequired
 }));
+
+export const apihost = "/api";

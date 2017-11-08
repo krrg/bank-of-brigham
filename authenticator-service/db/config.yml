@@ -1,8 +1,0 @@
-development:
-  adapter: postgresql
-  database: isrlauth
-  port: 6432
-  host: 127.0.0.1
-  username: isrlauth
-  password: password
-  pool: 1  # This is just for migrations, we should never need more than one connection
