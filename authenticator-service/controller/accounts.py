@@ -35,21 +35,21 @@ async def handle_verify_password(request):
             "error": "could not verify password"
         }, status=401)
 
-    response = sanic.response.text("Verified")
+    second_factor = await accounts_model.get_2fa_required(username)
+
+    response = sanic.response.json({
+        "username": username,
+        "2fa": second_factor,
+    })
 
     Session\
         .from_request(request)\
         .insert_claims({
-            "username": username
+            "username": username,
         })\
         .attach_to_response(response)
 
     return response
-
-
-@Accounts.route("/accounts/login_status", ["GET"])
-async def handle_login_status(request):
-    rSession.from_request(request).read_claims()
 
 
 import jose.jwt

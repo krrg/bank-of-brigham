@@ -1,0 +1,42 @@
+@import "container.scss";
+@import "shadowed.scss";
+
+.TwoFactorSelection {
+    @extend .container;
+
+    .__content {
+        margin-top: 3em;
+        padding: 2em;
+        @include shadowed-medium();
+        background-color: white;
+    }
+
+    .TwoFactorSelectorList {
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+
+        .TwoFactorButton {
+            flex: 1;
+            // background-color: #ccc;
+            // color: black;
+            margin-right: 12px;
+            @include shadowed-subtle();
+            font-size: 36pt;
+            font-weight: 100;
+            padding: 0.5em;
+
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+            &:hover, &:active {
+                @include shadowed();
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

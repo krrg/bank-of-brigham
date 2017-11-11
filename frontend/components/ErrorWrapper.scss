@@ -1,0 +1,13 @@
+.ErrorWrapper {
+    .__message {
+        color: red;
+        text-align: right;
+    }
+}
+
+.__errored {
+    border: 1px solid red;
+    border-radius: 2px;
+    padding: 1em;
+    margin: 1em -1em 1em -1em;
+}

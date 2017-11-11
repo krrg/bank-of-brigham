@@ -38,6 +38,15 @@ class Accounts(object):
 
         return PasswordHashingHelpers.verify_password(stored_entry, to_verify)
 
+    async def get_2fa_required(self, username):
+        account = await self.accounts.find_one({"username": username})
+        if account is None:
+            return None
+
+        return account["2fa"]
+
+
+
 
 import nacl
 import nacl.pwhash
