@@ -1,19 +1,25 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import "./HeaderBar.scss";
 
-export default class HeaderBar extends React.Component {
+const HeaderBar = ({showLinks}) => {
 
-    render() {
-        return (
-            <div className="HeaderBar">
-                <div className="HeaderBar__content">
-                    <Link to="/bank" className="__logo">
-                        <img src="/img/bankiconhex_white.png" />
-                        <h1>Bank of Brigham</h1>
-                    </Link>
+    if (showLinks === undefined) {
+        showLinks = true;
+    }
 
+    return (
+        <div className="HeaderBar">
+            <div className="HeaderBar__content">
+                <Link to="/bank" className="__logo">
+                    <img src="/img/bankiconhex_white.png" />
+                    <h1>Bank of Brigham</h1>
+                </Link>
+
+                {
+                    showLinks ?
                     <div className="__rightLinks">
                         <Link to="/bank">Home</Link>
                         <Link to="/bank/transfers">Payments</Link>
@@ -21,10 +27,12 @@ export default class HeaderBar extends React.Component {
                         <Link to="/bank/messages">Settings</Link>
                         <Link to="/logout">Logout</Link>
                     </div>
+                : undefined }
 
-                </div>
             </div>
-        )
-    }
+        </div>
+    )
 
 }
+
+export default HeaderBar;

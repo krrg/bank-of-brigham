@@ -45,6 +45,6 @@
         padding: 4em;
         background-color: white;
         border-radius: 1px;
-        @include shadowed($darkBackground);
+        @include shadowed-medium();
     }
 }

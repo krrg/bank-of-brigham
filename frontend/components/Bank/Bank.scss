@@ -2,8 +2,8 @@
 @import "shadowed.scss";
 
 .section-box {
-    @include shadowed();
-    border-radius: 4px;
+    @include shadowed-subtle();
+    border-radius: 2px;
     background-color: white;
 
     margin-top: 3em;

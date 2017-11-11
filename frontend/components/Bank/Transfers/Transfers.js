@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import Accounting from "../../../lib/accounting";
 
-import AccountsStore from "../../../stores/AccountsStore";
-import AccountsActions from "../../../actions/AccountsActions";
+import BankStore from "../../../stores/BankStore";
+import BankActions from "../../../actions/BankActions";
 
 import { TAccountList, accountTypesMap } from "../../../constants";
 
@@ -49,19 +49,13 @@ const TransferOption = (props) => {
 
 }
 
-class TransferOption extends React.Component {
-    render() {
-
-    }
-}
-
 export default class Transfers extends React.Component {
 
     constructor() {
         super();
 
         this.state = {
-            accounts: AccountsStore.getState().accounts,
+            accounts: BankStore.getState().accounts,
             to: null,
             from: null,
         }
@@ -74,12 +68,12 @@ export default class Transfers extends React.Component {
     }
 
     componentDidMount() {
-        AccountsStore.listen(this.handleAccountsStoreUpdated);
-        AccountsActions.get();
+        BankStore.listen(this.handleAccountsStoreUpdated);
+        BankActions.getAccounts();
     }
 
     componentWillUnmount() {
-        AccountsStore.unlisten(this.handleAccountsStoreUpdated);
+        BankStore.unlisten(this.handleAccountsStoreUpdated);
     }
 
     renderAccountDropdown = () => {

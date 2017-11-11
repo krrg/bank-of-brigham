@@ -7,7 +7,8 @@ export const LoginSource = {
     loginPassword: {
 
         remote(state, username, password) {
-            axios.post(`${host}/accounts/verify_password`, {
+            console.log("username: ", username, " password: ", password);
+            return axios.post(`${host}/accounts/verify_password`, {
                 username: username.trim().toLowerCase(),
                 password: password, /* Do not trim or lower case this */
             })

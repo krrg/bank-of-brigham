@@ -1,5 +1,7 @@
 import React from "react";
 import * as F from "react-foundation";
+import LoginActions from "../../actions/LoginActions";
+import LoginStore from "../../stores/LoginStore";
 
 import "./Login.scss";
 
@@ -10,8 +12,8 @@ export default class Login extends React.Component {
             e.preventDefault();
         }
 
-        const username = this.refs.username.value.toLowerCase();
-        const password = this.refs.password.value; /* do not modify password at all, including stripping spaces. */
+        const username = this.refs.username.value;
+        const password = this.refs.password.value;
 
         LoginActions.loginPassword(username, password);
     }
@@ -24,7 +26,7 @@ export default class Login extends React.Component {
                         <img src="/img/bankiconhex.png" />
                         <div>
                             <h1>Bank of Brigham</h1>
-                            <form action={}>
+                            <form onSubmit={this.handlePasswordSubmit}>
                                 <label htmlFor="Login__username">Username</label>
                                 <input type='text' id="Login__username" ref="username" className="Login__username" placeholder="Username" />
                                 <label htmlFor="Login__password">Password</label>

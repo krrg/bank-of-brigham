@@ -1,7 +1,7 @@
-import AccountActions from "../actions/AccountsActions";
+import BankActions from "../actions/BankActions";
 import axios from "axios";
 
-export const AccountsSource = {
+export const BankSource = {
 
     fetchAccounts: {
 
@@ -49,8 +49,8 @@ export const AccountsSource = {
             return state.accounts;
         },
 
-        success: AccountActions.getCompleted,
-        error: AccountActions.getErrored,
+        success: BankActions.getAccountsCompleted,
+        error: BankActions.getAccountsErrored,
 
     }
 

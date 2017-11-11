@@ -4,7 +4,7 @@
 
 .HeaderBar {
     background-color: $darkBackground;
-    @include shadowed;
+    @include shadowed-subtle();
 
     .HeaderBar__content {
         display: flex;

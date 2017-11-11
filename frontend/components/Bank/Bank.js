@@ -5,8 +5,8 @@ import HeaderBar from "./HeaderBar/HeaderBar";
 import AccountOverview from "./AccountOverview/AccountOverview";
 import DetailsList from "./DetailsList/DetailsList";
 
-import AccountsStore from "../../stores/AccountsStore";
-import AccountsActions from "../../actions/AccountsActions";
+import BankStore from "../../stores/BankStore";
+import BankActions from "../../actions/BankActions";
 
 import _ from "lodash";
 
@@ -19,28 +19,26 @@ class BankIndex extends React.Component {
         super();
 
         this.state = {
-            accounts: AccountsStore.getState().accounts,
+            accounts: BankStore.getState().accounts,
         }
     }
 
-    handleAccountsStoreUpdated = (storeState) => {
+    handleBankStoreUpdated = (storeState) => {
         this.setState({
             accounts: storeState.accounts
         })
     }
 
     componentDidMount() {
-        AccountsStore.listen(this.handleAccountsStoreUpdated);
-        AccountsActions.get();
+        BankStore.listen(this.handleBankStoreUpdated);
+        BankActions.getAccounts();
     }
 
     componentWillUnmount() {
-        AccountsStore.unlisten(this.handleAccountsStoreUpdated);
+        BankStore.unlisten(this.handleBankStoreUpdated);
     }
 
     render() {
-        console.log("Accounts", this.state.accounts);
-
         if (! this.state.accounts) {
             return (<h1>Loading</h1>);
         }

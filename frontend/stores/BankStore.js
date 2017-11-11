@@ -1,6 +1,6 @@
 import AltInstance from "../alt";
-import AccountsActions from "../actions/AccountsActions";
-import { AccountsSource } from "../api/AccountsApi";
+import BankActions from "../actions/BankActions";
+import { BankSource } from "../api/BankApi";
 import { accountTypes } from "../constants";
 
 import _ from "lodash";
@@ -10,24 +10,24 @@ function getAuthToken() {
     return null;
 }
 
-class AccountsStore {
+class BankStore {
     constructor() {
         this.state = {
             accounts: null
         }
 
-        this.registerAsync(AccountsSource);
-        this.bindAction(AccountsActions.get, this.handleGet);
-        this.bindAction(AccountsActions.getCompleted, this.handleGetCompleted);
+        this.registerAsync(BankSource);
+        this.bindAction(BankActions.getAccounts, this.handleGetAccounts);
+        this.bindAction(BankActions.getAccountsCompleted, this.handleGetAccountsCompleted);
     }
 
-    handleGet = () => {
+    handleGetAccounts = () => {
         if (! this.getInstance().isLoading()) {
             this.getInstance().fetchAccounts(getAuthToken())
         }
     }
 
-    handleGetCompleted = (result) => {
+    handleGetAccountsCompleted = (result) => {
         const accounts = result["accounts"];
         const ordering = _.fromPairs(accountTypes.map(accountType => {
             return [accountType["key"], accountType["color"]];
@@ -39,5 +39,5 @@ class AccountsStore {
     }
 }
 
-const AltAccountsStore = AltInstance.createStore(AccountsStore, 'AccountsStore');
-export default AltAccountsStore;
+const AltStore = AltInstance.createStore(BankStore, 'BankStore');
+export default AltStore;

@@ -21,6 +21,7 @@ class Accounts(object):
         document = {
             "username": username,
             "hashed_pw": hashed_pw,
+            "2fa": [],
             "created_at": datetime.datetime.utcnow()
         }
 

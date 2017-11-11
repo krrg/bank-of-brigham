@@ -47,6 +47,11 @@ async def handle_verify_password(request):
     return response
 
 
+@Accounts.route("/accounts/login_status", ["GET"])
+async def handle_login_status(request):
+    rSession.from_request(request).read_claims()
+
+
 import jose.jwt
 import time
 

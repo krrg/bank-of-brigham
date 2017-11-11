@@ -1,4 +1,13 @@
 
-@mixin shadowed($shadowColor: rgba(0, 0, 0, 0.75)) {
-    box-shadow: 0 0 0.75em 0 $shadowColor;
+@mixin shadowed($shadowColor: rgba(100, 100, 100, 1.0)) {
+    // box-shadow: 0 0 0.75em 0 $shadowColor;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+@mixin shadowed-medium() {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.19), 0 4px 6px rgba(0,0,0,0.23);
+}
+
+@mixin shadowed-subtle() {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
