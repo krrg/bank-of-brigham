@@ -1,3 +1,5 @@
+@import "shadowed.scss";
+
 .container {
     @media (min-width: 1120px) {
         max-width: 1120px;
@@ -8,4 +10,13 @@
         padding-left: 1em;
         padding-right: 1em;
     }
+}
+
+.content-container {
+    @extend .container;
+    @include shadowed-medium();
+
+    background-color: white;
+    margin-top: 3em;
+    padding: 2em;
 }

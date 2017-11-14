@@ -21,7 +21,7 @@ class Accounts(object):
         document = {
             "username": username,
             "hashed_pw": hashed_pw,
-            "2fa": [],
+            "2fa": None,
             "created_at": datetime.datetime.utcnow()
         }
 
@@ -38,14 +38,22 @@ class Accounts(object):
 
         return PasswordHashingHelpers.verify_password(stored_entry, to_verify)
 
-    async def get_2fa_required(self, username):
+    async def get_2fa_method(self, username):
         account = await self.accounts.find_one({"username": username})
         if account is None:
             return None
 
         return account["2fa"]
 
-
+    async def register_2fa_method(self, username, _2fa, _2fa_metadata):
+        return await self.accounts.update_one({
+            "username": username,
+        }, {
+            "$set": {
+                "2fa": str(_2fa),
+                "2fa_metadata": _2fa_metadata,
+            }
+        })
 
 
 import nacl

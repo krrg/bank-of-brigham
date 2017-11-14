@@ -16,6 +16,17 @@ export const SignupSource = {
         success: SignupActions.postSignupCompleted,
         error: SignupActions.postSignupErrored,
 
+    },
+
+    registerSms: {
+        remote(state, phoneNumber) {
+            return axios.post(`${host}/sms/enable`, {
+                phone_number: phoneNumber
+            })
+        },
+
+        success: SignupActions.postSignupSmsCompleted,
+        error: SignupActions.postSignupSmsErrored,
     }
 
 }

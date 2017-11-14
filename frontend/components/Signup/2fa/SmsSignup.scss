@@ -1,0 +1,10 @@
+@import "container.scss";
+@import "shadowed.scss";
+
+.SmsSignup {
+
+    .__content {
+        @extend .content-container;
+    }
+
+}

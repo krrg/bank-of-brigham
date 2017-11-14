@@ -15,6 +15,10 @@ class SignupStore {
         this.bindAction(SignupActions.postSignup, this.handlePostSignup);
         this.bindAction(SignupActions.postSignupCompleted, this.handlePostSignupCompleted);
         this.bindAction(SignupActions.postSignupErrored, this.handlePostSignupErrored);
+
+        this.bindAction(SignupActions.postSignupSms, this.handlePostSignupSms);
+        this.bindAction(SignupActions.postSignupSmsCompleted, this.handlePostSignupSmsCompleted);
+        this.bindAction(SignupActions.postSignupSmsErrored, this.handlePostSignupSmsErrored);
     }
 
     handlePostSignup(data) {
@@ -43,6 +47,21 @@ class SignupStore {
             this.addError("usernameAlreadyTaken");
             return;
         }
+    }
+
+    handlePostSignupSms(phoneNumber) {
+        console.log(`Trying to post signup SMS with ${phoneNumber}`);
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().registerSms(phoneNumber);
+        }
+    }
+
+    handlePostSignupSmsCompleted(axiosResult) {
+
+    }
+
+    handlePostSignupSmsErrored(axiosError) {
+
     }
 
     resetErrors() {

@@ -3,12 +3,15 @@ import ReactDOM from "react-dom";
 import * as F from "react-foundation";
 import { BrowserRouter, Route, Redirect, IndexRoute } from "react-router-dom";
 
-import Login from "./components/Login/Login";
-import SignupUsernamePassword from "./components/Signup/SignupUsernamePassword";
-import TwoFactorSelection from "./components/Signup/TwoFactorSelection";
 import Bank from "./components/Bank/Bank";
 import HeaderBar from "./components/Bank/HeaderBar/HeaderBar";
 import Transfers from "./components/Bank/Transfers/Transfers";
+
+import Login from "./components/Login/Login";
+import SignupUsernamePassword from "./components/Signup/SignupUsernamePassword";
+import TwoFactorSelection from "./components/Signup/TwoFactorSelection";
+import SmsSignup from "./components/Signup/2fa/SmsSignup";
+
 
 import "./index.scss";
 
@@ -20,8 +23,9 @@ const Index = () => {
                 <Route exact path="/login" component={() => <Login />} />
                 <div>
                     <Route exact path="/create" component={() => <Redirect to="/create/1"/>} />
-                    <Route exact path="/create/1" component={() => <SignupUsernamePassword /> } />
+                    <Route exact path="/create/1" component={() => <SignupUsernamePassword />} />
                     <Route exact path="/create/2" component={() => <TwoFactorSelection />} />
+                    <Route exact path="/create/3/sms" component={() => <SmsSignup />} />
                 </div>
                 <div>
                     <Route path="/bank" component={() => <HeaderBar />} />

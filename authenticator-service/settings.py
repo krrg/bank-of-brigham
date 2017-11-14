@@ -45,7 +45,6 @@ def read_stored_secrets(input_keys=None, generated_keys=None):
 
 MONGO_HOST = os.environ.get("MONGO_HOST", "localhost")
 MONGO_PORT = os.environ.get("MONGO_PORT", 27017)
-JWT_SECRET = os.environ.get("JWT_SECRET", None)
 
 secrets = read_stored_secrets(input_keys=[
     "TWILIO_ACCOUNT_SID",

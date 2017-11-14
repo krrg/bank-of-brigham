@@ -7,6 +7,7 @@ TWILIO_AUTH_TOKEN = settings.secrets["TWILIO_AUTH_TOKEN"]
 TWILIO_PHONE_NUMBER = settings.secrets["TWILIO_PHONE_NUMBER"]
 
 baseurl = f"https://{TWILIO_ACCOUNT_SID}:{TWILIO_AUTH_TOKEN}@api.twilio.com/2010-04-01"
+lookupurl = f"https://{TWILIO_ACCOUNT_SID}:{TWILIO_AUTH_TOKEN}@lookups.twilio.com/v1"
 
 class AsyncTwilioClient(object):
 
@@ -23,7 +24,16 @@ class AsyncTwilioClient(object):
             "Body": message
         })
 
-        print("Back from Twilio")
-        print(await resp.json())
-
         return True
+
+    async def lookup_phone_number(self, phone_number):
+        resp = await self.http_client.get(f"{lookupurl}/PhoneNumbers/{phone_number}")
+        if resp.status != 200:
+            print(resp)
+            raise InvalidPhoneNumberError()
+
+        return await resp.json()
+
+
+class InvalidPhoneNumberError(RuntimeError):
+    pass
