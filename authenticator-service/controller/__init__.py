@@ -11,26 +11,14 @@ from controller.session import Session
 def require_password(f):
     @functools.wraps(f)
     def decorated_function(request, *args, **kwargs):
-        # request = kwargs["request"]
         session = Session.from_request(request)
         claims = session.read_claims()
+
         if "password_good" in claims and claims["password_good"]:
-            return f(request, *args, **kwargs)
+            kwargs["session"] = claims
+            return await route(request, *args, **kwargs)
         else:
-            return sanic.response.text("Must authenticate with password!", status=401)
-    return decorated_function
-
-
-def require_2fa(f):
-    @functools.wraps(f)
-    def decorated_function(request, *args, **kwargs):
-        # request = kwargs["request"]
-        session = Session.from_request(request)
-        claims = session.read_claims()
-        if "2fa_good" in claims and claims["2fa_good"]:
-            return f(request, *args, **kwargs)
-        else:
-            return sanic.response.text("Requires 2FA beyond this point.", status=401)
+            return sanic.response.text("(Partial) Requires password to proceed", status=401)
     return decorated_function
 
 
@@ -45,7 +33,7 @@ def require_full_authentication(route):
             kwargs["session"] = claims
             return await route(request, *args, **kwargs)
         else:
-            return sanic.response.text("(Full) Requires password and 2FA to proceed.", status=401)
+            return sanic.response.text("(Full) Requires password and (if applicable) 2FA to proceed.", status=401)
     return decorated_function
 
 

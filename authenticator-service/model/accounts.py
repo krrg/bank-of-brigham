@@ -29,7 +29,7 @@ class Accounts(object):
         return True
 
     async def verify_password(self, username, password):
-        account = await self.accounts.find_one({"username": username})
+        account = await self.accounts.find_one({"username": username}, projection=["hashed_pw"])
         if account is None:
             return False
 
@@ -39,11 +39,17 @@ class Accounts(object):
         return PasswordHashingHelpers.verify_password(stored_entry, to_verify)
 
     async def get_2fa_method(self, username):
-        account = await self.accounts.find_one({"username": username})
+        account = await self.accounts.find_one({"username": username}, projection=["2fa"])
         if account is None:
             return None
 
         return account["2fa"]
+
+    async def get_2fa_metadata(self, username):
+        account = await self.accounts.find_one({"username": username}, projection=["2fa_metadata"])
+        if account is None:
+            return None
+        return account["2fa_metadata"]
 
     async def register_2fa_method(self, username, _2fa, _2fa_metadata):
         return await self.accounts.update_one({

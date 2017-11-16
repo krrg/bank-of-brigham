@@ -57,7 +57,10 @@ class SignupStore {
     }
 
     handlePostSignupSmsCompleted(axiosResult) {
-
+        this.resetErrors();
+        this.setState({
+            readyForSmsVerificationCode: true,
+        })
     }
 
     handlePostSignupSmsErrored(axiosError) {
