@@ -11,6 +11,7 @@ import Login from "./components/Login/Login";
 import SignupUsernamePassword from "./components/Signup/SignupUsernamePassword";
 import TwoFactorSelection from "./components/Signup/TwoFactorSelection";
 import SmsSignup from "./components/Signup/2fa/SmsSignup";
+import SmsSignupVerify from "./components/Signup/2fa/SmsSignupVerify";
 
 
 import "./index.scss";
@@ -26,6 +27,7 @@ const Index = () => {
                     <Route exact path="/create/1" component={() => <SignupUsernamePassword />} />
                     <Route exact path="/create/2" component={() => <TwoFactorSelection />} />
                     <Route exact path="/create/3/sms" component={() => <SmsSignup />} />
+                    <Route exact path="/create/4/sms" component={() => <SmsSignupVerify />} />
                 </div>
                 <div>
                     <Route path="/bank" component={() => <HeaderBar />} />

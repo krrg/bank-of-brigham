@@ -17,6 +17,21 @@ export const LoginSource = {
         success: LoginActions.loginPasswordCompleted,
         error: LoginActions.loginPasswordErrored,
 
+    },
+
+    loginSms: {
+
+        remote(state, verificationCode) {
+            console.log("Well, we got this far.");
+
+            return axios.post(`${host}/sms/completeverify`, {
+                code: verificationCode,
+            })
+        },
+
+        success: LoginActions.loginSmsCompleted,
+        error: LoginActions.loginSmsErrored,
+
     }
 
 }

@@ -1,0 +1,9 @@
+@import "container.scss";
+
+.SmsSignupVerify {
+
+    .__content {
+        @extend .content-container;
+    }
+
+}

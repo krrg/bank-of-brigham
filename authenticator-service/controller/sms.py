@@ -27,52 +27,63 @@ async def ensure_mongo_connection(app, loop):
 
 @Sms.route("/enable", methods=["POST"])
 @controller.require_full_authentication
-async def handle_enable_sms_2fa(request, session=None, **kwargs):
+async def handle_enable_sms_2fa(request, session_claims=None, **kwargs):
     unvalidated_phone_number = request.json.get("phone_number")
 
     try:
+        if unvalidated_phone_number is None:
+            raise apiclients.twilio.InvalidPhoneNumberError()
+
         response = await twilio_client.lookup_phone_number(unvalidated_phone_number)
         validated_phone_number = response["phone_number"]
 
         # Add the phone number to the account.
-        await accounts_model.register_2fa_method(session['username'], 'sms', {
+        await accounts_model.register_2fa_method(session_claims['username'], 'sms', {
             'phoneNumber': validated_phone_number,
         })
-        await SmsVerification.begin_verification(session['username'], validated_phone_number)
 
-        hidden_phone = validated_phone_number[-2:]
-
-        return sanic.response.json({"success": True, "hidden_phone": hidden_phone})
+        return await handle_begin_verify_sms_2fa(request, session_claims=session_claims, **kwargs)
 
     except apiclients.twilio.InvalidPhoneNumberError:
-        return sanic.response.json({"success": False, "error": "Unable to parse and validate phone number."})
+        return sanic.response.json({
+            "error": "Unable to parse and validate phone number."
+        }, status=400)
 
 
 @Sms.route("/beginverify")
 @controller.require_password
-async def handle_begin_verify_sms_2fa(request, session=None, **kwargs):
-    username = session['username']
+async def handle_begin_verify_sms_2fa(request, session_claims=None, **kwargs):
+    username = session_claims['username']
 
-    await accounts_model.
-    await SmsVerification.begin_verification(username)
+    # await accounts_model.
+    metadata = await accounts_model.get_2fa_metadata(username)
+    if metadata is None:
+        raise RuntimeError("Cannot locate the phone number for this individual.")
+
+    phone_number = metadata["phoneNumber"]
+    await SmsVerification.begin_verification(username, phone_number)
+    hidden_digits = phone_number[-2:]
+
+    return sanic.response.json({"last_phone_number_digits": hidden_digits}, status=200)
+
 
 @Sms.route("/completeverify", methods=["POST"])
 @controller.require_password
-async def handle_verify_sms_2fa(request, session=None, **kwargs):
-    username = session['username']
+async def handle_verify_sms_2fa(request, session_claims=None, **kwargs):
+    username = session_claims['username']
     unverified_code = request.json.get("code")
 
-    result = await SmsVerification.complete_verification(username)
+    result = await SmsVerification.complete_verification(username, unverified_code)
     if result:
         response = sanic.response.json({"success": True})
-
+        session = controller.Session.from_claims(session_claims)
         session.insert_claims({
             "fully_authenticated": True,
         }).attach_to_response(response)
 
         return response
     else:
-        return sanic.response.json({"success": False, "error": "Unauthenticated"}, status=401)
+        return sanic.response.json({"success": False, "error": "Unable to validate code"}, status=401)
 
 
 import secrets
@@ -93,6 +104,7 @@ class SmsVerification(object):
         actual_code = await tokens_model.get_token_for(username)
         if actual_code is None:
             return False
+        print(f"Comparing {unverified_code} to {actual_code}")
         return secrets.compare_digest(unverified_code, actual_code)
 
     @staticmethod

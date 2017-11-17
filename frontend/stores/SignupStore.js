@@ -50,7 +50,10 @@ class SignupStore {
     }
 
     handlePostSignupSms(phoneNumber) {
-        console.log(`Trying to post signup SMS with ${phoneNumber}`);
+        this.resetErrors();
+        this.setState({
+            readyForSmsVerificationCode: false,
+        })
         if (! this.getInstance().isLoading()) {
             this.getInstance().registerSms(phoneNumber);
         }
@@ -64,7 +67,8 @@ class SignupStore {
     }
 
     handlePostSignupSmsErrored(axiosError) {
-
+        this.resetErrors();
+        this.addError("invalidPhoneNumber");
     }
 
     resetErrors() {

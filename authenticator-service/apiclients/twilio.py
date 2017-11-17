@@ -29,7 +29,7 @@ class AsyncTwilioClient(object):
     async def lookup_phone_number(self, phone_number):
         resp = await self.http_client.get(f"{lookupurl}/PhoneNumbers/{phone_number}")
         if resp.status != 200:
-            print(resp)
+            print("Phone number invalid!!!", phone_number)
             raise InvalidPhoneNumberError()
 
         return await resp.json()

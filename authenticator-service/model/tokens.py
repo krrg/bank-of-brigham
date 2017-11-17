@@ -13,20 +13,21 @@ class Tokens(object):
 
     async def store_token_for(self, username, token, expiring=False):
         document = {
-            "createdAt": datetime.datetime.now(),
+            "createdAt": datetime.datetime.utcnow(),
             "username": username,
             "token": token,
         }
 
         if expiring:
-            print("Inserting expiring token")
             await self.temp_tokens.insert_one(document)
         else:
             await self.perm_tokens.insert_one(document)
 
     async def get_token_for(self, username):
-        match = await self.temp_tokens.find_one({ "username": username}) or await self.perm_tokens.find_one({ "username": username})
-        if match is None:
-            return None
-        return match["token"]
+        # We have to check both the temporary and permanent storage.
+        for token_store in [self.temp_tokens, self.perm_tokens]:
 
+            match = await token_store.find_one({"username": username})
+            if match is not None:
+                return match["token"]
+        return None;

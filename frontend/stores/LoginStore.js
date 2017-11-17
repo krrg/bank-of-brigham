@@ -17,6 +17,10 @@ class LoginStore {
         this.bindAction(LoginActions.loginPassword, this.handleLoginPassword);
         this.bindAction(LoginActions.loginPasswordCompleted, this.handleLoginPasswordCompleted);
         this.bindAction(LoginActions.loginPasswordErrored, this.handleLoginPasswordErrored);
+
+        this.bindAction(LoginActions.loginSms, this.handleLoginSms);
+        this.bindAction(LoginActions.loginSmsCompleted, this.handleLoginSmsCompleted);
+        this.bindAction(LoginActions.loginSmsErrored, this.handleLoginSmsErrored);
     }
 
     handleLoginPassword(dispatchedData) {
@@ -29,10 +33,7 @@ class LoginStore {
     }
 
     handleLoginPasswordCompleted(responseData) {
-
-        console.log("The login was a success");
-        console.log(responseData);
-
+        console.log("Login is complete.");
     }
 
     handleLoginPasswordErrored(errorData) {
@@ -40,6 +41,29 @@ class LoginStore {
             authenticationLevel: null,
             secondFactorType: null,
             errorMessage: "Could not verify username and password",
+        })
+    }
+
+    handleLoginSms(dispatchedData) {
+        const verificationCode = dispatchedData;
+
+        console.log("verification code: ", verificationCode);
+
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().loginSms(verificationCode);
+        }
+    }
+
+    handleLoginSmsCompleted(axiosResponse) {
+        console.log("We have completed with ", axiosResponse.data);
+        this.setState({
+            "authenticationLevel": "full"
+        })
+    }
+
+    handleLoginSmsErrored(axiosError) {
+        this.setState({
+            "errorMessage": "Unable to verify code"
         })
     }
 

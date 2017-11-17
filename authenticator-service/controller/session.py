@@ -34,6 +34,8 @@ class Session(object):
 
     def attach_to_response(self, response):
         response.cookies['jwt'] = self.raw_jwt
+        response.cookies['jwt']['max-age'] = 1800
+        response.cookies['jwt']['httponly'] = True
 
     @staticmethod
     def __encode__(claims):
@@ -61,3 +63,9 @@ class Session(object):
     @staticmethod
     def create_session():
         return Session()
+
+    @staticmethod
+    def from_claims(claims):
+        session = Session()
+        session.insert_claims(claims)
+        return session
