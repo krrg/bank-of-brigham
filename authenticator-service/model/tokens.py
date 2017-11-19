@@ -19,9 +19,9 @@ class Tokens(object):
         }
 
         if expiring:
-            await self.temp_tokens.insert_one(document)
+            await self.temp_tokens.replace_one({"username": username}, document, upsert=True)
         else:
-            await self.perm_tokens.insert_one(document)
+            await self.perm_tokens.replace_one({"username": username}, document, upsert=True)
 
     async def get_token_for(self, username):
         # We have to check both the temporary and permanent storage.

@@ -1,28 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import * as F from "react-foundation";
 import { BrowserRouter, Route, Redirect, IndexRoute } from "react-router-dom";
 
 import Bank from "./components/Bank/Bank";
 import HeaderBar from "./components/Bank/HeaderBar/HeaderBar";
 import Transfers from "./components/Bank/Transfers/Transfers";
 
-import Login from "./components/Login/Login";
+import LoginRouterWrapper from "./components/Login/LoginRouterWrapper";
+import Logout from "./components/Login/Logout";
 import SignupUsernamePassword from "./components/Signup/SignupUsernamePassword";
 import TwoFactorSelection from "./components/Signup/TwoFactorSelection";
 import SmsSignup from "./components/Signup/2fa/SmsSignup";
 import SmsSignupVerify from "./components/Signup/2fa/SmsSignupVerify";
 
-
 import "./index.scss";
+
 
 const Index = () => {
     return (
         <BrowserRouter>
             <div>
                 <Route exact path="/" component={() => <Redirect to="/login" />} />
-                <Route exact path="/login" component={() => <Login />} />
                 <div>
+                    <Route path="/login" component={() => <HeaderBar showLinks={false} />} />
+                    <Route exact path="/login" component={() => <Redirect to="/login/1" />} />
+                    <Route path="/login/:stage" component={() => <LoginRouterWrapper />} />
+                </div>
+                <Route exact path="/logout" component={() => <div><HeaderBar showLinks={false} /><Logout /></div>} />
+                <div>
+                    <Route path="/create" component={() => <HeaderBar showLinks={false} />} />
                     <Route exact path="/create" component={() => <Redirect to="/create/1"/>} />
                     <Route exact path="/create/1" component={() => <SignupUsernamePassword />} />
                     <Route exact path="/create/2" component={() => <TwoFactorSelection />} />

@@ -3,8 +3,6 @@
 
 .Login {
 
-    background-color: $lightBackground;
-
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -27,7 +25,7 @@
         width: 8em;
     }
 
-    height: 100vh;
+    height: calc(100vh - 72px);
 
     .LoginBox {
         display: flex;
@@ -45,6 +43,10 @@
         padding: 4em;
         background-color: white;
         border-radius: 1px;
+
+        position: relative;
+        bottom: 8vh;
+
         @include shadowed-medium();
     }
 }

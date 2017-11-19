@@ -27,7 +27,7 @@ async def login_user(username, password):
 
     response = sanic.response.json({
         "username": username,
-        "2fa": second_factor,
+        "secondFactor": second_factor,
     })
 
     Session\
@@ -61,3 +61,11 @@ async def handle_verify_password(request):
     password = request.json.get("password")
 
     return await login_user(username, password)
+
+@Accounts.route("/accounts/session", ["DELETE"])
+async def handle_logout(request):
+    response = sanic.response.text("")
+    Session\
+        .create_session()\
+        .attach_to_response(response)
+    return response

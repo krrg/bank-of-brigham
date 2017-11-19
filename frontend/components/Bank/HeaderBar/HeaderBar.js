@@ -10,10 +10,12 @@ const HeaderBar = ({showLinks}) => {
         showLinks = true;
     }
 
+    const link = showLinks ? "/bank" : "/";
+
     return (
         <div className="HeaderBar">
             <div className="HeaderBar__content">
-                <Link to="/bank" className="__logo">
+                <Link to={link} className="__logo">
                     <img src="/img/bankiconhex_white.png" />
                     <h1>Bank of Brigham</h1>
                 </Link>

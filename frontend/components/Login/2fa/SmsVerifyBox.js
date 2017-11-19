@@ -1,23 +1,35 @@
 import React from "react";
-import * as F from "react-foundation";
+import PropTypes from "prop-types";
+import { Button } from "react-foundation";
 import LoginActions from "../../../actions/LoginActions";
 import LoginStore from "../../../stores/LoginStore";
+import LoadingSpinner from "../../LoadingSpinner";
+
 
 export default class SmsVerifyBox extends React.Component {
 
+    static propTypes = {
+        digits: PropTypes.string,
+    }
+
     handleVerificationCodeSubmit = (e) => {
         if (e) { e.preventDefault() }
+        console.log("Submitting verification code.");
         LoginActions.loginSms(this.refs.code.value);
     }
 
     render() {
+        if (! this.props.digits) {
+            return <LoadingSpinner />
+        }
+
         return (
             <div className="SmsVerifyBox">
                 <h2>Enter code</h2>
                 <p>We've sent a verification code to (***) ***-**{this.props.digits}</p>
                 <form onSubmit={this.handleVerificationCodeSubmit}>
                     <input type="text" placeholder="Code" ref="code"/>
-                    <F.Button>Submit</F.Button>
+                    <Button>Submit</Button>
                 </form>
             </div>
         )
