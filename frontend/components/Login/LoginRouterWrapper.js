@@ -76,8 +76,8 @@ class LoginRouterWrapper extends React.Component {
     render() {
         return (
             <div className="Login">
-                Authentication: { this.state.authenticationLevel }
-                Second factor: { this.state.secondFactor }
+                {/* Authentication: { this.state.authenticationLevel }
+                Second factor: { this.state.secondFactor } */}
                 <div className="x-vertical-center">
                     { this.renderConditionalAuthenticationStep() }
                 </div>

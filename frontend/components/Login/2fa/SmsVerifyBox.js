@@ -14,7 +14,6 @@ export default class SmsVerifyBox extends React.Component {
 
     handleVerificationCodeSubmit = (e) => {
         if (e) { e.preventDefault() }
-        console.log("Submitting verification code.");
         LoginActions.loginSms(this.refs.code.value);
     }
 
