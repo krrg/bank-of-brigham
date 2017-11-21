@@ -50,7 +50,7 @@ async def handle_enable_sms_2fa(request, session_claims=None, **kwargs):
         }, status=400)
 
 
-@Sms.route("/beginverify")
+@Sms.route("/beginverify", methods=["POST"])
 @controller.require_password
 async def handle_begin_verify_sms_2fa(request, session_claims=None, **kwargs):
     username = session_claims['username']

@@ -1,5 +1,5 @@
 import React from "react";
-import * as F from "react-foundation";
+import { Button } from "react-foundation";
 import { withRouter } from "react-router-dom";
 
 import SignupActions from "../../actions/SignupActions";
@@ -96,7 +96,7 @@ class SignupUsernamePassword extends React.Component {
                     <input type='password' id="Login__password2" ref="password2" className="Login__password" placeholder="Verify Password" />
                 </ErrorWrapper>
 
-                <F.Button>Create Account</F.Button>
+                <Button>Create Account</Button>
             </form>
         )
     }

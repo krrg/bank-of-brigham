@@ -63,6 +63,7 @@ class SignupStore {
         this.resetErrors();
         this.setState({
             readyForSmsVerificationCode: true,
+            lastPhoneDigits: axiosResult.data["last_phone_number_digits"],
         })
     }
 

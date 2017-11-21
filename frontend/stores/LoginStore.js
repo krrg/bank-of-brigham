@@ -14,6 +14,9 @@ class LoginStore {
         }
 
         this.registerAsync(LoginSource);
+
+        this.bindAction(LoginActions.logout, this.handleLogout);
+
         this.bindAction(LoginActions.loginPassword, this.handleLoginPassword);
         this.bindAction(LoginActions.loginPasswordCompleted, this.handleLoginPasswordCompleted);
         this.bindAction(LoginActions.loginPasswordErrored, this.handleLoginPasswordErrored);
@@ -21,6 +24,21 @@ class LoginStore {
         this.bindAction(LoginActions.loginSms, this.handleLoginSms);
         this.bindAction(LoginActions.loginSmsCompleted, this.handleLoginSmsCompleted);
         this.bindAction(LoginActions.loginSmsErrored, this.handleLoginSmsErrored);
+
+        this.bindAction(LoginActions.beginSms, this.handleBeginSms);
+        this.bindAction(LoginActions.beginSmsCompleted, this.handleBeginSmsCompleted);
+    }
+
+    handleLogout = () => {
+        this.setState({
+            authenticationLevel: null,
+            secondFactor: null,
+            errorMessage: null,
+        })
+
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().logout();
+        }
     }
 
     handleLoginPassword(dispatchedData) {
@@ -32,8 +50,11 @@ class LoginStore {
         }
     }
 
-    handleLoginPasswordCompleted(responseData) {
-        console.log("Login is complete.");
+    handleLoginPasswordCompleted(axiosResponse) {
+        this.setState({
+            "authenticationLevel": "password",
+            "secondFactor": axiosResponse.data["secondFactor"],
+        })
     }
 
     handleLoginPasswordErrored(errorData) {
@@ -41,6 +62,20 @@ class LoginStore {
             authenticationLevel: null,
             secondFactorType: null,
             errorMessage: "Could not verify username and password",
+        })
+    }
+
+    handleBeginSms() {
+        console.log("We are about to send the text message");
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().beginSmsVerification();
+        }
+    }
+
+    handleBeginSmsCompleted(axiosResponse) {
+        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        this.setState({
+            phoneNumber: axiosResponse.data["last_phone_number_digits"]
         })
     }
 

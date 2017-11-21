@@ -1,6 +1,6 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import * as F from "react-foundation";
+import { Button } from "react-foundation";
 
 import "./TwoFactorSelection.scss";
 
@@ -8,9 +8,9 @@ class TwoFactorSelection extends React.Component {
 
     TwoFactorButton = ({displayText, onClick}) => {
         return (
-            <F.Button className="TwoFactorButton" onClick={onClick}>
+            <Button className="TwoFactorButton" onClick={onClick}>
                 { displayText }
-            </F.Button>
+            </Button>
         )
     }
 
