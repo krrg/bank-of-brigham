@@ -49,4 +49,15 @@ export const LoginSource = {
         error: LoginActions.beginSmsErrored,
     },
 
+    loginBackupCode: {
+        remote(state, verificationCode) {
+            return axios.post(`${host}/codes/verify`, {
+                code: verificationCode
+            })
+        },
+
+        success: LoginActions.loginBackupCodeCompleted,
+        error: LoginActions.loginBackupCodeErrored,
+    },
+
 }

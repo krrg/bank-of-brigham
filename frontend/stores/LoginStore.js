@@ -27,6 +27,10 @@ class LoginStore {
 
         this.bindAction(LoginActions.beginSms, this.handleBeginSms);
         this.bindAction(LoginActions.beginSmsCompleted, this.handleBeginSmsCompleted);
+
+        this.bindAction(LoginActions.loginBackupCode, this.handleLoginBackupCode);
+        this.bindAction(LoginActions.loginBackupCodeCompleted, this.handleLoginBackupCodeCompleted);
+        this.bindAction(LoginActions.loginBackupCodeErrored, this.handleLoginBackupCodeErrored);
     }
 
     handleLogout = () => {
@@ -66,40 +70,57 @@ class LoginStore {
     }
 
     handleBeginSms() {
-        console.log("We are about to send the text message");
         if (! this.getInstance().isLoading()) {
             this.getInstance().beginSmsVerification();
         }
     }
 
     handleBeginSmsCompleted(axiosResponse) {
-        console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         this.setState({
             phoneNumber: axiosResponse.data["last_phone_number_digits"]
         })
     }
 
+    setFullAuthenticationState() {
+        this.setState({
+            "authenticationLevel": "full"
+        })
+    }
+
+    setErrorMessageState(errorMessage) {
+        this.setState({
+            "errorMessage": errorMessage,
+        })
+    }
+
     handleLoginSms(dispatchedData) {
         const verificationCode = dispatchedData;
-
-        console.log("verification code: ", verificationCode);
-
         if (! this.getInstance().isLoading()) {
             this.getInstance().loginSms(verificationCode);
         }
     }
 
     handleLoginSmsCompleted(axiosResponse) {
-        console.log("We have completed with ", axiosResponse.data);
-        this.setState({
-            "authenticationLevel": "full"
-        })
+        this.setFullAuthenticationState();
     }
 
     handleLoginSmsErrored(axiosError) {
-        this.setState({
-            "errorMessage": "Unable to verify code"
-        })
+        this.setErrorMessageState("Unable to verify code");
+    }
+
+    handleLoginBackupCode(dispatchedData) {
+        const verificationCode = dispatchedData;
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().loginBackupCode(verificationCode);
+        }
+    }
+
+    handleLoginBackupCodeCompleted(axiosResult) {
+        this.setFullAuthenticationState();
+    }
+
+    handleLoginBackupCodeErrored(axiosError) {
+        this.setErrorMessageState("Unable to verify code");
     }
 
 }

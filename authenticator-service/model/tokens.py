@@ -32,3 +32,13 @@ class Tokens(object):
             if match is not None:
                 return match["token"]
         return None;
+
+
+class MultiTokens(Tokens):
+
+    async def verify_and_remove_token_for(self, username, code):
+        original_document = await self.perm_tokens.find_one_and_update({"username": username}, {"$pull": {
+            "token": code
+        }})
+
+        return original_document is not None and code in original_document["token"]

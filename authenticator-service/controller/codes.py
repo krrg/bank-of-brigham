@@ -13,7 +13,7 @@ async def ensure_mongo_connection(app, loop):
     accounts_model = model.accounts.Accounts()
     await accounts_model.before_start()
     global tokens_model
-    tokens_model = model.tokens.Tokens()
+    tokens_model = model.tokens.MultiTokens()
     await tokens_model.before_start()
 
 
@@ -58,13 +58,7 @@ class BackupCodeVerification(object):
 
     @staticmethod
     async def verify_backup_code(username, code):
-        code_list = await tokens_model.get_token_for(username)
-        if code in code_list:
-            code_list.remove(code)
-            await tokens_model.store_token_for(code_list)
-            return True
-        else:
-            return False
+        return await tokens_model.verify_and_remove_token_for(username, code)
 
     @staticmethod
     def generate_code(digits=8):

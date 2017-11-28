@@ -19,6 +19,10 @@ const LoginActions = AltInstance.generateActions(
     'loginSmsCompleted',
     'loginSmsErrored',
 
+    'loginBackupCode',
+    'loginBackupCodeCompleted',
+    'loginBackupCodeErrored',
+
 );
 
 export default LoginActions;

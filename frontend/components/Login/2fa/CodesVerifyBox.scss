@@ -1,0 +1,14 @@
+@import "clearfix.scss";
+
+.CodesVerifyBox {
+    @include clearfix();
+
+    .LoginButton {
+        float: right;
+    }
+
+    .__verificationForm {
+        width: 100%;
+    }
+
+}

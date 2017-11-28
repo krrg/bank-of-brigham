@@ -1,6 +1,8 @@
 import React from "react";
 import LoginActions from "../../actions/LoginActions";
 
+import "./Logout.scss";
+
 export default class Logout extends React.Component {
 
     componentDidMount() {
@@ -9,7 +11,7 @@ export default class Logout extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="Logout container">
                 <p>You have been logged out.</p>
             </div>
         )
