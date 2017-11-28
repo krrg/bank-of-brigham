@@ -1,0 +1,8 @@
+@import "container.scss";
+@import "shadowed.scss";
+
+.CodesSignup {
+    .__content {
+        @extend .content-container;
+    }
+}

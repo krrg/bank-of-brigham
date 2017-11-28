@@ -19,6 +19,10 @@ class SignupStore {
         this.bindAction(SignupActions.postSignupSms, this.handlePostSignupSms);
         this.bindAction(SignupActions.postSignupSmsCompleted, this.handlePostSignupSmsCompleted);
         this.bindAction(SignupActions.postSignupSmsErrored, this.handlePostSignupSmsErrored);
+
+        this.bindAction(SignupActions.postSignupBackupCodes, this.handlePostSignupBackupCodes);
+        this.bindAction(SignupActions.postSignupBackupCodesCompleted, this.handlePostSignupBackupCodesCompleted);
+        this.bindAction(SignupActions.postSignupBackupCodesErrored, this.handlePostSignupBackupCodesErrored);
     }
 
     handlePostSignup(data) {
@@ -70,6 +74,23 @@ class SignupStore {
     handlePostSignupSmsErrored(axiosError) {
         this.resetErrors();
         this.addError("invalidPhoneNumber");
+    }
+
+    handlePostSignupBackupCodes() {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().enableBackupCodes();
+        }
+    }
+
+    handlePostSignupBackupCodesCompleted(axiosResult) {
+        const backupCodes = axiosResult.data["codes"];
+        this.setState({
+            backupCodes: backupCodes,
+        })
+    }
+
+    handlePostSignupBackupCodesErrored(axiosResult) {
+
     }
 
     resetErrors() {

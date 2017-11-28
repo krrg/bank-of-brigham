@@ -4,38 +4,44 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-AccountAlreadyExistsException	../model/accounts.py	/^class AccountAlreadyExistsException(Exception):$/;"	kind:class	line:69
-Accounts	../controller/accounts.py	/^Accounts = sanic.Blueprint("accounts", url_prefix="\/api")$/;"	kind:variable	line:5
+AccountAlreadyExistsException	../model/accounts.py	/^class AccountAlreadyExistsException(Exception):$/;"	kind:class	line:83
+Accounts	../controller/accounts.py	/^Accounts = sanic.Blueprint("accounts", url_prefix="\/api")$/;"	kind:variable	line:7
 Accounts	../main.py	/^from controller.accounts import Accounts$/;"	kind:namespace	line:11
 Accounts	../model/accounts.py	/^class Accounts(object):$/;"	kind:class	line:7
-AsyncTwilioClient	../apiclients/twilio.py	/^class AsyncTwilioClient(object):$/;"	kind:class	line:11
+AsyncTwilioClient	../apiclients/twilio.py	/^class AsyncTwilioClient(object):$/;"	kind:class	line:12
 ConnectionPoolInitializer	../apiclients/aiohttpclient.py	/^ConnectionPoolInitializer = sanic.blueprints.Blueprint('aiohttpclient')$/;"	kind:variable	line:5
 ConnectionPoolInitializer	../db/cxpool.py	/^ConnectionPoolInitializer = sanic.blueprints.Blueprint('cxpool')$/;"	kind:variable	line:5
 DbCxPoolInit	../main.py	/^from db.cxpool import ConnectionPoolInitializer as DbCxPoolInit$/;"	kind:namespace	line:4
 HttpCxPoolInit	../main.py	/^from apiclients.aiohttpclient import ConnectionPoolInitializer as  HttpCxPoolInit$/;"	kind:namespace	line:5
-JWT_ALGORITHM	../controller/accounts.py	/^    JWT_ALGORITHM = "HS256"$/;"	kind:variable	line:66
-JWT_SECRET	../settings.py	/^JWT_SECRET = os.environ.get("JWT_SECRET", None)$/;"	kind:variable	line:48
+InvalidPhoneNumberError	../apiclients/twilio.py	/^class InvalidPhoneNumberError(RuntimeError):$/;"	kind:class	line:38
+JWT_ALGORITHM	../controller/session.py	/^    JWT_ALGORITHM = "HS256"$/;"	kind:variable	line:7
 MONGO_HOST	../settings.py	/^MONGO_HOST = os.environ.get("MONGO_HOST", "localhost")$/;"	kind:variable	line:46
 MONGO_PORT	../settings.py	/^MONGO_PORT = os.environ.get("MONGO_PORT", 27017)$/;"	kind:variable	line:47
-PasswordHashingHelpers	../model/accounts.py	/^class PasswordHashingHelpers(object):$/;"	kind:class	line:54
+PasswordHashingHelpers	../model/accounts.py	/^class PasswordHashingHelpers(object):$/;"	kind:class	line:68
 Sanic	../main.py	/^from sanic import Sanic$/;"	kind:namespace	line:1
-Session	../controller/accounts.py	/^class Session(object):$/;"	kind:class	line:64
-Sms	../controller/sms.py	/^Sms = sanic.Blueprint("sms", url_prefix="\/api\/sms")$/;"	kind:variable	line:5
+Session	../controller/__init__.py	/^from controller.session import Session$/;"	kind:namespace	line:3
+Session	../controller/accounts.py	/^from controller.session import Session$/;"	kind:namespace	line:4
+Session	../controller/session.py	/^class Session(object):$/;"	kind:class	line:5
+Sms	../controller/sms.py	/^Sms = sanic.Blueprint("sms", url_prefix="\/api\/sms")$/;"	kind:variable	line:9
 Sms	../main.py	/^from controller.sms import Sms$/;"	kind:namespace	line:12
+SmsVerification	../controller/sms.py	/^class SmsVerification(object):$/;"	kind:class	line:92
 TWILIO_ACCOUNT_SID	../apiclients/twilio.py	/^TWILIO_ACCOUNT_SID = settings.secrets["TWILIO_ACCOUNT_SID"]$/;"	kind:variable	line:5
 TWILIO_AUTH_TOKEN	../apiclients/twilio.py	/^TWILIO_AUTH_TOKEN = settings.secrets["TWILIO_AUTH_TOKEN"]$/;"	kind:variable	line:6
 TWILIO_PHONE_NUMBER	../apiclients/twilio.py	/^TWILIO_PHONE_NUMBER = settings.secrets["TWILIO_PHONE_NUMBER"]$/;"	kind:variable	line:7
-__decode__	../controller/accounts.py	/^    def __decode__(raw_jwt):$/;"	kind:member	line:109
-__encode__	../controller/accounts.py	/^    def __encode__(claims):$/;"	kind:member	line:98
-__init__	../apiclients/twilio.py	/^    def __init__(self):$/;"	kind:member	line:13
-__init__	../controller/accounts.py	/^    def __init__(self, raw_jwt):$/;"	kind:member	line:68
+Tokens	../model/tokens.py	/^class Tokens(object):$/;"	kind:class	line:3
+__decode__	../controller/session.py	/^    def __decode__(raw_jwt):$/;"	kind:member	line:52
+__encode__	../controller/session.py	/^    def __encode__(claims):$/;"	kind:member	line:41
+__init__	../apiclients/twilio.py	/^    def __init__(self):$/;"	kind:member	line:14
+__init__	../controller/session.py	/^    def __init__(self, raw_jwt=None):$/;"	kind:member	line:9
 __init__	../model/accounts.py	/^    def __init__(self):$/;"	kind:member	line:9
+__init__	../model/tokens.py	/^    def __init__(self):$/;"	kind:member	line:5
 __init__.py	../apiclients/__init__.py	1;"	kind:file	line:1
 __init__.py	../controller/__init__.py	1;"	kind:file	line:1
 __init__.py	../db/__init__.py	1;"	kind:file	line:1
 __init__.py	../model/__init__.py	1;"	kind:file	line:1
 __main__	../migrate.py	/^import db.migrations.__main__$/;"	kind:namespace	line:1
-accounts	../controller/accounts.py	/^import model.accounts$/;"	kind:namespace	line:7
+accounts	../controller/accounts.py	/^import model.accounts$/;"	kind:namespace	line:9
+accounts	../controller/sms.py	/^import model.accounts$/;"	kind:namespace	line:5
 accounts.py	../controller/accounts.py	1;"	kind:file	line:1
 accounts.py	../model/accounts.py	1;"	kind:file	line:1
 aiohttp	../apiclients/aiohttpclient.py	/^import aiohttp$/;"	kind:namespace	line:3
@@ -46,36 +52,59 @@ apiclients	../apiclients/twilio.py	/^import apiclients.aiohttpclient$/;"	kind:na
 apiclients	../controller/sms.py	/^import apiclients.twilio$/;"	kind:namespace	line:3
 apiclients	../main.py	/^import apiclients.twilio$/;"	kind:namespace	line:17
 app	../main.py	/^app = Sanic()$/;"	kind:variable	line:7
-attach_to_response	../controller/accounts.py	/^    def attach_to_response(self, response):$/;"	kind:member	line:94
+attach_to_response	../controller/session.py	/^    def attach_to_response(self, response):$/;"	kind:member	line:35
 base64	../settings.py	/^import base64$/;"	kind:namespace	line:3
 baseurl	../apiclients/twilio.py	/^baseurl = f"https:\/\/{TWILIO_ACCOUNT_SID}:{TWILIO_AUTH_TOKEN}@api.twilio.com\/2010-04-01"$/;"	kind:variable	line:9
 before_start	../model/accounts.py	/^    async def before_start(self):$/;"	kind:member	line:12
+before_start	../model/tokens.py	/^    async def before_start(self):$/;"	kind:member	line:9
+begin_verification	../controller/sms.py	/^    async def begin_verification(username, phone_number):$/;"	kind:member	line:95
 blueprints	../apiclients/aiohttpclient.py	/^import sanic.blueprints$/;"	kind:namespace	line:2
 blueprints	../db/cxpool.py	/^import sanic.blueprints$/;"	kind:namespace	line:2
+complete_verification	../controller/sms.py	/^    async def complete_verification(username, unverified_code):$/;"	kind:member	line:103
+controller	../controller/accounts.py	/^import controller$/;"	kind:namespace	line:3
+controller	../controller/sms.py	/^import controller$/;"	kind:namespace	line:4
 create_new_account	../model/accounts.py	/^    async def create_new_account(self, username, password):$/;"	kind:member	line:15
-create_session	../controller/accounts.py	/^    def create_session(claims):$/;"	kind:member	line:121
+create_session	../controller/session.py	/^    def create_session():$/;"	kind:member	line:64
 cxpool	../model/accounts.py	/^import db.cxpool$/;"	kind:namespace	line:3
+cxpool	../model/tokens.py	/^import db.cxpool$/;"	kind:namespace	line:2
 cxpool.py	../db/cxpool.py	1;"	kind:file	line:1
 datetime	../model/accounts.py	/^import datetime$/;"	kind:namespace	line:5
+datetime	../model/tokens.py	/^import datetime$/;"	kind:namespace	line:1
 db	../migrate.py	/^import db.migrations.__main__$/;"	kind:namespace	line:1
 db	../model/accounts.py	/^import db.cxpool$/;"	kind:namespace	line:3
-ensure_http_client	../controller/sms.py	/^async def ensure_http_client(app, loop):$/;"	kind:function	line:9
-ensure_mongo_connection	../controller/accounts.py	/^async def ensure_mongo_connection(app, loop):$/;"	kind:function	line:10
-from_request	../controller/accounts.py	/^    def from_request(request):$/;"	kind:member	line:117
+db	../model/tokens.py	/^import db.cxpool$/;"	kind:namespace	line:2
+decorated_function	../controller/__init__.py	/^    async def decorated_function(request, *args, **kwargs):$/;"	kind:function	line:14
+decorated_function	../controller/__init__.py	/^    async def decorated_function(request, *args, **kwargs):$/;"	kind:function	line:29
+ensure_http_client	../controller/sms.py	/^async def ensure_http_client(app, loop):$/;"	kind:function	line:13
+ensure_mongo_connection	../controller/accounts.py	/^async def ensure_mongo_connection(app, loop):$/;"	kind:function	line:12
+ensure_mongo_connection	../controller/sms.py	/^async def ensure_mongo_connection(app, loop):$/;"	kind:function	line:19
+from_claims	../controller/session.py	/^    def from_claims(claims):$/;"	kind:member	line:68
+from_request	../controller/session.py	/^    def from_request(request):$/;"	kind:member	line:60
+functools	../controller/__init__.py	/^import functools$/;"	kind:namespace	line:1
 generate_b64_secret	../settings.py	/^def generate_b64_secret(config_obj, key):$/;"	kind:function	line:12
-get_2fa_required	../model/accounts.py	/^    async def get_2fa_required(self, username):$/;"	kind:member	line:41
+generate_code	../controller/sms.py	/^    def generate_code(digits=6):$/;"	kind:member	line:115
+generate_message	../controller/sms.py	/^    def generate_message(code):$/;"	kind:member	line:111
+get_2fa_metadata	../model/accounts.py	/^    async def get_2fa_metadata(self, username):$/;"	kind:member	line:48
+get_2fa_method	../model/accounts.py	/^    async def get_2fa_method(self, username):$/;"	kind:member	line:41
 get_config_value	../settings.py	/^def get_config_value(config_obj, key):$/;"	kind:function	line:6
-handle_create_account	../controller/accounts.py	/^async def handle_create_account(request):$/;"	kind:function	line:42
+get_token_for	../model/tokens.py	/^    async def get_token_for(self, username):$/;"	kind:member	line:26
+handle_begin_verify_sms_2fa	../controller/sms.py	/^async def handle_begin_verify_sms_2fa(request, session_claims=None, **kwargs):$/;"	kind:function	line:55
+handle_create_account	../controller/accounts.py	/^async def handle_create_account(request):$/;"	kind:function	line:47
+handle_enable_sms_2fa	../controller/sms.py	/^async def handle_enable_sms_2fa(request, session_claims=None, **kwargs):$/;"	kind:function	line:30
+handle_logout	../controller/accounts.py	/^async def handle_logout(request):$/;"	kind:function	line:66
 handle_root	../main.py	/^async def handle_root(request):$/;"	kind:function	line:20
-handle_test	../controller/sms.py	/^async def handle_test(request):$/;"	kind:function	line:14
-handle_verify_password	../controller/accounts.py	/^async def handle_verify_password(request):$/;"	kind:function	line:54
-hash_and_salt_password	../model/accounts.py	/^    def hash_and_salt_password(password):$/;"	kind:member	line:57
-insert_claims	../controller/accounts.py	/^    def insert_claims(self, claims):$/;"	kind:member	line:89
-is_valid	../controller/accounts.py	/^    def is_valid(self):$/;"	kind:member	line:78
-jose	../controller/accounts.py	/^import jose.jwt$/;"	kind:namespace	line:61
+handle_verify_password	../controller/accounts.py	/^async def handle_verify_password(request):$/;"	kind:function	line:59
+handle_verify_sms_2fa	../controller/sms.py	/^async def handle_verify_sms_2fa(request, session_claims=None, **kwargs):$/;"	kind:function	line:72
+hash_and_salt_password	../model/accounts.py	/^    def hash_and_salt_password(password):$/;"	kind:member	line:71
+hashlib	../controller/sms.py	/^import hashlib$/;"	kind:namespace	line:90
+insert_claims	../controller/session.py	/^    def insert_claims(self, claims):$/;"	kind:member	line:30
+is_valid	../controller/session.py	/^    def is_valid(self):$/;"	kind:member	line:19
+jose	../controller/session.py	/^import jose.jwt$/;"	kind:namespace	line:2
 json	../main.py	/^from sanic.response import json$/;"	kind:namespace	line:2
-jwt	../controller/accounts.py	/^import jose.jwt$/;"	kind:namespace	line:61
-login_user	../controller/accounts.py	/^async def login_user(username, password):$/;"	kind:function	line:16
+jwt	../controller/session.py	/^import jose.jwt$/;"	kind:namespace	line:2
+login_user	../controller/accounts.py	/^async def login_user(username, password):$/;"	kind:function	line:18
+lookup_phone_number	../apiclients/twilio.py	/^    async def lookup_phone_number(self, phone_number):$/;"	kind:member	line:29
+lookupurl	../apiclients/twilio.py	/^lookupurl = f"https:\/\/{TWILIO_ACCOUNT_SID}:{TWILIO_AUTH_TOKEN}@lookups.twilio.com\/v1"$/;"	kind:variable	line:10
 main.py	../main.py	1;"	kind:file	line:1
 manually_setup_cxpool	../db/cxpool.py	/^async def manually_setup_cxpool():$/;"	kind:function	line:7
 manually_setup_httpclient	../apiclients/aiohttpclient.py	/^async def manually_setup_httpclient():$/;"	kind:function	line:7
@@ -83,44 +112,56 @@ manually_teardown_cxpool	../db/cxpool.py	/^async def manually_teardown_cxpool():
 manually_teardown_httpclient	../apiclients/aiohttpclient.py	/^async def manually_teardown_httpclient():$/;"	kind:function	line:12
 migrate.py	../migrate.py	1;"	kind:file	line:1
 migrations	../migrate.py	/^import db.migrations.__main__$/;"	kind:namespace	line:1
-model	../controller/accounts.py	/^import model.accounts$/;"	kind:namespace	line:7
+model	../controller/accounts.py	/^import model.accounts$/;"	kind:namespace	line:9
+model	../controller/sms.py	/^import model.accounts$/;"	kind:namespace	line:5
+model	../controller/sms.py	/^import model.tokens$/;"	kind:namespace	line:6
 motor	../db/cxpool.py	/^import motor.motor_asyncio$/;"	kind:namespace	line:3
 motor_asyncio	../db/cxpool.py	/^import motor.motor_asyncio$/;"	kind:namespace	line:3
-nacl	../model/accounts.py	/^import nacl$/;"	kind:namespace	line:51
-nacl	../model/accounts.py	/^import nacl.pwhash$/;"	kind:namespace	line:52
+nacl	../model/accounts.py	/^import nacl$/;"	kind:namespace	line:65
+nacl	../model/accounts.py	/^import nacl.pwhash$/;"	kind:namespace	line:66
 os	../settings.py	/^import os$/;"	kind:namespace	line:1
 os	../settings.py	/^import os.path$/;"	kind:namespace	line:2
-overwrite_claims	../controller/accounts.py	/^    def overwrite_claims(self, claims):$/;"	kind:member	line:84
+overwrite_claims	../controller/session.py	/^    def overwrite_claims(self, claims):$/;"	kind:member	line:25
 path	../settings.py	/^import os.path$/;"	kind:namespace	line:2
-push_message	../apiclients/twilio.py	/^    async def push_message(self, to, message):$/;"	kind:member	line:16
-pwhash	../model/accounts.py	/^import nacl.pwhash$/;"	kind:namespace	line:52
+push_message	../apiclients/twilio.py	/^    async def push_message(self, to, message):$/;"	kind:member	line:17
+pwhash	../model/accounts.py	/^import nacl.pwhash$/;"	kind:namespace	line:66
 pymongo	../model/accounts.py	/^import pymongo$/;"	kind:namespace	line:4
-read_claims	../controller/accounts.py	/^    def read_claims(self):$/;"	kind:member	line:81
+read_claims	../controller/session.py	/^    def read_claims(self):$/;"	kind:member	line:22
 read_stored_secrets	../settings.py	/^def read_stored_secrets(input_keys=None, generated_keys=None):$/;"	kind:function	line:19
+register_2fa_method	../model/accounts.py	/^    async def register_2fa_method(self, username, _2fa, _2fa_metadata):$/;"	kind:member	line:54
+require_full_authentication	../controller/__init__.py	/^def require_full_authentication(route):$/;"	kind:function	line:26
+require_password	../controller/__init__.py	/^def require_password(route):$/;"	kind:function	line:11
+response	../controller/__init__.py	/^import sanic.response$/;"	kind:namespace	line:2
 response	../controller/accounts.py	/^import sanic.response$/;"	kind:namespace	line:2
 response	../controller/sms.py	/^import sanic.response$/;"	kind:namespace	line:2
 sanic	../apiclients/aiohttpclient.py	/^import sanic.blueprints$/;"	kind:namespace	line:2
+sanic	../controller/__init__.py	/^import sanic.response$/;"	kind:namespace	line:2
 sanic	../controller/accounts.py	/^import sanic$/;"	kind:namespace	line:1
 sanic	../controller/accounts.py	/^import sanic.response$/;"	kind:namespace	line:2
 sanic	../controller/sms.py	/^import sanic$/;"	kind:namespace	line:1
 sanic	../controller/sms.py	/^import sanic.response$/;"	kind:namespace	line:2
 sanic	../db/cxpool.py	/^import sanic.blueprints$/;"	kind:namespace	line:2
-secrets	../settings.py	/^secrets = read_stored_secrets(input_keys=[$/;"	kind:variable	line:50
+secrets	../controller/sms.py	/^import secrets$/;"	kind:namespace	line:89
+secrets	../settings.py	/^secrets = read_stored_secrets(input_keys=[$/;"	kind:variable	line:49
+session.py	../controller/session.py	1;"	kind:file	line:1
 settings	../apiclients/aiohttpclient.py	/^import settings$/;"	kind:namespace	line:1
 settings	../apiclients/twilio.py	/^import settings$/;"	kind:namespace	line:1
-settings	../controller/accounts.py	/^import settings$/;"	kind:namespace	line:3
+settings	../controller/session.py	/^import settings$/;"	kind:namespace	line:1
 settings	../db/cxpool.py	/^import settings$/;"	kind:namespace	line:1
 settings	../model/accounts.py	/^import settings$/;"	kind:namespace	line:2
 settings.py	../settings.py	1;"	kind:file	line:1
 setup_cxpool	../apiclients/aiohttpclient.py	/^async def setup_cxpool(app, loop):$/;"	kind:function	line:17
 setup_cxpool	../db/cxpool.py	/^async def setup_cxpool(app, loop):$/;"	kind:function	line:15
 sms.py	../controller/sms.py	1;"	kind:file	line:1
+store_token_for	../model/tokens.py	/^    async def store_token_for(self, username, token, expiring=False):$/;"	kind:member	line:14
 teardown_cxpool	../apiclients/aiohttpclient.py	/^async def teardown_cxpool(app, loop):$/;"	kind:function	line:21
 teardown_cxpool	../db/cxpool.py	/^async def teardown_cxpool(app, loop):$/;"	kind:function	line:19
-time	../controller/accounts.py	/^import time$/;"	kind:namespace	line:62
+time	../controller/session.py	/^import time$/;"	kind:namespace	line:3
+tokens	../controller/sms.py	/^import model.tokens$/;"	kind:namespace	line:6
+tokens.py	../model/tokens.py	1;"	kind:file	line:1
 twilio	../controller/sms.py	/^import apiclients.twilio$/;"	kind:namespace	line:3
 twilio	../main.py	/^import apiclients.twilio$/;"	kind:namespace	line:17
 twilio.py	../apiclients/twilio.py	1;"	kind:file	line:1
 verify_password	../model/accounts.py	/^    async def verify_password(self, username, password):$/;"	kind:member	line:31
-verify_password	../model/accounts.py	/^    def verify_password(stored_entry, to_verify):$/;"	kind:member	line:61
+verify_password	../model/accounts.py	/^    def verify_password(stored_entry, to_verify):$/;"	kind:member	line:75
 yaml	../settings.py	/^import yaml$/;"	kind:namespace	line:4

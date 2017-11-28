@@ -87,7 +87,6 @@ async def handle_verify_sms_2fa(request, session_claims=None, **kwargs):
 
 
 import secrets
-import hashlib
 
 class SmsVerification(object):
 

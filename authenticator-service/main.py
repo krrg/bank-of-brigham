@@ -10,9 +10,11 @@ app.blueprint(HttpCxPoolInit)
 
 from controller.accounts import Accounts
 from controller.sms import Sms
+from controller.codes import Codes
 
 app.blueprint(Accounts)
 app.blueprint(Sms)
+app.blueprint(Codes)
 
 import apiclients.twilio
 

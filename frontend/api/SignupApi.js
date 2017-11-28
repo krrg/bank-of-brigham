@@ -27,6 +27,15 @@ export const SignupSource = {
 
         success: SignupActions.postSignupSmsCompleted,
         error: SignupActions.postSignupSmsErrored,
-    }
+    },
+
+    enableBackupCodes: {
+        remote(state) {
+            return axios.post(`${host}/codes/enable`)
+        },
+
+        success: SignupActions.postSignupBackupCodesCompleted,
+        error: SignupActions.postSignupBackupCodesErrored,
+    },
 
 }

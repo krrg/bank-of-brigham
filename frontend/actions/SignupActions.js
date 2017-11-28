@@ -9,6 +9,10 @@ const SignupActions = AltInstance.generateActions(
     'postSignupSmsCompleted',
     'postSignupSmsErrored',
 
+    'postSignupBackupCodes',
+    'postSignupBackupCodesCompleted',
+    'postSignupBackupCodesErrored',
+
 );
 
 export default SignupActions;
