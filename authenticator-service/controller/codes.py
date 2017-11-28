@@ -73,6 +73,6 @@ class BackupCodeVerification(object):
         ])
 
     @staticmethod
-    def generate_code_list(length=10):
+    def generate_code_list(length=12):
         return [BackupCodeVerification.generate_code() for i in range(length)]
 

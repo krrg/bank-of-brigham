@@ -1,8 +1,48 @@
 @import "container.scss";
 @import "shadowed.scss";
+@import "flash.scss";
+@import "clearfix.scss";
 
 .CodesSignup {
     .__content {
         @extend .content-container;
+        @include clearfix();
+    }
+
+    .__textKeepSafe {
+        @extend .flash;
+        @media print {
+            padding: 2em;
+        }
+    }
+
+    .__centerContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .CodesList {
+        display: flex;
+        flex-direction: row;
+        flex-flow: wrap;
+
+        padding: 1em;
+        border: 1px solid #777;
+        width: 24em;
+        list-style: none;
+        font-size: 18pt;
+        
+        li {
+            width: 50%;
+            text-align: center;
+        }
+    }
+
+    .btnNext {
+        float: right;
+        @media print {
+            display: none;
+        }
     }
 }

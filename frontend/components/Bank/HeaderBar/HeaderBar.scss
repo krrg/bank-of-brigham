@@ -3,6 +3,18 @@
 @import "shadowed.scss";
 
 .HeaderBar {
+
+    @media print {
+        margin-top: 2em;
+
+        .__logo {
+            img {
+                filter: invert(100%);
+            }
+            color: black;
+        }
+    }
+
     background-color: $darkBackground;
     @include shadowed-subtle();
 

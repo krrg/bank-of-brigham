@@ -19,7 +19,12 @@ export default class SmsVerifyBox extends React.Component {
 
     render() {
         if (! this.props.digits) {
-            return <LoadingSpinner />
+            return (
+                <span>
+                    No digits here
+                    <LoadingSpinner />
+                </span>
+            )
         }
 
         return (

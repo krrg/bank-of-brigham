@@ -1,0 +1,10 @@
+@import "shadowed.scss";
+
+.flash {
+    // @include shadowed-subtle();
+
+    padding: 1em;
+    background-color: whitesmoke;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
