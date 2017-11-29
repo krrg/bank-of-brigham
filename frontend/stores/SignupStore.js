@@ -12,20 +12,25 @@ class SignupStore {
         }
 
         this.registerAsync(SignupSource);
-        this.bindAction(SignupActions.postSignup, this.handlePostSignup);
-        this.bindAction(SignupActions.postSignupCompleted, this.handlePostSignupCompleted);
-        this.bindAction(SignupActions.postSignupErrored, this.handlePostSignupErrored);
+        this.bindAction(SignupActions.signup, this.handleSignup);
+        this.bindAction(SignupActions.signupCompleted, this.handleSignupCompleted);
+        this.bindAction(SignupActions.signupErrored, this.handleSignupErrored);
 
-        this.bindAction(SignupActions.postSignupSms, this.handlePostSignupSms);
-        this.bindAction(SignupActions.postSignupSmsCompleted, this.handlePostSignupSmsCompleted);
-        this.bindAction(SignupActions.postSignupSmsErrored, this.handlePostSignupSmsErrored);
+        this.bindAction(SignupActions.signupSms, this.handleSignupSms);
+        this.bindAction(SignupActions.signupSmsCompleted, this.handleSignupSmsCompleted);
+        this.bindAction(SignupActions.signupSmsErrored, this.handleSignupSmsErrored);
 
-        this.bindAction(SignupActions.postSignupBackupCodes, this.handlePostSignupBackupCodes);
-        this.bindAction(SignupActions.postSignupBackupCodesCompleted, this.handlePostSignupBackupCodesCompleted);
-        this.bindAction(SignupActions.postSignupBackupCodesErrored, this.handlePostSignupBackupCodesErrored);
+        this.bindAction(SignupActions.signupBackupCodes, this.handleSignupBackupCodes);
+        this.bindAction(SignupActions.signupBackupCodesCompleted, this.handleSignupBackupCodesCompleted);
+        this.bindAction(SignupActions.signupBackupCodesErrored, this.handleSignupBackupCodesErrored);
+
+        this.bindAction(SignupActions.signupTotp, this.handleSignupTotp);
+        this.bindAction(SignupActions.signupTotpCompleted, this.handleSignupTotpCompleted);
+        this.bindAction(SignupActions.signupTotpErrored, this.handleSignupTotpErrored);
+
     }
 
-    handlePostSignup(data) {
+    handleSignup(data) {
         const username = data[0];
         const password = data[1];
 
@@ -36,7 +41,7 @@ class SignupStore {
         }
     }
 
-    handlePostSignupCompleted(axiosResult) {
+    handleSignupCompleted(axiosResult) {
         this.resetErrors();
 
         this.setState({
@@ -45,7 +50,7 @@ class SignupStore {
 
     }
 
-    handlePostSignupErrored(axiosResult) {
+    handleSignupErrored(axiosResult) {
         this.resetErrors();
         if (axiosResult.response.status === 409 /* Conflict */) {
             this.addError("usernameAlreadyTaken");
@@ -53,7 +58,7 @@ class SignupStore {
         }
     }
 
-    handlePostSignupSms(phoneNumber) {
+    handleSignupSms(phoneNumber) {
         this.resetErrors();
         this.setState({
             readyForSmsVerificationCode: false,
@@ -63,7 +68,7 @@ class SignupStore {
         }
     }
 
-    handlePostSignupSmsCompleted(axiosResult) {
+    handleSignupSmsCompleted(axiosResult) {
         this.resetErrors();
         this.setState({
             readyForSmsVerificationCode: true,
@@ -71,26 +76,45 @@ class SignupStore {
         })
     }
 
-    handlePostSignupSmsErrored(axiosError) {
+    handleSignupSmsErrored(axiosError) {
         this.resetErrors();
         this.addError("invalidPhoneNumber");
     }
 
-    handlePostSignupBackupCodes() {
+    handleSignupBackupCodes() {
         if (! this.getInstance().isLoading()) {
             this.getInstance().enableBackupCodes();
         }
     }
 
-    handlePostSignupBackupCodesCompleted(axiosResult) {
+    handleSignupBackupCodesCompleted(axiosResult) {
         const backupCodes = axiosResult.data["codes"];
         this.setState({
             backupCodes: backupCodes,
         })
     }
 
-    handlePostSignupBackupCodesErrored(axiosResult) {
+    handleSignupBackupCodesErrored(axiosResult) {
+        console.error("Could not sign up for backup codes...");
+    }
 
+    handleSignupTotp() {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().enableTotp();
+        }
+    }
+
+    handleSignupTotpCompleted(axiosResult) {
+        const totpProvisioningUri = axiosResult.data["totp_uri"];
+        const totpSecret = axiosResult.data["totp_secret"];
+        this.setState({
+            totpProvisioningUri: totpProvisioningUri,
+            totpSecret: totpSecret,
+        })
+    }
+
+    handleSignupTotpErrored() {
+        console.error("Unable to signup for TOTP");
     }
 
     resetErrors() {

@@ -13,6 +13,7 @@ import TwoFactorSelection from "./components/Signup/TwoFactorSelection";
 import SmsSignup from "./components/Signup/2fa/SmsSignup";
 import SmsSignupVerify from "./components/Signup/2fa/SmsSignupVerify";
 import CodesSignup from "./components/Signup/2fa/CodesSignup";
+import TotpSignup from "./components/Signup/2fa/TotpSignup";
 
 import "./index.scss";
 
@@ -36,6 +37,7 @@ const Index = () => {
                     <Route exact path="/create/3/sms" component={() => <SmsSignup />} />
                     <Route exact path="/create/4/sms" component={() => <SmsSignupVerify />} />
                     <Route exact path="/create/3/codes" component={() => <CodesSignup />} />
+                    <Route exact path="/create/3/totp" component={() => <TotpSignup />} />
                 </div>
                 <div>
                     <Route path="/bank" component={() => <HeaderBar />} />

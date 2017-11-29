@@ -1,17 +1,21 @@
 import AltInstance from "../alt";
 
 const SignupActions = AltInstance.generateActions(
-    'postSignup',
-    'postSignupCompleted',
-    'postSignupErrored',
+    'signup',
+    'signupCompleted',
+    'signupErrored',
 
-    'postSignupSms',
-    'postSignupSmsCompleted',
-    'postSignupSmsErrored',
+    'signupSms',
+    'signupSmsCompleted',
+    'signupSmsErrored',
 
-    'postSignupBackupCodes',
-    'postSignupBackupCodesCompleted',
-    'postSignupBackupCodesErrored',
+    'signupBackupCodes',
+    'signupBackupCodesCompleted',
+    'signupBackupCodesErrored',
+
+    'signupTotp',
+    'signupTotpCompleted',
+    'signupTotpErrored',
 
 );
 

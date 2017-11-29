@@ -21,7 +21,7 @@ export default class SmsVerifyBox extends React.Component {
         if (! this.props.digits) {
             return (
                 <span>
-                    No digits here
+                    Sending verification text message...
                     <LoadingSpinner />
                 </span>
             )

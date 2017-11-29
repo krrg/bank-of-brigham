@@ -77,7 +77,7 @@ class SignupUsernamePassword extends React.Component {
         }
 
         if (! errorState) {
-            SignupActions.postSignup(username, password1);
+            SignupActions.signup(username, password1);
         }
 
     }

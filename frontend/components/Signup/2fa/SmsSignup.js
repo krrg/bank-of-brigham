@@ -20,7 +20,7 @@ class SmsSignup extends React.Component {
 
     handlePhoneNumberRegister = (e) => {
         if (e) { e.preventDefault() }
-        SignupActions.postSignupSms(this.refs.phoneNumber.value);
+        SignupActions.signupSms(this.refs.phoneNumber.value);
         this.setState({
             waiting: true,
         })

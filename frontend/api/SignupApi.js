@@ -13,8 +13,8 @@ export const SignupSource = {
             })
         },
 
-        success: SignupActions.postSignupCompleted,
-        error: SignupActions.postSignupErrored,
+        success: SignupActions.signupCompleted,
+        error: SignupActions.signupErrored,
 
     },
 
@@ -25,8 +25,8 @@ export const SignupSource = {
             })
         },
 
-        success: SignupActions.postSignupSmsCompleted,
-        error: SignupActions.postSignupSmsErrored,
+        success: SignupActions.signupSmsCompleted,
+        error: SignupActions.signupSmsErrored,
     },
 
     enableBackupCodes: {
@@ -34,8 +34,17 @@ export const SignupSource = {
             return axios.post(`${host}/codes/enable`)
         },
 
-        success: SignupActions.postSignupBackupCodesCompleted,
-        error: SignupActions.postSignupBackupCodesErrored,
+        success: SignupActions.signupBackupCodesCompleted,
+        error: SignupActions.signupBackupCodesErrored,
     },
+
+    enableTotp: {
+        remote(state) {
+            return axios.post(`${host}/totp/enable`);
+        },
+
+        success: SignupActions.signupTotpCompleted,
+        error: SignupActions.signupTotpErrored,
+    }
 
 }

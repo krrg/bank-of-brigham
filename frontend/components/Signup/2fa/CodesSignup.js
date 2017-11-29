@@ -26,7 +26,7 @@ class CodesSignup extends React.Component {
 
     componentDidMount() {
         SignupStore.listen(this.handleSignupStoreUpdated);
-        SignupActions.postSignupBackupCodes();
+        SignupActions.signupBackupCodes();
     }
 
     componentWillUnmount() {
