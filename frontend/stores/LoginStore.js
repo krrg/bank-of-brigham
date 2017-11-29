@@ -38,6 +38,23 @@ class LoginStore {
 
     }
 
+    setFullAuthenticationState() {
+        this.setState({
+            "authenticationLevel": "full",
+            "errorMessage": null
+        })
+    }
+
+    setErrorMessageState(errorMessage) {
+        this.setState({
+            "errorMessage": errorMessage,
+        })
+    }
+
+    clearErrorMessageState() {
+        this.setErrorMessageState(null);
+    }
+
     handleLogout = () => {
         this.setState({
             authenticationLevel: null,
@@ -51,6 +68,8 @@ class LoginStore {
     }
 
     handleLoginPassword(dispatchedData) {
+        this.clearErrorMessageState();
+
         const username = dispatchedData[0];
         const password = dispatchedData[1];
 
@@ -60,6 +79,7 @@ class LoginStore {
     }
 
     handleLoginPasswordCompleted(axiosResponse) {
+        this.clearErrorMessageState();
         this.setState({
             "authenticationLevel": "password",
             "secondFactor": axiosResponse.data["secondFactor"],
@@ -75,27 +95,16 @@ class LoginStore {
     }
 
     handleBeginSms() {
+        this.clearErrorMessageState();
         if (! this.getInstance().isLoading()) {
             this.getInstance().beginSmsVerification();
         }
     }
 
     handleBeginSmsCompleted(axiosResponse) {
+        this.clearErrorMessageState();
         this.setState({
             phoneNumber: axiosResponse.data["last_phone_number_digits"]
-        })
-    }
-
-    setFullAuthenticationState() {
-        this.setState({
-            "authenticationLevel": "full"
-        })
-    }
-
-    setErrorMessageState(errorMessage) {
-        console.error(errorMessage);
-        this.setState({
-            "errorMessage": errorMessage,
         })
     }
 

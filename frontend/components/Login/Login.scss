@@ -1,5 +1,6 @@
 @import "colors.scss";
 @import "shadowed.scss";
+@import "clearfix.scss";
 
 .Login {
 
@@ -22,6 +23,10 @@
         margin-right: auto;
     }
 
+    .__loginForm {
+        @include clearfix();
+    }
+
     .Login__submit {
         float: right;
         width: 8em;
@@ -35,6 +40,8 @@
         justify-content: center;
 
         img {
+            width: 269px;
+            height: 284px;
             @media(max-width: 999px) {
                 display: none;
             }

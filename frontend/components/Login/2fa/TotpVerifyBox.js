@@ -5,6 +5,17 @@ import LoginStore from "../../../stores/LoginStore";
 import { Button } from "react-foundation";
 
 
+export const TotpVerifyBoxWrapper = () => {
+    return (
+        <div>
+            <h2>Verification Code</h2>
+            <TotpVerifyBox />
+        </div>
+    )
+}
+
+import "./TotpVerifyBox.scss";
+
 class TotpVerifyBox extends React.Component {
 
     constructor() {
@@ -46,8 +57,7 @@ class TotpVerifyBox extends React.Component {
         return (
             <div className="TotpVerifyBox">
                 <p>Please use your authenticator app to generate a six-digit code and enter it below:</p>
-                <form onSubmit={this.handleVerifyTotpCode}>
-                    <label>Verification code:</label>
+                <form className="__form" onSubmit={this.handleVerifyTotpCode}>
                     <input type="text" placeholder="000000" ref="code"/>
                     <Button type="submit">Submit</Button>
                 </form>
