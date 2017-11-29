@@ -19,7 +19,7 @@ export const LoginSource = {
             return axios.post(`${host}/accounts/verify_password`, {
                 username: username.trim().toLowerCase(),
                 password: password, /* Do not trim or lower case this */
-            })
+            });
         },
 
         success: LoginActions.loginPasswordCompleted,
@@ -32,7 +32,7 @@ export const LoginSource = {
         remote(state, verificationCode) {
             return axios.post(`${host}/sms/completeverify`, {
                 code: verificationCode,
-            })
+            });
         },
 
         success: LoginActions.loginSmsCompleted,
@@ -53,11 +53,22 @@ export const LoginSource = {
         remote(state, verificationCode) {
             return axios.post(`${host}/codes/verify`, {
                 code: verificationCode
-            })
+            });
         },
 
         success: LoginActions.loginBackupCodeCompleted,
         error: LoginActions.loginBackupCodeErrored,
     },
+
+    verifyTotp: {
+        remote(state, verificationCode) {
+            return axios.post(`${host}/totp/verify`, {
+                code: verificationCode
+            });
+        },
+
+        success: LoginActions.loginTotpCompleted,
+        error: LoginActions.loginTotpErrored,
+    }
 
 }

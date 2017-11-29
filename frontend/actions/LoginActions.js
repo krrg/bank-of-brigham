@@ -23,6 +23,10 @@ const LoginActions = AltInstance.generateActions(
     'loginBackupCodeCompleted',
     'loginBackupCodeErrored',
 
+    'loginTotp',
+    'loginTotpCompleted',
+    'loginTotpErrored',
+
 );
 
 export default LoginActions;

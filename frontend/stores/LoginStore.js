@@ -31,6 +31,11 @@ class LoginStore {
         this.bindAction(LoginActions.loginBackupCode, this.handleLoginBackupCode);
         this.bindAction(LoginActions.loginBackupCodeCompleted, this.handleLoginBackupCodeCompleted);
         this.bindAction(LoginActions.loginBackupCodeErrored, this.handleLoginBackupCodeErrored);
+
+        this.bindAction(LoginActions.loginTotp, this.handleLoginTotp);
+        this.bindAction(LoginActions.loginTotpCompleted, this.handleLoginTotpCompleted);
+        this.bindAction(LoginActions.loginTotpErrored, this.handleLoginTotpErrored);
+
     }
 
     handleLogout = () => {
@@ -88,6 +93,7 @@ class LoginStore {
     }
 
     setErrorMessageState(errorMessage) {
+        console.error(errorMessage);
         this.setState({
             "errorMessage": errorMessage,
         })
@@ -121,6 +127,20 @@ class LoginStore {
 
     handleLoginBackupCodeErrored(axiosError) {
         this.setErrorMessageState("Unable to verify code");
+    }
+
+    handleLoginTotp(code) {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().verifyTotp(code);
+        }
+    }
+
+    handleLoginTotpCompleted(axiosResult) {
+        this.setFullAuthenticationState();
+    }
+
+    handleLoginTotpErrored(axiosError) {
+        this.setErrorMessageState("Unable to verify OTP");
     }
 
 }

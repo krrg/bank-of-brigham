@@ -5,6 +5,7 @@ import SignupStore from "../../../stores/SignupStore";
 import SignupActions from "../../../actions/SignupActions";
 import LoadingSpinner from "../../LoadingSpinner";
 import QRCode from "qrcode.react";
+import TotpVerifyBox from "../../Login/2fa/TotpVerifyBox";
 
 
 import "./TotpSignup.scss";
@@ -46,9 +47,16 @@ class TotpSignup extends React.Component {
         })
     }
 
+    handleNextButtonQrCodeScannedClicked = (e) => {
+        if (e) { e.preventDefault(); }
+        this.setState({
+            qrCodeScanned: true
+        })
+    }
+
     renderPlayLink = () => {
         return (
-            <a className="__googlePlayLink" href='https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+            <a className="__googlePlayLink" target="blank" href='https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
                 <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
             </a>
         )
@@ -61,7 +69,7 @@ class TotpSignup extends React.Component {
                 <p>Download the <b>FreeOTP Authenticator</b> app to your Android device</p>
                 { this.renderPlayLink() }
                 { this.state.appDownloaded ? null :
-                     <Button className="nextButtonDownloaded" onClick={this.handleNextButtonDownloadedClicked}>Next</Button>
+                     <Button className="nextButton __downloaded" onClick={this.handleNextButtonDownloadedClicked}>Next</Button>
                 }
             </div>
         )
@@ -84,14 +92,18 @@ class TotpSignup extends React.Component {
                 <h3>Step 2</h3>
                 <p>Use the <b>FreeOTP Authenticator</b> app on your Android device to scan this QR code:</p>
                 { this.state.totpProvisioningUri ? this.renderQrCode() : <LoadingSpinner /> }
+                { this.state.qrCodeScanned ? null :
+                     <Button className="nextButton __qrCodeScanned" onClick={this.handleNextButtonQrCodeScannedClicked}>Next</Button>
+                }
             </div>
         )
     }
 
     renderStep3_VerifyWorkingWithCode = () => {
         return (
-            <div>
-
+            <div className="Step">
+                <h3>Step 3</h3>
+                <TotpVerifyBox />
             </div>
         )
     }

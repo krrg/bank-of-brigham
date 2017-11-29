@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import SmsVerifyBox from "./2fa/SmsVerifyBox";
 import CodesVerifyBox from "./2fa/CodesVerifyBox";
+import TotpVerifyBox from "./2fa/TotpVerifyBox";
 import LoginStore from "../../stores/LoginStore";
 
 import "./Login.scss";
@@ -38,6 +39,7 @@ class Login2FA extends React.Component {
         switch (this.props.secondFactor) {
             case "sms": return <SmsVerifyBox digits={this.state.phoneNumber}/>;
             case "codes": return <CodesVerifyBox />;
+            case "totp": return <TotpVerifyBox />;
             default: return <p>This 2FA method ({this.props.secondFactor}) not ready yet.</p>
         }
     }

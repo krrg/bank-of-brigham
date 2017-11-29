@@ -22,6 +22,7 @@ async def ensure_mongo_connection(app, loop):
 async def handle_enable_totp(request, session_claims=None):
     username = session_claims["username"]
     secret, uri = await TotpVerification.enable_totp(username)
+    await accounts_model.register_2fa_method(username, 'totp', None)
     return sanic.response.json({
         "totp_secret": secret,
         "totp_uri": uri,
@@ -57,4 +58,10 @@ class TotpVerification(object):
     @staticmethod
     async def verify_totp(username, code):
         secret_key = await tokens_model.get_token_for(username)
+
+        totp = pyotp.TOTP(secret_key)
+        actual_code = totp.now()
+
+        print(f"Actual code {actual_code} and reported code {code}")
+
         return pyotp.TOTP(secret_key).verify(code)
