@@ -73,14 +73,7 @@ export const SignupSource = {
                 });
             });
 
-            await axios.post(`${host}/u2f/completeenable`, regResponse);
-            console.log("It is all done.");
-
-            // const registrationResponse = await u2f.register(response.data);
-            // console.log("just got a registration response from the YubiKey", registrationResponse);
-
-            // const completion = await axios.post(`${host}/u2f/completeenable`, registrationResponse);
-            // console.log("Completed!");
+            return await axios.post(`${host}/u2f/completeenable`, regResponse);
         },
 
         success: SignupActions.signupU2FCompleted,
