@@ -14,9 +14,10 @@ import SmsSignup from "./components/Signup/2fa/SmsSignup";
 import SmsSignupVerify from "./components/Signup/2fa/SmsSignupVerify";
 import CodesSignup from "./components/Signup/2fa/CodesSignup";
 import TotpSignup from "./components/Signup/2fa/TotpSignup";
+import U2FSignup from "./components/Signup/2fa/U2FSignup";
 
+import babelPolyfill from "babel-polyfill";
 import "./index.scss";
-
 
 const Index = () => {
     return (
@@ -38,6 +39,7 @@ const Index = () => {
                     <Route exact path="/create/4/sms" component={() => <SmsSignupVerify />} />
                     <Route exact path="/create/3/codes" component={() => <CodesSignup />} />
                     <Route exact path="/create/3/totp" component={() => <TotpSignup />} />
+                    <Route exact path="/create/3/u2f" component={() => <U2FSignup />} />
                 </div>
                 <div>
                     <Route path="/bank" component={() => <HeaderBar />} />

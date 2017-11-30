@@ -28,6 +28,10 @@ class SignupStore {
         this.bindAction(SignupActions.signupTotpCompleted, this.handleSignupTotpCompleted);
         this.bindAction(SignupActions.signupTotpErrored, this.handleSignupTotpErrored);
 
+        this.bindAction(SignupActions.signupU2F, this.handleSignupU2F);
+        this.bindAction(SignupActions.signupU2FCompleted, this.handleSignupU2FCompleted);
+        this.bindAction(SignupActions.signupU2FErrored, this.handleSignupU2FErrored);
+
     }
 
     handleSignup(data) {
@@ -115,6 +119,22 @@ class SignupStore {
 
     handleSignupTotpErrored() {
         console.error("Unable to signup for TOTP");
+    }
+
+    handleSignupU2F() {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().registerU2F();
+        }
+    }
+
+    handleSignupU2FCompleted(axiosResult) {
+        this.setState({
+            u2fCompleted: true,
+        })
+    }
+
+    handleSignupU2FErrored(error) {
+        this.addError("u2f");
     }
 
     resetErrors() {

@@ -42,7 +42,6 @@ def read_stored_secrets(input_keys=None, generated_keys=None):
 
     return result_config
 
-
 MONGO_HOST = os.environ.get("MONGO_HOST", "localhost")
 MONGO_PORT = os.environ.get("MONGO_PORT", 27017)
 

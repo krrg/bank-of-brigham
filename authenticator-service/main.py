@@ -12,11 +12,13 @@ from controller.accounts import Accounts
 from controller.sms import Sms
 from controller.codes import Codes
 from controller.totp import TOTP
+from controller.u2f import U2F
 
 app.blueprint(Accounts)
 app.blueprint(Sms)
 app.blueprint(Codes)
 app.blueprint(TOTP)
+app.blueprint(U2F)
 
 import apiclients.twilio
 
