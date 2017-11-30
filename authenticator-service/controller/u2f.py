@@ -8,7 +8,7 @@ import settings
 
 
 U2F = sanic.Blueprint("u2f", url_prefix="/api/u2f")
-U2F_APP_ID = "http://localhost:4000"
+U2F_APP_ID = "https://localhost:4000"
 
 
 @U2F.listener('after_server_start')

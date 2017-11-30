@@ -43,7 +43,7 @@
     "webpack-dev-server": "2.9.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --hot --inline",
+    "start": "webpack-dev-server --hot --inline --https",
     "build": "./node_modules/webpack/bin/webpack.js -p"
   }
 }

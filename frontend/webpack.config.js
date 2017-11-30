@@ -99,7 +99,8 @@ module.exports = {
         contentBase: [
             path.join(__dirname, "__build__"),
             path.join(__dirname, 'resources')
-        ]
+        ],
+        disableHostCheck: true,
     }
 
 

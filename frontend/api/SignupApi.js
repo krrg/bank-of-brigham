@@ -1,7 +1,8 @@
 import SignupActions from "../actions/SignupActions";
 import axios from "axios";
-import u2f from "u2f-api";
+import bluebird from "bluebird";
 import { apihost as host } from "../constants";
+import u2f from "../lib/u2f";
 
 export const SignupSource = {
 
@@ -51,16 +52,35 @@ export const SignupSource = {
     registerU2F: {
         async remote(state)  {
             // await u2f.ensureSupport();
-            console.log("U2F:  Yes it is supported");
+            // console.log("U2F:  Yes it is supported");
 
-            const registrationRequest = await axios.post(`${host}/u2f/beginenable`)
-            console.log("Just got back result from u2f axios: ", registrationRequest);
+            const response = await axios.post(`${host}/u2f/beginenable`)
+            const registrationRequest = response.data;
+            console.log("here is the registration request", registrationRequest);
 
-            const registrationResponse = await u2f.register(registrationRequest);
-            console.log("just got a registration response from the YubiKey", registrationResponse)
+            const appId = response.data["appId"];
+            const registerRequests = response.data["registerRequests"];
 
-            const completion = await axios.post(`${host}/u2f/completeenable`, registrationResponse);
-            console.log("Completed!");
+            const regResponse = await new Promise((resolve, reject) => {
+                console.log("Executing promise.");
+                u2f.register(appId, registerRequests, [], (chromeResponse) => {
+                    console.log("Chrome response", chromeResponse);
+                    if (chromeResponse["errorCode"]) {
+                        reject(chromeResponse)
+                    } else {
+                        resolve(chromeResponse);
+                    }
+                });
+            });
+
+            await axios.post(`${host}/u2f/completeenable`, regResponse);
+            console.log("It is all done.");
+
+            // const registrationResponse = await u2f.register(response.data);
+            // console.log("just got a registration response from the YubiKey", registrationResponse);
+
+            // const completion = await axios.post(`${host}/u2f/completeenable`, registrationResponse);
+            // console.log("Completed!");
         },
 
         success: SignupActions.signupU2FCompleted,
