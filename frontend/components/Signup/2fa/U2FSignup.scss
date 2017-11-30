@@ -1,5 +1,21 @@
 @import "container.scss";
+@import "clearfix.scss";
 
 .U2FSignup {
     @extend .content-container;
+    
+    .__success {
+        @include clearfix();
+        font-size: 18pt;
+        font-weight: 100;
+        text-align: center;
+        
+        p {
+            margin: 100px;
+        }
+
+        button {
+            float: right;
+        }
+    }
 }
