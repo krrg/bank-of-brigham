@@ -36,6 +36,10 @@ class LoginStore {
         this.bindAction(LoginActions.loginTotpCompleted, this.handleLoginTotpCompleted);
         this.bindAction(LoginActions.loginTotpErrored, this.handleLoginTotpErrored);
 
+        this.bindAction(LoginActions.loginU2F, this.handleLoginU2F);
+        this.bindAction(LoginActions.loginU2FCompleted, this.handleLoginU2FCompleted);
+        this.bindAction(LoginActions.loginU2FErrored, this.handleLoginU2FErrored);
+
     }
 
     setFullAuthenticationState() {
@@ -150,6 +154,23 @@ class LoginStore {
 
     handleLoginTotpErrored(axiosError) {
         this.setErrorMessageState("Unable to verify OTP");
+    }
+
+    handleLoginU2F() {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().loginU2F();
+        }
+    }
+
+    handleLoginU2FCompleted(axiosResponse) {
+        this.setFullAuthenticationState();
+        // console.log("We've got a U2F verification: ", axiosResponse.data);
+    }
+
+    handleLoginU2FErrored(u2fError) {
+        this.setState({
+            "u2fErrorCode": u2fError["errorCode"]
+        })
     }
 
 }

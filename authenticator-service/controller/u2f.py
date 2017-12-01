@@ -44,6 +44,43 @@ async def handle_completeenable_u2f(request, session_claims=None):
     return sanic.response.json({"success": True})
 
 
+@U2F.route("/beginverify", methods=["POST"])
+@controller.require_password
+async def handle_beginverify_2fa(request, session_claims=None):
+    username = session_claims["username"]
+    device = await accounts_model.get_2fa_metadata(username)
+
+    challenge = u2f.begin_authentication(U2F_APP_ID, [device])
+    await tokens_model.store_token_for(username, challenge.json, expiring=True)
+    return sanic.response.json(challenge.data_for_client)
+
+
+@U2F.route("/completeverify", methods=["POST"])
+@controller.require_password
+async def handle_completeverify_2fa(request, session_claims=None):
+    username = session_claims["username"]
+    challenge = await tokens_model.get_token_for(username)
+
+    device, c, t = u2f.complete_authentication(challenge, request.json, [U2F_APP_ID])
+
+    response = sanic.response.json({
+        "keyHandle": device["keyHandle"],
+        "touch": t,
+        "counter": c,
+    })
+
+    session = controller.Session.from_claims(session_claims)
+    session.insert_claims({
+        "fully_authenticated": True,
+    }).attach_to_response(response)
+
+    return response
+
+
+
+
+
+
 
 
 

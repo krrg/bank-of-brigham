@@ -2,6 +2,7 @@ import React from "react";
 import LoadingSpinner from "../../LoadingSpinner";
 import LoginActions from "../../../actions/LoginActions";
 import LoginStore from "../../../stores/LoginStore";
+import  { withRouter } from "react-router-dom";
 
 
 class U2FVerifyBox extends React.Component {
@@ -16,13 +17,19 @@ class U2FVerifyBox extends React.Component {
 
     handleLoginStoreUpdated = (storeState) => {
         this.setState({
-            u2fVerified: storeState["u2fVerified"],
+            u2fVerified: storeState["authenticationLevel"] === "full",
         });
+
+        if (this.state.u2fVerified) {
+            this.props.history.push("/bank");
+        }
     }
 
     componentDidMount() {
         LoginStore.listen(this.handleLoginStoreUpdated);
-        LoginActions.loginU2F();
+        setTimeout(() => {
+            LoginActions.loginU2F()
+        }, 0);
     }
 
     componentWillUnmount() {
@@ -41,4 +48,4 @@ class U2FVerifyBox extends React.Component {
 
 }
 
-withRouter(U2FVerifyBox);
+export default withRouter(U2FVerifyBox);

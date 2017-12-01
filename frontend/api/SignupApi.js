@@ -62,9 +62,7 @@ export const SignupSource = {
             const registerRequests = response.data["registerRequests"];
 
             const regResponse = await new Promise((resolve, reject) => {
-                console.log("Executing promise.");
                 u2f.register(appId, registerRequests, [], (chromeResponse) => {
-                    console.log("Chrome response", chromeResponse);
                     if (chromeResponse["errorCode"]) {
                         reject(chromeResponse)
                     } else {
