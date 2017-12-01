@@ -21,7 +21,7 @@ class CodesVerifyBox extends React.Component {
     render() {
         return (
             <div className="CodesVerifyBox">
-                <h1>Enter Verification Code</h1>
+                <h2>Enter Verification Code</h2>
                 <p>Please enter one of the 8-digit verification codes you received previously.</p>
                 <form className="__verificationForm" onSubmit={this.handleSubmitVerificationCode}>
                     <input type="text" placeholder="00009999" ref="code" />
