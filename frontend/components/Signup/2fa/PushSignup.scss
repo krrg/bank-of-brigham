@@ -1,0 +1,9 @@
+@import "container.scss";
+
+.PushSignup {
+
+    .__content {
+        @extend .content-container;
+    }
+
+}

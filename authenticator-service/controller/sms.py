@@ -96,7 +96,7 @@ class SmsVerification(object):
         code = SmsVerification.generate_code()
         message = SmsVerification.generate_message(code)
         await tokens_model.store_token_for(username, code, expiring=True)
-        await twilio_client.push_message(phone_number, message)
+        await twilio_client.push_sms_message(phone_number, message)
 
     @staticmethod
     async def complete_verification(username, unverified_code):

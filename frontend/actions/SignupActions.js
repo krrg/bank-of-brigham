@@ -21,6 +21,10 @@ const SignupActions = AltInstance.generateActions(
     'signupU2FCompleted',
     'signupU2FErrored',
 
+    'signupPush',
+    'signupPushCompleted',
+    'signupPushErrored',
+
 );
 
 export default SignupActions;

@@ -6,6 +6,7 @@ import CodesVerifyBox from "./2fa/CodesVerifyBox";
 import { TotpVerifyBoxWrapper } from "./2fa/TotpVerifyBox";
 import U2FVerifyBox from "./2fa/U2FVerifyBox";
 import LoginStore from "../../stores/LoginStore";
+import PushVerifyBox from "./2fa/PushVerifyBox";
 
 import "./Login.scss";
 
@@ -42,6 +43,7 @@ class Login2FA extends React.Component {
             case "codes": return <CodesVerifyBox />;
             case "totp": return <TotpVerifyBoxWrapper />;
             case "u2f": return <U2FVerifyBox />;
+            case "push": return <PushVerifyBox />;
             default: return <p>This 2FA method ({this.props.secondFactor}) not ready yet.</p>
         }
     }

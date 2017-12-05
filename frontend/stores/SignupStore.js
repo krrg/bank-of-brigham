@@ -32,6 +32,10 @@ class SignupStore {
         this.bindAction(SignupActions.signupU2FCompleted, this.handleSignupU2FCompleted);
         this.bindAction(SignupActions.signupU2FErrored, this.handleSignupU2FErrored);
 
+        this.bindAction(SignupActions.signupPush, this.handleSignupPush);
+        this.bindAction(SignupActions.signupPushCompleted, this.handleSignupPushCompleted);
+        this.bindAction(SignupActions.signupPushErrored, this.handleSignupPushErrored);
+
     }
 
     handleSignup(data) {
@@ -135,6 +139,22 @@ class SignupStore {
 
     handleSignupU2FErrored(error) {
         this.addError("u2f");
+    }
+
+    handleSignupPush(phoneNumber) {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().registerPush(phoneNumber);
+        }
+    }
+
+    handleSignupPushCompleted(axiosResult) {
+        this.setState({
+            authySuccess: true
+        })
+    }
+
+    handleSignupPushErrored(axiosError) {
+        this.addError("push");
     }
 
     resetErrors() {

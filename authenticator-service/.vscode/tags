@@ -116,6 +116,7 @@ handle_begin_verify_sms_2fa	../controller/sms.py	/^async def handle_begin_verify
 handle_beginenable_u2f	../controller/u2f.py	/^async def handle_beginenable_u2f(request, session_claims=None):$/;"	kind:function	line:26
 handle_beginverify_2fa	../controller/u2f.py	/^async def handle_beginverify_2fa(request, session_claims=None):$/;"	kind:function	line:49
 handle_completeenable_u2f	../controller/u2f.py	/^async def handle_completeenable_u2f(request, session_claims=None):$/;"	kind:function	line:37
+handle_completeverify_2fa	../controller/u2f.py	/^async def handle_completeverify_2fa(request, session_claims=None):$/;"	kind:function	line:60
 handle_create_account	../controller/accounts.py	/^async def handle_create_account(request):$/;"	kind:function	line:47
 handle_enable_backup_codes	../controller/codes.py	/^async def handle_enable_backup_codes(request, session_claims=None, **kwargs):$/;"	kind:function	line:22
 handle_enable_sms_2fa	../controller/sms.py	/^async def handle_enable_sms_2fa(request, session_claims=None, **kwargs):$/;"	kind:function	line:30

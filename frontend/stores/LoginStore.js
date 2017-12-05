@@ -40,6 +40,10 @@ class LoginStore {
         this.bindAction(LoginActions.loginU2FCompleted, this.handleLoginU2FCompleted);
         this.bindAction(LoginActions.loginU2FErrored, this.handleLoginU2FErrored);
 
+        this.bindAction(LoginActions.loginPush, this.handleLoginPush);
+        this.bindAction(LoginActions.loginPushCompleted, this.handleLoginPushCompleted);
+        this.bindAction(LoginActions.loginPushErrored, this.handleLoginPushErrored);
+
     }
 
     setFullAuthenticationState() {
@@ -171,6 +175,20 @@ class LoginStore {
         this.setState({
             "u2fErrorCode": u2fError["errorCode"]
         })
+    }
+
+    handleLoginPush() {
+        if (! this.getInstance().isLoading()) {
+            this.getInstance().loginAuthyPush();
+        }
+    }
+
+    handleLoginPushCompleted() {
+        this.setFullAuthenticationState();
+    }
+
+    handleLoginPushErrored() {
+        this.setErrorMessageState("Unable to verify authy push");
     }
 
 }

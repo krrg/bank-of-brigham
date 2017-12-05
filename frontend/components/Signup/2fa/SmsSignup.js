@@ -46,8 +46,6 @@ class SmsSignup extends React.Component {
         SignupStore.unlisten(this.handleSignupStoreUpdated);
     }
 
-
-
     render() {
         return (
             <div className="SmsSignup">

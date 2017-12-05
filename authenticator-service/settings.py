@@ -49,6 +49,7 @@ secrets = read_stored_secrets(input_keys=[
     "TWILIO_ACCOUNT_SID",
     "TWILIO_AUTH_TOKEN",
     "TWILIO_PHONE_NUMBER",
+    "AUTHY_API_KEY",
 ], generated_keys=[
     "JWT_SECRET"
 ])

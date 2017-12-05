@@ -31,6 +31,10 @@ const LoginActions = AltInstance.generateActions(
     'loginU2FCompleted',
     'loginU2FErrored',
 
+    'loginPush',
+    'loginPushCompleted',
+    'loginPushErrored',
+
 );
 
 export default LoginActions;

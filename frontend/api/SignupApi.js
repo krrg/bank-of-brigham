@@ -3,6 +3,7 @@ import axios from "axios";
 import bluebird from "bluebird";
 import { apihost as host } from "../constants";
 import u2f from "../lib/u2f";
+import { AuthyHelper } from "./AuthyHelper";
 
 export const SignupSource = {
 
@@ -76,6 +77,23 @@ export const SignupSource = {
 
         success: SignupActions.signupU2FCompleted,
         error: SignupActions.signupU2FErrored,
+    },
+
+    registerPush: {
+        async remote(state, phoneNumber) {
+            await axios.post(`${host}/push/beginenable`, {
+                "phone_number": phoneNumber,
+            });
+
+            return await AuthyHelper.check_authy_status();
+        },
+
+        success: SignupActions.signupPushCompleted,
+        error: SignupActions.signupPushErrored,
     }
 
 }
+
+
+
+

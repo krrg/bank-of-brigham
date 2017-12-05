@@ -2,6 +2,7 @@ import LoginActions from "../actions/LoginActions";
 import axios from "axios";
 import { apihost as host } from "../constants";
 import u2f from "../lib/u2f";
+import { AuthyHelper } from "./AuthyHelper";
 
 export const LoginSource = {
 
@@ -95,6 +96,16 @@ export const LoginSource = {
 
         success: LoginActions.loginU2FCompleted,
         error: LoginActions.loginU2FErrored,
+    },
+
+    loginAuthyPush: {
+        async remote(state) {
+            await axios.post(`${host}/push/verify`);
+            return await AuthyHelper.check_authy_status();
+        },
+
+        success: LoginActions.loginPushCompleted,
+        error: LoginActions.loginPushErrored,
     }
 
 }
