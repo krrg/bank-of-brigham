@@ -1,9 +1,19 @@
 @import "container.scss";
 @import "shadowed.scss";
+@import "colors.scss";
 @import "../Bank.scss";
 
 .Transfers {
     @extend .container;
+
+    /* https://github.com/JedWatson/react-select/issues/704 */
+    .Select-menu {
+        max-height: 18em;
+    }
+
+    .Select-menu-outer {
+        max-height: 24em;
+    }
 }
 
 .TransferOption {
@@ -49,6 +59,11 @@
         .__balance {
             margin-right: 1em;
         }
+    }
+
+    &:hover, &:active {
+        background-color: lightgrey;
+        cursor: pointer;
     }
 
 }
