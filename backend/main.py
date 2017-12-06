@@ -8,12 +8,12 @@ app = Sanic()
 app.blueprint(DbCxPoolInit)
 app.blueprint(HttpCxPoolInit)
 
-from controller.accounts import Accounts
-from controller.sms import Sms
-from controller.codes import Codes
-from controller.totp import TOTP
-from controller.u2f import U2F
-from controller.push import Push
+from controllers.authenticators.accounts import Accounts
+from controllers.authenticators.sms import Sms
+from controllers.authenticators.codes import Codes
+from controllers.authenticators.totp import TOTP
+from controllers.authenticators.u2f import U2F
+from controllers.authenticators.push import Push
 
 app.blueprint(Accounts)
 app.blueprint(Sms)

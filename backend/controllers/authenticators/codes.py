@@ -2,7 +2,7 @@ import sanic
 import sanic.response
 import model.accounts
 import model.tokens
-import controller
+import controllers
 
 
 Codes = sanic.Blueprint("codes", url_prefix="/api/codes")
@@ -18,7 +18,7 @@ async def ensure_mongo_connection(app, loop):
 
 
 @Codes.route("/enable", methods=["POST"])
-@controller.require_full_authentication
+@controllers.require_full_authentication
 async def handle_enable_backup_codes(request, session_claims=None, **kwargs):
     username = session_claims["username"]
     backup_codes = await BackupCodeVerification.enable_backup_codes(username)
@@ -30,7 +30,7 @@ async def handle_enable_backup_codes(request, session_claims=None, **kwargs):
 
 
 @Codes.route("/verify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_verify_backup_code(request, session_claims=None, **kwargs):
     username = session_claims["username"]
     code = request.json.get("code")

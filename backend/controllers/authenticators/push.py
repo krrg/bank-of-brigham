@@ -1,7 +1,7 @@
 import sanic
 import sanic.response
 import apiclients.twilio
-import controller
+import controllers
 import model.accounts
 import model.tokens
 
@@ -26,7 +26,7 @@ async def ensure_mongo_connection(app, loop):
 
 
 @Push.route("/beginenable", methods=["POST"])
-@controller.require_full_authentication
+@controllers.require_full_authentication
 async def handle_enable_push(request, session_claims=None):
     print("Beginning the enablement of push notificatoin.")
     email_username = session_claims["username"]
@@ -44,7 +44,7 @@ async def handle_enable_push(request, session_claims=None):
 
 
 @Push.route("/verify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_verify_push(request, session_claims=None):
     print("Verifying via push notification")
     username = session_claims["username"]
@@ -58,7 +58,7 @@ async def handle_verify_push(request, session_claims=None):
 
 
 @Push.route("/checkstatus", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_checkstatus_push(request, session_claims=None):
     username = session_claims["username"]
     authy_uuid = await tokens_model.get_token_for(username)

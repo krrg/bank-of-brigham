@@ -1,7 +1,7 @@
 import sanic
 import sanic.response
 import apiclients.twilio
-import controller
+import controllers
 import model.accounts
 import model.tokens
 
@@ -26,7 +26,7 @@ async def ensure_mongo_connection(app, loop):
 
 
 @Sms.route("/enable", methods=["POST"])
-@controller.require_full_authentication
+@controllers.require_full_authentication
 async def handle_enable_sms_2fa(request, session_claims=None, **kwargs):
     unvalidated_phone_number = request.json.get("phone_number")
 
@@ -51,7 +51,7 @@ async def handle_enable_sms_2fa(request, session_claims=None, **kwargs):
 
 
 @Sms.route("/beginverify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_begin_verify_sms_2fa(request, session_claims=None, **kwargs):
     username = session_claims['username']
 
@@ -68,7 +68,7 @@ async def handle_begin_verify_sms_2fa(request, session_claims=None, **kwargs):
 
 
 @Sms.route("/completeverify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_verify_sms_2fa(request, session_claims=None, **kwargs):
     username = session_claims['username']
     unverified_code = request.json.get("code")

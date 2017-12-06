@@ -1,7 +1,7 @@
 import sanic
 import sanic.response
-import controller
-from controller.session import Session
+import controllers
+from controllers.session import Session
 
 
 Accounts = sanic.Blueprint("accounts", url_prefix="/api")

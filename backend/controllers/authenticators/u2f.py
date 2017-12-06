@@ -2,7 +2,7 @@ import sanic
 import sanic.response
 import model.accounts
 import model.tokens
-import controller
+import controllers
 import u2flib_server.u2f as u2f
 import settings
 
@@ -22,7 +22,7 @@ async def ensure_mongo_connection(app, loop):
 
 
 @U2F.route("/beginenable", methods=["POST"])
-@controller.require_full_authentication
+@controllers.require_full_authentication
 async def handle_beginenable_u2f(request, session_claims=None):
     username = session_claims["username"]
     previously_stored_devices = []  # You can only register one device at a time in our system!
@@ -33,7 +33,7 @@ async def handle_beginenable_u2f(request, session_claims=None):
 
 
 @U2F.route("/completeenable", methods=["POST"])
-@controller.require_full_authentication
+@controllers.require_full_authentication
 async def handle_completeenable_u2f(request, session_claims=None):
     username = session_claims["username"]
     enrollment_result = await tokens_model.get_token_for(username)
@@ -45,7 +45,7 @@ async def handle_completeenable_u2f(request, session_claims=None):
 
 
 @U2F.route("/beginverify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_beginverify_2fa(request, session_claims=None):
     username = session_claims["username"]
     device = await accounts_model.get_2fa_metadata(username)
@@ -56,7 +56,7 @@ async def handle_beginverify_2fa(request, session_claims=None):
 
 
 @U2F.route("/completeverify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_completeverify_2fa(request, session_claims=None):
     username = session_claims["username"]
     challenge = await tokens_model.get_token_for(username)

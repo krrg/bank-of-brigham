@@ -1,6 +1,6 @@
 import functools
 import sanic.response
-from controller.session import Session
+from controllers.session import Session
 
 
 #"username": username,

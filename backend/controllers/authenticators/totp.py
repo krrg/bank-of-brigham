@@ -2,7 +2,7 @@ import sanic
 import sanic.response
 import model.accounts
 import model.tokens
-import controller
+import controllers
 
 
 TOTP = sanic.Blueprint("totp", url_prefix="/api/totp")
@@ -18,7 +18,7 @@ async def ensure_mongo_connection(app, loop):
 
 
 @TOTP.route("/enable", methods=["POST"])
-@controller.require_full_authentication
+@controllers.require_full_authentication
 async def handle_enable_totp(request, session_claims=None):
     username = session_claims["username"]
     secret, uri = await TotpVerification.enable_totp(username)
@@ -29,7 +29,7 @@ async def handle_enable_totp(request, session_claims=None):
     })
 
 @TOTP.route("/verify", methods=["POST"])
-@controller.require_password
+@controllers.require_password
 async def handle_verify_totp(request, session_claims=None):
     username = session_claims["username"]
     code = request.json.get("code")
