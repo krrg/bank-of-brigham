@@ -69,7 +69,7 @@ async def handle_completeverify_2fa(request, session_claims=None):
         "counter": c,
     })
 
-    session = controller.Session.from_claims(session_claims)
+    session = controllers.Session.from_claims(session_claims)
     session.insert_claims({
         "fully_authenticated": True,
     }).attach_to_response(response)

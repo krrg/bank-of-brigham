@@ -76,7 +76,7 @@ async def handle_verify_sms_2fa(request, session_claims=None, **kwargs):
     result = await SmsVerification.complete_verification(username, unverified_code)
     if result:
         response = sanic.response.json({"success": True})
-        session = controller.Session.from_claims(session_claims)
+        session = controllers.Session.from_claims(session_claims)
         session.insert_claims({
             "fully_authenticated": True,
         }).attach_to_response(response)

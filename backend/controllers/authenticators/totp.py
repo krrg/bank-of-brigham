@@ -37,7 +37,7 @@ async def handle_verify_totp(request, session_claims=None):
         return sanic.response.json({"error", "Could not validate TOTP code"}, status=401)
 
     response = sanic.response.json({"success": True})
-    session = controller.Session.from_claims(session_claims)
+    session = controllers.Session.from_claims(session_claims)
     session.insert_claims({
         "fully_authenticated": True,
     }).attach_to_response(response)

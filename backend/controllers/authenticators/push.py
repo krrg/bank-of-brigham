@@ -69,7 +69,7 @@ async def handle_checkstatus_push(request, session_claims=None):
     response = sanic.response.json({
         "authy_status": status
     })
-    session = controller.Session.from_claims(session_claims)
+    session = controllers.Session.from_claims(session_claims)
     session.insert_claims({
         "fully_authenticated": status == "approved",
     }).attach_to_response(response)
