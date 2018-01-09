@@ -7,9 +7,9 @@ import BankStore from "../../../stores/BankStore";
 import BankActions from "../../../actions/BankActions";
 
 import { TAccountList, accountTypesMap } from "../../../constants";
+import { Button } from "react-foundation";
 
-import * as F from "react-foundation";
-
+import classNames from "classnames";
 
 import "./Transfers.scss";
 
@@ -115,6 +115,11 @@ export default class Transfers extends React.Component {
         this.setState(newState);
     }
 
+    handleTransferSubmit = (e) => {
+        if (e) { e.preventDefault(); }
+        console.log("We need to handle a transfer!");
+    }
+
     renderAccountDropdown = (stateKey) => {
         const self = this; /* Not sure how far `this` would go. */
         const options = this.state.accounts.map(a => {
@@ -140,21 +145,21 @@ export default class Transfers extends React.Component {
         )
     }
 
-    onMoneyInputChange = (e) => {
-        const value = e.target.value;
-        if (value.startsWith("$")) {
-            const newValue = Number.parseFloat(value.replace("$", ""));
-            if (isNaN(newValue)) {
-                this.setState({
-                    amount: ""
-                })
-            } else {
-                this.setState({
-                    amount: newValue
-                })
-            }
+    renderSubmitButton = () => {
+        const allRequiredFieldsFilled = _.every([
+            !! this.money && this.money.value,
+            !! this.state.to,
+            !! this.state.from,
+        ])
 
-        }
+        return (
+            <Button
+                type="submit"
+                className={classNames("float-right", {"disabled": ! allRequiredFieldsFilled})}
+            >
+            Submit
+            </Button>
+        )
     }
 
     render() {
@@ -169,23 +174,25 @@ export default class Transfers extends React.Component {
                         <h2>Transfers</h2>
                     </div>
 
-                    <div className="__content">
-                        <form>
+                    <div className="__content clearfix">
+                        <form onSubmit={this.handleTransferSubmit}>
+                            <p>Amount</p>
+                            <span className="input-group">
+                                <span className="input-group-label">$</span>
+                                <input className="input-group-field" type="number" ref={input => this.money = input}/>
+                            </span>
+                            <hr />
+
                             <p>Transfer from:</p>
                             { this.renderAccountDropdown("from") }
-
-                            <p>Amount</p>
-                            <F.Row collapseOnSmall={true}>
-                                <F.Column small={3} large={2}>
-                                    <span className="prefix">This</span>
-                                </F.Column>
-                                <F.Column small={9} large={10}>
-                                    <input type="text" placeholder="Enter your URL..." className="radius" />
-                                </F.Column>
-                            </F.Row>
+                            <hr />
 
                             <p>Transfer to:</p>
                             { this.renderAccountDropdown("to") }
+
+                            <br />
+                            { this.renderSubmitButton() }
+
                         </form>
 
                     </div>
