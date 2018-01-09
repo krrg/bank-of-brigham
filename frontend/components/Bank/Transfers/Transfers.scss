@@ -66,4 +66,25 @@
         cursor: pointer;
     }
 
+    .__arrow {
+        color: black;
+
+        .inverted {
+            color: white;
+            float: right;
+            z-index: 1000;
+        }
+    }
+
+
+
 }
+
+.Select-multi-value-wrapper {
+    padding-right: 0 !important;
+}
+
+.Select-input {
+    display: none !important;
+}
+

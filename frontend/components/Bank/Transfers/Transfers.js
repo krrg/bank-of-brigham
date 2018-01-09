@@ -8,6 +8,8 @@ import BankActions from "../../../actions/BankActions";
 
 import { TAccountList, accountTypesMap } from "../../../constants";
 
+import * as F from "react-foundation";
+
 
 import "./Transfers.scss";
 
@@ -27,23 +29,29 @@ class TransferOption extends React.Component {
         if (this.props.isFocused) {
             return;
         }
-        this.props.onFocus(this.props.option, e);
+        if (this.props.onFocus) {
+            this.props.onFocus(this.props.option, e);
+        }
     }
 
     onMouseEnter = (e) => {
-        this.props.onFocus(this.props.option, e);
+        if (this.props.onFocus) {
+            this.props.onFocus(this.props.option, e);
+        }
     }
 
     onMouseDown = (e) => {
         if (e) { e.preventDefault(); }
-        this.props.onSelect(this.props.option, e);
+        if (this.props.onSelect) {
+            this.props.onSelect(this.props.option, e);
+        }
     }
 
     render() {
-        const account = this.props.option;
+        const account = this.props.option || this.props.value;
 
         if (! account) {
-            return <option>null</option>
+            return <option>null sandwich</option>
         }
 
 
@@ -82,6 +90,7 @@ export default class Transfers extends React.Component {
             accounts: BankStore.getState().accounts,
             to: null,
             from: null,
+            amount: 0,
         }
     }
 
@@ -122,8 +131,30 @@ export default class Transfers extends React.Component {
                 value={this.state[stateKey]}
                 valueComponent={TransferOption}
                 onChange={(option, e) => {this.handleSelectChanged(stateKey, option, e)}}
+                clearable={false}
+                arrowRenderer={this.state[stateKey] ? null : undefined}
+                inputRenderer={this.state[stateKey] ? undefined : undefined}
+                multi={false}
+                searchable={false}
             />
         )
+    }
+
+    onMoneyInputChange = (e) => {
+        const value = e.target.value;
+        if (value.startsWith("$")) {
+            const newValue = Number.parseFloat(value.replace("$", ""));
+            if (isNaN(newValue)) {
+                this.setState({
+                    amount: ""
+                })
+            } else {
+                this.setState({
+                    amount: newValue
+                })
+            }
+
+        }
     }
 
     render() {
@@ -142,7 +173,17 @@ export default class Transfers extends React.Component {
                         <form>
                             <p>Transfer from:</p>
                             { this.renderAccountDropdown("from") }
-                            <br />
+
+                            <p>Amount</p>
+                            <F.Row collapseOnSmall={true}>
+                                <F.Column small={3} large={2}>
+                                    <span className="prefix">This</span>
+                                </F.Column>
+                                <F.Column small={9} large={10}>
+                                    <input type="text" placeholder="Enter your URL..." className="radius" />
+                                </F.Column>
+                            </F.Row>
+
                             <p>Transfer to:</p>
                             { this.renderAccountDropdown("to") }
                         </form>
