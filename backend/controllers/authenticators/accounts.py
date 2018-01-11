@@ -1,29 +1,52 @@
 import sanic
 import sanic.response
+import asyncio
+
 import controllers
 from controllers.session import Session
+
+import model.bank
+import model.accounts
+import model.events
 
 
 Accounts = sanic.Blueprint("accounts", url_prefix="/api")
 
-import model.accounts
 
 @Accounts.listener('after_server_start')
 async def ensure_mongo_connection(app, loop):
+
     global accounts_model
     accounts_model = model.accounts.Accounts()
     await accounts_model.before_start()  # Ensure db indexes will be created.
 
+    global bank_model
+    bank_model = model.bank.Bank()
+    await bank_model.before_start()
+
+    global events
+    events = model.events.Events()
+    await events.before_start()
+
 
 async def login_user(username, password):
     if not await accounts_model.verify_password(username, password):
+        await events.log_event({
+            "username": username,
+            "type": "login",
+            "message": "rejected"
+        })
         return sanic.response.json({
             "error": "could not verify password"
         }, status=401)
 
     second_factor = await accounts_model.get_2fa_method(username)
 
-    print("the second factor is: ", second_factor)
+    await events.log_event({
+        "username": username,
+        "type": "login",
+        "message": "successful"
+    })
 
     response = sanic.response.json({
         "username": username,
@@ -50,6 +73,14 @@ async def handle_create_account(request):
 
     try:
         await accounts_model.create_new_account(username, password)
+        await asyncio.wait([
+            bank_model.create_default_accounts(username),
+            events.log_event({
+                "username": username,
+                "type": "create",
+                "message": "successful"
+            })
+        ])
         return await login_user(username, password)
     except model.accounts.AccountAlreadyExistsException as e:
         return sanic.response.text("conflict", status=409)

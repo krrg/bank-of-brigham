@@ -10,7 +10,7 @@ const HeaderBar = ({showLinks}) => {
         showLinks = true;
     }
 
-    const link = showLinks ? "/bank" : "/";
+    const link = showLinks ? "/bank" : "/create";
 
     return (
         <div className="HeaderBar">

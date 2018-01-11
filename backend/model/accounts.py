@@ -4,6 +4,10 @@ import db.cxpool
 import pymongo
 import datetime
 
+"""
+The `Accounts` referred to here is a login account, not a bank account.  Do not be deceived.
+"""
+
 class Accounts(object):
 
     def __init__(self):

@@ -14,6 +14,7 @@ from controllers.authenticators.codes import Codes
 from controllers.authenticators.totp import TOTP
 from controllers.authenticators.u2f import U2F
 from controllers.authenticators.push import Push
+from controllers.bank import Bank
 
 app.blueprint(Accounts)
 app.blueprint(Sms)
@@ -21,6 +22,7 @@ app.blueprint(Codes)
 app.blueprint(TOTP)
 app.blueprint(U2F)
 app.blueprint(Push)
+app.blueprint(Bank)
 
 import apiclients.twilio
 
