@@ -1,3 +1,4 @@
 {
-    "python.linting.pylintEnabled": false
+    "python.linting.pylintEnabled": false,
+    "python.pythonPath": "/home/krr428/.pyenv/versions/funincular-bank-3.6.3/bin/python"
 }

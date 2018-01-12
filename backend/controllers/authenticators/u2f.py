@@ -19,6 +19,9 @@ async def ensure_mongo_connection(app, loop):
     global tokens_model
     tokens_model = model.tokens.MultiTokens()
     await tokens_model.before_start()
+    global events
+    events = model.events.Events()
+    await events.before_start()
 
 
 @U2F.route("/beginenable", methods=["POST"])
@@ -41,6 +44,11 @@ async def handle_completeenable_u2f(request, session_claims=None):
     device, cert = u2f.complete_registration(enrollment_result, request.json, U2F_APP_ID)
 
     await accounts_model.register_2fa_method(username, 'u2f', device.json)
+    await events.log_event({
+        "username": username,
+        "type": "enable_2fa",
+        "2fa": "u2f",
+    })
     return sanic.response.json({"success": True})
 
 
@@ -52,6 +60,7 @@ async def handle_beginverify_2fa(request, session_claims=None):
 
     challenge = u2f.begin_authentication(U2F_APP_ID, [device])
     await tokens_model.store_token_for(username, challenge.json, expiring=True)
+    await events.begin_2fa(username, "u2f")
     return sanic.response.json(challenge.data_for_client)
 
 
@@ -60,8 +69,8 @@ async def handle_beginverify_2fa(request, session_claims=None):
 async def handle_completeverify_2fa(request, session_claims=None):
     username = session_claims["username"]
     challenge = await tokens_model.get_token_for(username)
-
     device, c, t = u2f.complete_authentication(challenge, request.json, [U2F_APP_ID])
+    await events.complete_2fa(username, "u2f")
 
     response = sanic.response.json({
         "keyHandle": device["keyHandle"],

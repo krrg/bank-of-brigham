@@ -44,7 +44,27 @@ async def transfer_within_owner(request, session_claims=None):
 
     result = await bank_model.transfer_within_owner(username, amount_cents, from_account_id, to_account_id)
     if result:
+        await events.log_event({
+            "username": username,
+            "type": "transfer",
+            "value": "success",
+            "details": {
+                "amount_cents": amount_cents,
+                "from_account_id": from_account_id,
+                "to_account_id": to_account_id,
+            }
+        })
         return sanic.response.json({"success": True})
     else:
+        await events.log_event({
+            "username": username,
+            "type": "transfer",
+            "value": "failed",
+            "details": {
+                "amount_cents": amount_cents,
+                "from_account_id": from_account_id,
+                "to_account_id": to_account_id,
+            }
+        })
         return sanic.response.text("Error", 400)
 
