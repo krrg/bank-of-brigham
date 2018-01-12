@@ -2,6 +2,7 @@ import sanic
 import sanic.response
 import model.accounts
 import model.tokens
+import model.events
 import controllers
 import u2flib_server.u2f as u2f
 import settings
@@ -32,6 +33,7 @@ async def handle_beginenable_u2f(request, session_claims=None):
     enrollment_result = u2f.begin_registration(U2F_APP_ID, previously_stored_devices)
 
     await tokens_model.store_token_for(username, enrollment_result.json, expiring=True)
+
     return sanic.response.json(enrollment_result.data_for_client)
 
 

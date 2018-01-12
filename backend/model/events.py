@@ -19,7 +19,7 @@ class Events(object):
         return await self.log_event({
             "username": username,
             "2fa": second_factor,
-            "type": type,
+            "type": begin_or_complete,
         })
 
     async def begin_2fa(self, username, second_factor):

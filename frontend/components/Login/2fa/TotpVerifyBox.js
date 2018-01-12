@@ -15,6 +15,7 @@ export const TotpVerifyBoxWrapper = () => {
 }
 
 import "./TotpVerifyBox.scss";
+import { LoginApiHelpers } from "../../../api/LoginApi";
 
 class TotpVerifyBox extends React.Component {
 
@@ -47,6 +48,7 @@ class TotpVerifyBox extends React.Component {
 
     componentDidMount() {
         LoginStore.listen(this.handleLoginStoreUpdated);
+        LoginApiHelpers.beginLoginTotp();
     }
 
     componentWillUnmount() {

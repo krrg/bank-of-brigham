@@ -2,6 +2,7 @@ import sanic
 import sanic.response
 import model.accounts
 import model.tokens
+import model.events
 import controllers
 
 
@@ -15,6 +16,9 @@ async def ensure_mongo_connection(app, loop):
     global tokens_model
     tokens_model = model.tokens.Tokens()
     await tokens_model.before_start()
+    global events
+    events = model.events.Events()
+    await events.before_start()
 
 
 @TOTP.route("/enable", methods=["POST"])
@@ -28,13 +32,23 @@ async def handle_enable_totp(request, session_claims=None):
         "totp_uri": uri,
     })
 
-@TOTP.route("/verify", methods=["POST"])
+
+@TOTP.route("/beginverify", methods=["POST"])
+@controllers.require_password
+async def handle_begin_verify_totp(request, session_claims=None):
+    username = session_claims["username"]
+    await events.begin_2fa(username, "totp")
+    return sanic.response.text("Waiting for code...")
+
+@TOTP.route("/completeverify", methods=["POST"])
 @controllers.require_password
 async def handle_verify_totp(request, session_claims=None):
     username = session_claims["username"]
     code = request.json.get("code")
     if not await TotpVerification.verify_totp(username, code):
         return sanic.response.json({"error", "Could not validate TOTP code"}, status=401)
+
+    await events.complete_2fa(username, "totp")
 
     response = sanic.response.json({"success": True})
     session = controllers.Session.from_claims(session_claims)

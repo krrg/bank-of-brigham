@@ -3,6 +3,8 @@ import axios from "axios";
 import { apihost as host } from "../constants";
 import u2f from "../lib/u2f";
 import { AuthyHelper } from "./AuthyHelper";
+import babelPolyfill from "babel-polyfill";
+
 
 export const LoginSource = {
 
@@ -53,7 +55,7 @@ export const LoginSource = {
 
     loginBackupCode: {
         remote(state, verificationCode) {
-            return axios.post(`${host}/codes/verify`, {
+            return axios.post(`${host}/codes/completeverify`, {
                 code: verificationCode
             });
         },
@@ -64,7 +66,7 @@ export const LoginSource = {
 
     verifyTotp: {
         remote(state, verificationCode) {
-            return axios.post(`${host}/totp/verify`, {
+            return axios.post(`${host}/totp/completeverify`, {
                 code: verificationCode
             });
         },
@@ -100,12 +102,25 @@ export const LoginSource = {
 
     loginAuthyPush: {
         async remote(state) {
-            await axios.post(`${host}/push/verify`);
+            await axios.post(`${host}/push/beginverify`);
             return await AuthyHelper.check_authy_status();
         },
 
         success: LoginActions.loginPushCompleted,
         error: LoginActions.loginPushErrored,
+    }
+
+}
+
+
+export class LoginApiHelpers {
+
+    static beginLoginCodes = () => {
+        return axios.post(`${host}/codes/beginverify`)
+    }
+
+    static beginLoginTotp = () => {
+        return axios.post(`${host}/totp/beginverify`)
     }
 
 }

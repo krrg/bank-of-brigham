@@ -4,6 +4,7 @@ import apiclients.twilio
 import controllers
 import model.accounts
 import model.tokens
+import model.events
 
 
 Push = sanic.Blueprint("push", url_prefix="/api/push")
@@ -23,6 +24,9 @@ async def ensure_mongo_connection(app, loop):
     global tokens_model
     tokens_model = model.tokens.Tokens()
     await tokens_model.before_start()
+    global events
+    events = model.events.Events()
+    await events.before_start()
 
 
 @Push.route("/beginenable", methods=["POST"])
@@ -43,7 +47,7 @@ async def handle_enable_push(request, session_claims=None):
     return sanic.response.json({"authy": "pending"})
 
 
-@Push.route("/verify", methods=["POST"])
+@Push.route("/beginverify", methods=["POST"])
 @controllers.require_password
 async def handle_verify_push(request, session_claims=None):
     print("Verifying via push notification")
@@ -53,6 +57,7 @@ async def handle_verify_push(request, session_claims=None):
     response = await authy_client.send_onetouch_auth_request(authy_user_id)
     approval_uuid = response['approval_request']['uuid']
     await tokens_model.store_token_for(username, approval_uuid, expiring=False)
+    await events.begin_2fa(username, "push")
 
     return sanic.response.json({"authy": "pending"})
 
@@ -73,6 +78,9 @@ async def handle_checkstatus_push(request, session_claims=None):
     session.insert_claims({
         "fully_authenticated": status == "approved",
     }).attach_to_response(response)
+
+    if status == "approved":
+        await events.complete_2fa(username, "push")
 
     return response
 

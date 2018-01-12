@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import LoginActions from "../../../actions/LoginActions";
 
 import "./CodesVerifyBox.scss";
+import { LoginApiHelpers } from "../../../api/LoginApi";
 
 class CodesVerifyBox extends React.Component {
 
@@ -16,6 +17,10 @@ class CodesVerifyBox extends React.Component {
 
         console.log("Submitting verification code:", this.refs.code.value);
         LoginActions.loginBackupCode(this.refs.code.value.trim());
+    }
+
+    componentDidMount() {
+        LoginApiHelpers.beginLoginCodes();
     }
 
     render() {

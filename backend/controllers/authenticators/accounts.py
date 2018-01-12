@@ -15,15 +15,12 @@ Accounts = sanic.Blueprint("accounts", url_prefix="/api")
 
 @Accounts.listener('after_server_start')
 async def ensure_mongo_connection(app, loop):
-
     global accounts_model
     accounts_model = model.accounts.Accounts()
     await accounts_model.before_start()  # Ensure db indexes will be created.
-
     global bank_model
     bank_model = model.bank.Bank()
     await bank_model.before_start()
-
     global events
     events = model.events.Events()
     await events.before_start()

@@ -2,6 +2,7 @@ import sanic
 import sanic.response
 import model.accounts
 import model.tokens
+import model.events
 import controllers
 
 

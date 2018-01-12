@@ -4,6 +4,7 @@ import apiclients.twilio
 import controllers
 import model.accounts
 import model.tokens
+import model.events
 
 
 Sms = sanic.Blueprint("sms", url_prefix="/api/sms")
@@ -23,6 +24,9 @@ async def ensure_mongo_connection(app, loop):
     global tokens_model
     tokens_model = model.tokens.Tokens()
     await tokens_model.before_start()
+    global events
+    events = model.events.Events()
+    await events.before_start()
 
 
 @Sms.route("/enable", methods=["POST"])
@@ -64,6 +68,8 @@ async def handle_begin_verify_sms_2fa(request, session_claims=None, **kwargs):
     await SmsVerification.begin_verification(username, phone_number)
     hidden_digits = phone_number[-2:]
 
+    await events.begin_2fa(username, "sms")
+
     return sanic.response.json({"last_phone_number_digits": hidden_digits}, status=200)
 
 
@@ -75,6 +81,9 @@ async def handle_verify_sms_2fa(request, session_claims=None, **kwargs):
 
     result = await SmsVerification.complete_verification(username, unverified_code)
     if result:
+
+        await events.complete_2fa(username, "sms")
+
         response = sanic.response.json({"success": True})
         session = controllers.Session.from_claims(session_claims)
         session.insert_claims({
