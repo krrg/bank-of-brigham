@@ -6,6 +6,7 @@ from enum import Enum
 import asyncio
 import random
 import secrets
+import bson.objectid
 
 
 class BankAccountTypes(Enum):
@@ -44,9 +45,42 @@ class Bank(object):
         cursor = self.bank.find({
             "username": username
         })
+
         return await cursor.to_list(length=100)  # Maximum number of accounts
 
-    async def transfer_within_owner(self, username, )
+    async def transfer_within_owner(self, username, amount_cents, from_account_id, to_account_id):
+        from_account = await self.bank.find_one({
+            "username": username,
+            "_id": bson.objectid.ObjectId(from_account_id)
+        })
+
+        to_account = await self.bank.find_one({
+            "username": username,
+            "_id": bson.objectid.ObjectId(to_account_id)
+        })
+
+        if not from_account or not to_account:
+            print("accounts do not appear to exist", from_account_id, to_account_id)
+            return False
+
+        if from_account["balance_cents"] - amount_cents < 0:
+            return False
+
+        # Just a usability test server after all, so just hope the server doesn't crash through here.
+        # Also, there were a lot of amusing bugs that happened through here that resulted in
+        #  some good bank errors in my favor during testing.  Just though I'd share that.
+        to_account["balance_cents"] += amount_cents
+        await self.bank.replace_one({
+            "username": username,
+            "_id": bson.objectid.ObjectId(to_account_id)
+        }, to_account)
+        from_account["balance_cents"] -= amount_cents
+        await self.bank.replace_one({
+            "username": username,
+            "_id": bson.objectid.ObjectId(from_account_id)
+        }, from_account)
+
+        return True
 
     @staticmethod
     def random_account_number():

@@ -34,3 +34,17 @@ async def get_accounts_for_logged_in(request, session_claims=None):
         "accounts": json.loads(bson.json_util.dumps(accounts))
     })
 
+@Bank.route("/bank/transfer", methods=["POST"])
+@controllers.require_full_authentication
+async def transfer_within_owner(request, session_claims=None):
+    username = session_claims["username"]
+    amount_cents = request.json.get("amountCents")
+    from_account_id = request.json.get("from")
+    to_account_id = request.json.get("to")
+
+    result = await bank_model.transfer_within_owner(username, amount_cents, from_account_id, to_account_id)
+    if result:
+        return sanic.response.json({"success": True})
+    else:
+        return sanic.response.text("Error", 400)
+

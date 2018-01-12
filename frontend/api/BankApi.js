@@ -1,6 +1,7 @@
 import BankActions from "../actions/BankActions";
 import axios from "axios";
 import { apihost as host } from "../constants";
+import babelPolyfill from "babel-polyfill";
 
 
 const transmogrifyBankObject = (bankObject) => {
@@ -33,42 +34,6 @@ export const BankSource = {
                 accounts: accounts.map(transmogrifyBankObject)
             }
 
-
-            // const accounts = [{
-            //     id: 234,
-            //     number: "72321123",
-            //     displayName: "Online Savings",
-            //     type: "savings",
-            //     balance: 10000
-            // }, {
-            //     id: 290,
-            //     number: "345345211",
-            //     displayName: "Business Checking",
-            //     type: "checking",
-            //     balance: 2303.23
-            // }, {
-            //     id: 235,
-            //     number: "349349494",
-            //     displayName: "Interest Checking",
-            //     type: "checking",
-            //     balance: 2400
-            // }, {
-            //     id: 240,
-            //     number: "223989224",
-            //     displayName: "Money Market",
-            //     type: "moneymarket",
-            //     balance: 3500
-            // }, {
-            //     id: 988,
-            //     number: "2039282104",
-            //     displayName: "High Yield Certificate",
-            //     type: "certificate",
-            //     balance: 4050.30
-            // }]
-
-            // return Promise.resolve({
-            //     accounts: accounts
-            // });
         },
 
         success: BankActions.getAccountsCompleted,
@@ -77,3 +42,27 @@ export const BankSource = {
     }
 
 }
+
+/* It turns out that the POST-redirect pattern does not fit nicely into
+    flux architecture (and I know I did this in the login pages too).
+    For those of you that think there is a simple solution to this,
+    you are probably wrong, there is never a simple answer.
+    See huge discussion here on this very problem: https://github.com/reactjs/redux/issues/297
+
+    In the name of getting this done, I am going with a promise-returning Api class.
+*/
+
+export class BankApi {
+
+    static postTransfer = async (amountCents, from, to) => {
+        console.log("From and to", amountCents, from, to);
+
+        await axios.post(`${host}/bank/transfer`, {
+            amountCents: amountCents,
+            from: from,
+            to: to
+        });
+    }
+
+}
+

@@ -5,11 +5,12 @@ import Accounting from "../../../lib/accounting";
 
 import BankStore from "../../../stores/BankStore";
 import BankActions from "../../../actions/BankActions";
+import { BankApi } from "../../../api/BankApi";
 
 import { TAccountList, accountTypesMap } from "../../../constants";
 import { Button } from "react-foundation";
-
 import classNames from "classnames";
+import { withRouter } from "react-router-dom";
 
 import "./Transfers.scss";
 
@@ -81,7 +82,7 @@ class TransferOption extends React.Component {
     }
 }
 
-export default class Transfers extends React.Component {
+class Transfers extends React.Component {
 
     constructor() {
         super();
@@ -115,9 +116,16 @@ export default class Transfers extends React.Component {
         this.setState(newState);
     }
 
-    handleTransferSubmit = (e) => {
+    handleTransferSubmit = async (e) => {
         if (e) { e.preventDefault(); }
-        console.log("We need to handle a transfer!");
+        const amountCents = Math.floor(this.money.value * 100);
+
+        const fromId = this.state.from;
+        const toId = this.state.to;
+        await BankApi.postTransfer(amountCents, fromId, toId);
+
+        /* Now redirect */
+        this.props.history.push("/bank");
     }
 
     renderAccountDropdown = (stateKey) => {
@@ -179,7 +187,12 @@ export default class Transfers extends React.Component {
                             <p>Amount</p>
                             <span className="input-group">
                                 <span className="input-group-label">$</span>
-                                <input className="input-group-field" type="number" ref={input => this.money = input}/>
+                                <input
+                                    className="input-group-field"
+                                    ref={input => this.money = input}
+                                    type="number"
+                                    step="0.01"
+                                />
                             </span>
                             <hr />
 
@@ -202,3 +215,5 @@ export default class Transfers extends React.Component {
     }
 
 }
+
+export default withRouter(Transfers)
