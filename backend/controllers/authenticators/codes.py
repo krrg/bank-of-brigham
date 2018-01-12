@@ -41,6 +41,7 @@ async def handle_enable_backup_codes(request, session_claims=None, **kwargs):
 async def handle_begin_verify_backup_code(request, session_claims=None):
     username = session_claims["username"]
     await events.begin_2fa(username, "codes")
+    return sanic.response.text("Awaiting backup code entry")
 
 @Codes.route("/completeverify", methods=["POST"])
 @controllers.require_password
