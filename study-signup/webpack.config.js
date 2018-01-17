@@ -78,7 +78,7 @@ module.exports = {
     plugins: [
         extractSass,
         new HtmlWebpackPlugin({
-            title: 'Webpack App',
+            title: 'Website Usability Study',
             filename: 'index.html',
         }),
         new CopyWebpackPlugin([

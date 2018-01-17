@@ -1,30 +1,106 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:100|Source+Serif+Pro');
+@import url('https://fonts.googleapis.com/css?family=Source+Serif+Pro');
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300');
+@import "shadowed.scss";
+
 
 html, body {
     margin: 0;
     padding: 0;
+    font-size: 15pt;
 }
 
 body {
     background-color: whitesmoke;
     font-family: 'Source Serif Pro', serif;
+    padding-bottom: 4em;
+    padding-top: 4em;
 }
 
-h1, h2, h3 {
+h1, h2 {
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
 }
 
 h1 {
-    font-size: 36pt;
+    font-size: 45pt;
     font-weight: 100pt;
 }
 
 .Index {
+    @extend .content-section;
     max-width: 1024px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2em;
     background-color: white;
     padding: 2em;
+    
+    h1 {
+        margin-bottom: 3rem;
+    }
+
+    .__secondaryHeader {
+        border-top: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+
+        h2 {
+            // margin: 0 0 1.5em 0;
+            &:last-child {
+                margin-left: auto;
+            }
+        }
+        margin-bottom: 4rem;
+    }
+
+    table.__compensationTable {
+        margin-top: 1em;
+        border-collapse: collapse;
+
+        th {
+            border-bottom: 1px solid black;
+
+
+        }
+
+        td, th {
+            &:first-child {
+                border-right: 1px solid black;
+            }
+
+            text-align: center;
+            padding-left: 1em;
+            padding-right: 1em;
+        
+        }
+    }
+
+    a.__surveyLink {
+        background-color: #000077;
+        border-color: red;
+        font-size: 16pt;
+        padding: 0.75em;
+        margin-left: auto;
+        margin-right: auto;
+        color: white;
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 300;
+        text-decoration: none;
+        border-radius: 3px;
+    }
+
+    .__center.horiz {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+
+}
+
+.content-section {
+    @include shadowed-medium();
 }
