@@ -72,16 +72,16 @@ const Index = () => {
                 <h3>Further Information</h3>
                 <p>
                     This research study has been approved by the Brigham Young University Institutional Review Board for Human Subjects.
-                    
+
                     If you have any questions about this study, please contact:
                 </p>
                 <table align="center">
-                    <tr>Kent Seamons, PhD (Co-investigator)</tr>
+                    <tr>Kent Seamons, PhD</tr>
                     <tr><a href="mailto:seamons@cs.byu.edu">seamons@.cs.byu.edu</a></tr>
-                    <tr>801-422-UNKNOWN</tr>
+                    <tr>801-422-3722</tr>
                     <tr>2230 TMCB</tr>
                 </table>
-                    
+
 
                 <p>
                     To apply to participate in this study, please take this brief survey:<br />
@@ -91,7 +91,7 @@ const Index = () => {
                 </div>
 
 
-                
+
             </p>
 
         </div>
