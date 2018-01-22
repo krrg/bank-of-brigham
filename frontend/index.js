@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Redirect, IndexRoute } from "react-router-dom";
 import Bank from "./components/Bank/Bank";
 import HeaderBar from "./components/Bank/HeaderBar/HeaderBar";
 import Transfers from "./components/Bank/Transfers/Transfers";
+import Payments from "./components/Bank/Transfers/Payments";
 
 import LoginRouterWrapper from "./components/Login/LoginRouterWrapper";
 import Logout from "./components/Login/Logout";

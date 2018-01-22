@@ -91,7 +91,7 @@ module.exports = {
                 to: "img"
             }
         ]),
-        new UglifyJsPlugin(),
+        // new UglifyJsPlugin(),
     ],
 
 
