@@ -43,12 +43,6 @@ class Transfers extends React.Component {
         BankStore.unlisten(this.handleAccountsStoreUpdated);
     }
 
-    handleSelectChanged = (stateKey, option, e) => {
-        const newState = {};
-        newState[stateKey] = option.id;  // Maybe supposed to be the id?  // TODO TODO TODO TODO TODO Look here very closely.  Something is broken.
-        this.setState(newState);
-    }
-
     handleTransferSubmit = async (e) => {
         if (e) { e.preventDefault(); }
         const amountCents = Math.floor(this.money.value * 100);
@@ -59,31 +53,6 @@ class Transfers extends React.Component {
 
         /* Now redirect */
         this.props.history.push("/bank");
-    }
-
-    renderAccountDropdown = (stateKey) => {
-        const self = this; /* Not sure how far `this` would go. */
-        const options = this.state.accounts.map(a => {
-            return _.merge({}, a, {
-                "value": a["id"],
-            })
-        });
-
-        return (
-            <Select
-                options={options}
-                optionComponent={TransferOption}
-                maxHeight={10}
-                value={this.state[stateKey]}
-                valueComponent={TransferOption}
-                onChange={(option, e) => {this.handleSelectChanged(stateKey, option, e)}}
-                clearable={false}
-                arrowRenderer={this.state[stateKey] ? null : undefined}
-                inputRenderer={this.state[stateKey] ? undefined : undefined}
-                multi={false}
-                searchable={false}
-            />
-        )
     }
 
     renderSubmitButton = () => {
