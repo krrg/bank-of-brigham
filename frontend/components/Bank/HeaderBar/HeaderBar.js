@@ -4,13 +4,11 @@ import { Link } from "react-router-dom";
 
 import "./HeaderBar.scss";
 
-const HeaderBar = ({showLinks}) => {
+const HeaderBar = ({showLinks, link}) => {
 
     if (showLinks === undefined) {
         showLinks = true;
     }
-
-    const link = showLinks ? "/bank" : "/create";
 
     return (
         <div className="HeaderBar">

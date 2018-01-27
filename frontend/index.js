@@ -27,13 +27,13 @@ const Index = () => {
             <div>
                 <Route exact path="/" component={() => <Redirect to="/login" />} />
                 <div>
-                    <Route path="/login" component={() => <HeaderBar showLinks={false} />} />
+                    <Route path="/login" component={() => <HeaderBar showLinks={false} link="/create" />} />
                     <Route exact path="/login" component={() => <Redirect to="/login/1" />} />
                     <Route path="/login/:stage" component={() => <LoginRouterWrapper />} />
                 </div>
-                <Route exact path="/logout" component={() => <div><HeaderBar showLinks={false} /><Logout /></div>} />
+                <Route exact path="/logout" component={() => <div><HeaderBar showLinks={false} link="/login" /><Logout /></div>} />
                 <div>
-                    <Route path="/create" component={() => <HeaderBar showLinks={false} />} />
+                    <Route path="/create" component={() => <HeaderBar showLinks={false} link="/login" />} />
                     <Route exact path="/create" component={() => <Redirect to="/create/1"/>} />
                     <Route exact path="/create/1" component={() => <SignupUsernamePassword />} />
                     <Route exact path="/create/2" component={() => <TwoFactorSelection />} />
@@ -45,7 +45,7 @@ const Index = () => {
                     <Route exact path="/create/3/push" component={() => <PushSignup />} />
                 </div>
                 <div>
-                    <Route path="/bank" component={() => <HeaderBar />} />
+                    <Route path="/bank" component={() => <HeaderBar showLinks={true} link="/bank" />} />
                     <Route exact path="/bank" component={() => <Bank />} />
                     <Route exact path="/bank/transfers" component={() => <Transfers />} />
                     <Route exact path="/bank/payments" component={() => <Payments />} />

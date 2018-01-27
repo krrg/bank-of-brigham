@@ -82,7 +82,7 @@ module.exports = {
     plugins: [
         extractSass,
         new HtmlWebpackPlugin({
-            title: 'Webpack App',
+            title: 'Bank of Brigham',
             filename: 'index.html',
         }),
         new CopyWebpackPlugin([

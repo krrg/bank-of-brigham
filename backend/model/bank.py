@@ -82,6 +82,28 @@ class Bank(object):
 
         return True
 
+    async def payment_from_account(self, username, amount_cents, from_account_id):
+        from_account = await self.bank.find_one({
+            "username": username,
+            "_id": bson.objectid.ObjectId(from_account_id)
+        })
+
+        if not from_account:
+            print("account does not appear to exist", from_account_id)
+            return False
+
+        if from_account["balance_cents"] - amount_cents < 0:
+            return False
+
+        from_account["balance_cents"] -= amount_cents
+        await self.bank.replace_one({
+            "username": username,
+            "_id": bson.objectid.ObjectId(from_account_id)
+        }, from_account)
+
+        return True
+
+
     @staticmethod
     def random_account_number():
         number = []

@@ -49,7 +49,9 @@ export const BankSource = {
     you are probably wrong, there is never a simple answer.
     See huge discussion here on this very problem: https://github.com/reactjs/redux/issues/297
 
-    In the name of getting this done, I am going with a promise-returning Api class.
+    In the name of getting this done for thesis, I am going with a promise-returning Api class.
+    In production, would want to revisit this issue to better understand proper way to do this
+    in flux.
 */
 
 export class BankApi {
@@ -62,6 +64,15 @@ export class BankApi {
             from: from,
             to: to
         });
+    }
+
+    static postPayment = async (amountCents, from) => {
+        console.log("Posting payment from: ", amountCents, from);
+
+        await axios.post(`${host}/bank/payment`, {
+            amountCents: amountCents,
+            from: from,
+        })
     }
 
 }

@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { withRouter } from "react-router-dom";
 
 import TransferOption from "./TransferOption";
+import AccountDropdown from "./AccountDropdown";
 
 import "./Transfers.scss";
 
@@ -55,12 +56,36 @@ class Transfers extends React.Component {
         this.props.history.push("/bank");
     }
 
+    handleFromUpdated = (newState) => {
+        console.log("It is falling [from]!", newState);
+        this.setState({
+            "from": newState["account"]
+        })
+    }
+
+    handleToUpdated = (newState) => {
+        console.log("It is falling [to]!", newState);
+        this.setState({
+            "to": newState["account"]
+        })
+    }
+
+    handleValueUpdated = (e) => {
+        this.setState({
+            moneyValue: e.target.value,
+        })
+    }
+
     renderSubmitButton = () => {
         const allRequiredFieldsFilled = _.every([
             !! this.money && this.money.value,
             !! this.state.to,
             !! this.state.from,
         ])
+
+        console.log("Money: ", this.money)
+        console.log("To:", this.state.to)
+        console.log("From:", this.state.from);
 
         return (
             <Button
@@ -94,17 +119,23 @@ class Transfers extends React.Component {
                                     ref={input => this.money = input}
                                     type="number"
                                     step="0.01"
+                                    onInput={this.handleValueUpdated}
                                 />
                             </span>
                             <hr />
 
                             <p>Transfer from:</p>
-                            { this.renderAccountDropdown("from") }
+                                <AccountDropdown
+                                    accounts={this.state.accounts}
+                                    handleSelectChanged={this.handleFromUpdated}
+                                />
                             <hr />
 
                             <p>Transfer to:</p>
-                            { this.renderAccountDropdown("to") }
-
+                                <AccountDropdown
+                                    accounts={this.state.accounts}
+                                    handleSelectChanged={this.handleToUpdated}
+                                />
                             <br />
                             { this.renderSubmitButton() }
 
