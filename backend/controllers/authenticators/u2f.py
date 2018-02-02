@@ -9,7 +9,28 @@ import settings
 
 
 U2F = sanic.Blueprint("u2f", url_prefix="/api/u2f")
-U2F_APP_ID = "https://localhost:4000"
+
+def U2F_APP_ID(host):
+    # A kind of poor man's solution I suppose.  The app-id.json approach
+    # Doesn't seem to work correctly, so we are left with this little hack.s
+    return f"https://{host}"
+
+
+# @U2F.route("/app-id.json", methods=["GET"])
+# async def handle_app_id(request):
+#     print("Just got request.host of ", request.host)
+
+#     return sanic.response.json({
+#         "trustedFacets": [{
+#             "version": { "major": 1, "minor": 0 },
+#             "ids": [
+#                 "https://www.bofb.us",
+#                 "https://bofb.us",
+#                 "https://localhost:4000",
+
+#             ]
+#         }]
+#     })
 
 
 @U2F.listener('after_server_start')
@@ -30,7 +51,7 @@ async def ensure_mongo_connection(app, loop):
 async def handle_beginenable_u2f(request, session_claims=None):
     username = session_claims["username"]
     previously_stored_devices = []  # You can only register one device at a time in our system!
-    enrollment_result = u2f.begin_registration(U2F_APP_ID, previously_stored_devices)
+    enrollment_result = u2f.begin_registration(U2F_APP_ID(request.host), previously_stored_devices)
 
     await tokens_model.store_token_for(username, enrollment_result.json, expiring=True)
 
@@ -43,7 +64,7 @@ async def handle_completeenable_u2f(request, session_claims=None):
     username = session_claims["username"]
     enrollment_result = await tokens_model.get_token_for(username)
 
-    device, cert = u2f.complete_registration(enrollment_result, request.json, U2F_APP_ID)
+    device, cert = u2f.complete_registration(enrollment_result, request.json, U2F_APP_ID(request.host))
 
     await accounts_model.register_2fa_method(username, 'u2f', device.json)
     await events.log_event({
@@ -60,7 +81,7 @@ async def handle_beginverify_2fa(request, session_claims=None):
     username = session_claims["username"]
     device = await accounts_model.get_2fa_metadata(username)
 
-    challenge = u2f.begin_authentication(U2F_APP_ID, [device])
+    challenge = u2f.begin_authentication(U2F_APP_ID(request.host), [device])
     await tokens_model.store_token_for(username, challenge.json, expiring=True)
     await events.begin_2fa(username, "u2f")
     return sanic.response.json(challenge.data_for_client)
@@ -71,7 +92,7 @@ async def handle_beginverify_2fa(request, session_claims=None):
 async def handle_completeverify_2fa(request, session_claims=None):
     username = session_claims["username"]
     challenge = await tokens_model.get_token_for(username)
-    device, c, t = u2f.complete_authentication(challenge, request.json, [U2F_APP_ID])
+    device, c, t = u2f.complete_authentication(challenge, request.json, [U2F_APP_ID(request.host)])
     await events.complete_2fa(username, "u2f")
 
     response = sanic.response.json({
