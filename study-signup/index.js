@@ -77,7 +77,7 @@ const Index = () => {
                 </p>
                 <table align="center">
                     <tr>Kent Seamons, PhD</tr>
-                    <tr><a href="mailto:seamons@cs.byu.edu">seamons@.cs.byu.edu</a></tr>
+                    <tr><a href="mailto:seamons@cs.byu.edu">seamons@cs.byu.edu</a></tr>
                     <tr>801-422-3722</tr>
                     <tr>2230 TMCB</tr>
                 </table>
