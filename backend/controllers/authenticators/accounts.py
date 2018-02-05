@@ -81,12 +81,17 @@ async def handle_create_account(request):
         return await login_user(username, password)
     except model.accounts.AccountAlreadyExistsException as e:
         return sanic.response.text("conflict", status=409)
+    except model.accounts.PasswordTooWeakException as e:
+        return sanic.response.json({"error": "weakPassword"}, status=400)
 
 
 @Accounts.route("/accounts/verify_password", ["POST"])
 async def handle_verify_password(request):
     username = request.json.get("username")
     password = request.json.get("password")
+    token = request.json.get("token")
+
+    await events.end_password(token, username)
 
     return await login_user(username, password)
 
@@ -97,3 +102,11 @@ async def handle_logout(request):
         .create_session()\
         .attach_to_response(response)
     return response
+
+import secrets
+@Accounts.route("/passwords/beginverify", ["GET"])
+async def handle_begin_password(request):
+    correlation_token = await events.begin_password()
+    return sanic.response.json({
+        "token": correlation_token
+    })

@@ -6,6 +6,7 @@ import LoginStore from "../../stores/LoginStore";
 import ErrorWrapper from "../ErrorWrapper";
 
 import "./Login.scss";
+import { LoginApiHelpers } from "../../api/LoginApi";
 
 class Login extends React.Component {
 
@@ -24,7 +25,7 @@ class Login extends React.Component {
         const username = this.refs.username.value;
         const password = this.refs.password.value;
 
-        LoginActions.loginPassword(username, password);
+        LoginActions.loginPassword(username, password, this.state.token);
     }
 
     handleLoginStoreUpdated = (storeState) => {
@@ -33,8 +34,12 @@ class Login extends React.Component {
         })
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         LoginStore.listen(this.handleLoginStoreUpdated);
+        const token = await LoginApiHelpers.beginLoginPassword();
+        this.setState({
+            token: token
+        })
     }
 
     componentWillUnmount() {

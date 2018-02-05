@@ -24,7 +24,7 @@ const HeaderBar = ({showLinks, link}) => {
                         <Link to="/bank">Home</Link>
                         <Link to="/bank/payments">Payments</Link>
                         <Link to="/bank/transfers">Transfers</Link>
-                        <Link to="/bank/messages">Settings</Link>
+                        {/* <Link to="/bank/messages">Settings</Link> */}
                         <Link to="/logout">Logout</Link>
                     </div>
                 : undefined }

@@ -63,6 +63,11 @@ class SignupStore {
         if (axiosResult.response.status === 409 /* Conflict */) {
             this.addError("usernameAlreadyTaken");
             return;
+        } else if (axiosResult.response.status === 400) {
+            const error = axiosResult.response.data["error"];
+            console.log("Adding generically bad error", error)
+            this.addError(error);
+            return;
         }
     }
 

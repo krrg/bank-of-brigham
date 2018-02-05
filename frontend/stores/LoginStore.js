@@ -80,9 +80,10 @@ class LoginStore {
 
         const username = dispatchedData[0];
         const password = dispatchedData[1];
+        const token = dispatchedData[2];
 
         if (! this.getInstance().isLoading()) {
-            this.getInstance().loginPassword(username, password)
+            this.getInstance().loginPassword(username, password, token);
         }
     }
 

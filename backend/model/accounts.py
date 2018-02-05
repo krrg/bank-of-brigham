@@ -20,6 +20,9 @@ class Accounts(object):
         if await self.accounts.find_one({"username": username}) is not None:
             raise AccountAlreadyExistsException()
 
+        if len(password) < 8 or password == "password":
+            raise PasswordTooWeakException()
+
         hashed_pw = PasswordHashingHelpers.hash_and_salt_password(password)
 
         document = {
@@ -85,6 +88,9 @@ class PasswordHashingHelpers(object):
 
 
 class AccountAlreadyExistsException(Exception):
+    pass
+
+class PasswordTooWeakException(Exception):
     pass
 
 

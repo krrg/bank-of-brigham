@@ -56,7 +56,7 @@ class TotpSignup extends React.Component {
 
     renderPlayLink = () => {
         return (
-            <a className="__googlePlayLink" target="blank" href='https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+            <a className="__googlePlayLink" href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' target="blank">
                 <img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/>
             </a>
         )
@@ -66,7 +66,7 @@ class TotpSignup extends React.Component {
         return (
             <div className="Step">
                 <h3>Step 1</h3>
-                <p>Download the <b>FreeOTP Authenticator</b> app to your Android device</p>
+                <p>Download the <b>Google Authenticator</b> app to your Android device</p>
                 { this.renderPlayLink() }
                 { this.state.appDownloaded ? null :
                      <Button className="nextButton __downloaded" onClick={this.handleNextButtonDownloadedClicked}>Next</Button>
@@ -90,7 +90,7 @@ class TotpSignup extends React.Component {
         return (
             <div className="Step">
                 <h3>Step 2</h3>
-                <p>Use the <b>FreeOTP Authenticator</b> app on your Android device to scan this QR code:</p>
+                <p>Use the <b>Google Authenticator</b> app on your Android device to scan this QR code:</p>
                 { this.state.totpProvisioningUri ? this.renderQrCode() : <LoadingSpinner /> }
                 { this.state.qrCodeScanned ? null :
                      <Button className="nextButton __qrCodeScanned" onClick={this.handleNextButtonQrCodeScannedClicked}>Next</Button>
@@ -112,6 +112,7 @@ class TotpSignup extends React.Component {
         return (
             <div className="TotpSignup">
                 <h2>Authenticator App</h2>
+                <p>The study coordinator will assist you with these steps.</p>
                 { this.renderStep1_DownloadApp() }
                 { this.state.appDownloaded ? this.renderStep2_ScanQrCode() : null }
                 { this.state.qrCodeScanned ? this.renderStep3_VerifyWorkingWithCode() : null }

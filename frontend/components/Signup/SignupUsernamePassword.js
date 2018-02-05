@@ -17,6 +17,7 @@ class SignupUsernamePassword extends React.Component {
         this.state = {
             errorPasswordNotMatch: false,
             errorUsernameAlreadyTaken: false,
+            errorWeakPassword: false,
         }
     }
 
@@ -35,6 +36,7 @@ class SignupUsernamePassword extends React.Component {
         this.setState({
             readyFor2faSelection: storeState.readyFor2faSelection,
             errorUsernameAlreadyTaken: SignupStore.getErrorStatus("usernameAlreadyTaken"),
+            errorWeakPassword: SignupStore.getErrorStatus("weakPassword"),
         })
 
         if (this.state.readyFor2faSelection) {
@@ -90,10 +92,12 @@ class SignupUsernamePassword extends React.Component {
                     <input type='text' id="Login__username" ref="username" className="Login__username" placeholder="Username" />
                 </ErrorWrapper>
 
-                <ErrorWrapper isErrored={this.state.errorPasswordNotMatch} message="Passwords do not match">
-                    <label htmlFor="Login__password">Password</label>
-                    <input type='password' id="Login__password" ref="password" className="Login__password" placeholder="Password" />
-                    <input type='password' id="Login__password2" ref="password2" className="Login__password" placeholder="Verify Password" />
+                <ErrorWrapper isErrored={this.state.errorWeakPassword} message="Please choose a longer password">
+                    <ErrorWrapper isErrored={this.state.errorPasswordNotMatch} message="Passwords do not match">
+                        <label htmlFor="Login__password">Password</label>
+                        <input type='password' id="Login__password" ref="password" className="Login__password" placeholder="Password" />
+                        <input type='password' id="Login__password2" ref="password2" className="Login__password" placeholder="Verify Password" />
+                    </ErrorWrapper>
                 </ErrorWrapper>
 
                 <Button>Create Account</Button>

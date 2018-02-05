@@ -19,10 +19,11 @@ export const LoginSource = {
 
     loginPassword: {
 
-        remote(state, username, password) {
+        remote(state, username, password, token) {
             return axios.post(`${host}/accounts/verify_password`, {
                 username: username.trim().toLowerCase(),
                 password: password, /* Do not trim or lower case this */
+                token: token,
             });
         },
 
@@ -121,6 +122,10 @@ export class LoginApiHelpers {
 
     static beginLoginTotp = () => {
         return axios.post(`${host}/totp/beginverify`)
+    }
+
+    static beginLoginPassword = () => {
+        return axios.get(`${host}/passwords/beginverify`)
     }
 
 }
