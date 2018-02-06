@@ -75,6 +75,7 @@ class SignupStore {
         this.resetErrors();
         this.setState({
             readyForSmsVerificationCode: false,
+            lastPhoneDigits: undefined,
         })
         if (! this.getInstance().isLoading()) {
             this.getInstance().registerSms(phoneNumber);
@@ -95,6 +96,9 @@ class SignupStore {
     }
 
     handleSignupBackupCodes() {
+        this.setState({
+            backupCodes: undefined
+        })
         if (! this.getInstance().isLoading()) {
             this.getInstance().enableBackupCodes();
         }
@@ -112,6 +116,10 @@ class SignupStore {
     }
 
     handleSignupTotp() {
+        this.setState({
+            totpProvisioningUri: undefined,
+            totpSecret: undefined,
+        })
         if (! this.getInstance().isLoading()) {
             this.getInstance().enableTotp();
         }
@@ -131,6 +139,9 @@ class SignupStore {
     }
 
     handleSignupU2F() {
+        this.setState({
+            u2fCompleted: false,
+        })
         if (! this.getInstance().isLoading()) {
             this.getInstance().registerU2F();
         }
@@ -147,6 +158,9 @@ class SignupStore {
     }
 
     handleSignupPush(phoneNumber) {
+        this.setState({
+            authySuccess: false,
+        })
         if (! this.getInstance().isLoading()) {
             this.getInstance().registerPush(phoneNumber);
         }

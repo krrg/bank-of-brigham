@@ -18,6 +18,8 @@ import TotpSignup from "./components/Signup/2fa/TotpSignup";
 import U2FSignup from "./components/Signup/2fa/U2FSignup";
 import PushSignup from "./components/Signup/2fa/PushSignup";
 
+import Admin from "./components/Admin"
+
 import babelPolyfill from "babel-polyfill";
 import "./index.scss";
 
@@ -50,6 +52,12 @@ const Index = () => {
                     <Route exact path="/bank/transfers" component={() => <Transfers />} />
                     <Route exact path="/bank/payments" component={() => <Payments />} />
                     <Route exact path="/bank/settings" component={() => null} />
+                </div>
+                <div>
+                    <Route path="/admin" component={() => <Admin.Header />} />
+                    <Route exact path="/admin" component={() => <Admin.Status />} />
+                    <Route exact path="/admin/timings" component={() => <Admin.Timings />} />
+                    <Route exact path="/admin/users" component={() => <Admin.Users /> }/>
                 </div>
             </div>
         </BrowserRouter>

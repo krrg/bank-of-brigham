@@ -51,11 +51,30 @@
             height: 3em;
         }
 
-        h1 {
+        .__title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
             margin: 0;
             margin-left: 0.3em;
-            font-size: 28pt;
+
+            h1 {
+                font-size: 28pt;
+                padding: 0;
+                margin: 0;
+            }
+
+            p {
+                padding: 0;
+                margin: 0;
+                margin-left: 3px;
+                position: relative;
+                top: -12px;
+            }
+
         }
+
 
     }
 }
