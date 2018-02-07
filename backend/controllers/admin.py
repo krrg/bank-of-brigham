@@ -5,6 +5,7 @@ from controllers.session import Session
 
 import model.bank
 import model.events
+import model.accounts
 
 import json
 import bson.json_util
@@ -15,24 +16,18 @@ Admin = sanic.Blueprint("adminbp", url_prefix="/api")
 
 @Admin.listener('after_server_start')
 async def ensure_mongo_connection(app, loop):
-    global bank_model
-    bank_model = model.bank.Bank()
-    await bank_model.before_start()  # Ensure db indexes will be created.
-
     global events
     events = model.events.EventsReader()
-    await events.before_start()
 
     global accounts
-    accounts = model.accounts.Accounts()
-    await accounts.before_start()
+    accounts = model.accounts.AccountsReader()
 
 
-async def stream_events(events_cursor, response):
+async def stream_list(list_cursor, title, response):
     # A little ghetto, but it works and won't load the entire result set into memory.
-    response.write('{"events":[')
+    response.write('{"' + title + '":[\n  ')
     first = True
-    async for event in events_cursor:
+    async for event in list_cursor:
         if not first:
             response.write(",\n  ")
         else:
@@ -40,13 +35,25 @@ async def stream_events(events_cursor, response):
         response.write(bson.json_util.dumps(event))
     response.write('\n]}')
 
-@Admin.route("/admin/summary")
+
+@Admin.route("/events/logins/<type>")
 @controllers.localhost_only
-async def summary_statistics(request):
-    f = functools.partial(stream_events, events.get_password_logins())
+async def handle_login_events(request, type):
+    if type == "password":
+        f = functools.partial(stream_list, events.get_password_logins(), "events")
+    elif type == "2fa":
+        f = functools.partial(stream_list, events.get_2fa_logins(), "events")
+    else:
+        return sanic.response.text("", status=404)
+
     return sanic.response.stream(f, content_type="application/json")
 
 
+@Admin.route("/admin/accounts")
+@controllers.localhost_only
+async def list_users(request):
+    f = functools.partial(stream_list, accounts.list_all_users(), "users")
+    return sanic.response.stream(f, content_type="application/json")
 
 
 

@@ -124,8 +124,9 @@ export class LoginApiHelpers {
         return axios.post(`${host}/totp/beginverify`)
     }
 
-    static beginLoginPassword = () => {
-        return axios.get(`${host}/passwords/beginverify`)
+    static beginLoginPassword = async () => {
+        const result = await axios.get(`${host}/passwords/beginverify`);
+        return result.data["token"]
     }
 
 }

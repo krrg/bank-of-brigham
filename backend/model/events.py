@@ -40,11 +40,12 @@ class Events(object):
         })
         return correlation_token
 
-    async def end_password(self, correlation_token, username):
+    async def end_password(self, correlation_token, username, success=True):
         await self.log_event({
             "username": username,
             "token": correlation_token,
             "type": "complete_password",
+            "success": success,
         })
         await self.events.update_one({
             "token": correlation_token
@@ -74,8 +75,22 @@ class EventsReader(object):
             query["username"] = username
 
         cursor = self.events.find(query)
-        cursor.sort('created_at', pymongo.DESCENDING)
+        cursor.sort('date', pymongo.DESCENDING)
+        return cursor
 
+    def get_2fa_logins(self, username=None):
+        query = {
+            "$or": [
+                { "type": "begin_2fa" },
+                { "type": "complete_2fa" }
+            ]
+        }
+
+        if username is not None:
+            query["username"] = username
+
+        cursor = self.events.find(query)
+        cursor.sort('date', pymongo.DESCENDING)
         return cursor
 
 

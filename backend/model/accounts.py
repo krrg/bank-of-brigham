@@ -69,6 +69,46 @@ class Accounts(object):
         })
 
 
+class AccountsReader(object):
+
+    def __init__(self):
+        self.accounts = db.cxpool.mongoclient["isrlauth"]["accounts"]
+
+    def before_start(self):
+        pass
+
+    def list_all_users(self):
+        cursor = self.accounts.aggregate([
+            {
+                "$project": {
+                    "username": 1,
+                    "2fa": 1,
+                    "_id": 0,
+                }
+            }, {
+                "$lookup": {
+                    "from": "bank",
+                    "localField": "username",
+                    "foreignField": "username",
+                    "as": "bank"
+                }
+            }, {
+                "$lookup": {
+                    "from": "events",
+                    "localField": "username",
+                    "foreignField": "username",
+                    "as": "events"
+                }
+            }, {
+                "$sort": {
+                    "created_at": pymongo.DESCENDING
+                }
+            }
+        ])
+
+        return cursor
+
+
 import nacl
 import nacl.pwhash
 

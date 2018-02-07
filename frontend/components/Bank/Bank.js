@@ -40,7 +40,7 @@ class BankIndex extends React.Component {
 
     render() {
         if (! this.state.accounts) {
-            return (<h1>Loading</h1>);
+            return null;
         }
 
         return (

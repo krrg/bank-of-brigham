@@ -26,24 +26,16 @@ async def ensure_mongo_connection(app, loop):
     await events.before_start()
 
 
-async def login_user(username, password):
+async def login_user(username, password, token=None):
     if not await accounts_model.verify_password(username, password):
-        await events.log_event({
-            "username": username,
-            "type": "login",
-            "message": "rejected"
-        })
+        await events.end_password(token, username, success=False)
         return sanic.response.json({
             "error": "could not verify password"
         }, status=401)
 
     second_factor = await accounts_model.get_2fa_method(username)
 
-    await events.log_event({
-        "username": username,
-        "type": "login",
-        "message": "successful"
-    })
+    await events.end_password(token, username, success=True)
 
     response = sanic.response.json({
         "username": username,
@@ -91,9 +83,7 @@ async def handle_verify_password(request):
     password = request.json.get("password")
     token = request.json.get("token")
 
-    await events.end_password(token, username)
-
-    return await login_user(username, password)
+    return await login_user(username, password, token=token)
 
 @Accounts.route("/accounts/session", ["DELETE"])
 async def handle_logout(request):
