@@ -23,7 +23,6 @@ export class EventList extends React.Component {
     }
 
     renderRow = (event) => {
-        console.log(event);
         return (
             <table>
                 <tbody>

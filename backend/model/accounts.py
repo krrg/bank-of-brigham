@@ -80,6 +80,10 @@ class AccountsReader(object):
     def list_all_users(self):
         cursor = self.accounts.aggregate([
             {
+                "$sort": {
+                    "created_at": pymongo.DESCENDING
+                }
+            }, {
                 "$project": {
                     "username": 1,
                     "2fa": 1,
@@ -98,11 +102,7 @@ class AccountsReader(object):
                     "localField": "username",
                     "foreignField": "username",
                     "as": "events"
-                }
-            }, {
-                "$sort": {
-                    "created_at": pymongo.ASCENDING
-                }
+                },
             }
         ])
 

@@ -43,9 +43,10 @@ class AdminStore {
         console.log("The users list is completed", result.data)
 
         const usersList = result.data["users"].map(user => {
+            user = _.merge(user, summarizeUser(user));
             user["bank"] = user["bank"].map(transmogrifyBankObject)
-
-            return _.merge(user, summarizeUser(user))
+            user["events"] = sortEventsDescending(user["events"]);
+            return user;
         })
 
         const usersMap = _.keyBy(usersList, user => user['username']);
@@ -103,7 +104,7 @@ class AdminStore {
 export const summarizeUser = (user) => {
     const username = user["username"];
     const secondFactor = user["2fa"];
-    const events = sortEventsDescending(user["events"]); // I think Mongo is doing this already, but just to be sure.
+    const events = user["events"];
     const lastLoginAttempt = filterPasswordLoginBeginAttempts(events, username)[0];
     const accountBalance = totalAccountBalances(user["bank"]);
 
@@ -117,7 +118,7 @@ export const summarizeUser = (user) => {
 
 const totalAccountBalances = (accounts) => {
     return _.sumBy(accounts, account => {
-        return account["balance_cents"] / 100.0;
+        return account["balance_cents"] / 100.0
     })
 }
 
@@ -147,7 +148,8 @@ const filterPasswordLoginBeginAttempts = (events, username) => {
 
 const sortEventsDescending = (events) => {
     return _.sortBy(events, event => {
-        return event["date"]["$date"];
+        console.log(-1 * event["date"]["$date"], "<<<< date");
+        return -1 * event["date"]["$date"];
     })
 }
 
