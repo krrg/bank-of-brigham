@@ -43,9 +43,11 @@ class AdminStore {
         console.log("The users list is completed", result.data)
 
         const usersList = result.data["users"].map(user => {
-            user = _.merge(user, summarizeUser(user));
-            user["bank"] = user["bank"].map(transmogrifyBankObject)
-            user["events"] = sortEventsDescending(user["events"]);
+            /* These transformations are a little fragile and must be done
+               exactly in this order */
+               user["events"] = sortEventsDescending(user["events"]);
+               user = _.merge(user, summarizeUser(user));
+               user["bank"] = user["bank"].map(transmogrifyBankObject)
             return user;
         })
 
