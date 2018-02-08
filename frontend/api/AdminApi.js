@@ -18,14 +18,24 @@ const AdminSource = {
     get2FALoginEvents: {
         remote(state) {
             return axios.get(`${host}/events/logins/2fa`);
-        }
+        },
+
+        success: AdminActions.get2faLoginEventsCompleted,
+        error: AdminActions.get2faLoginEventsErrored,
     },
 
 
-    getUsers: {
+    getUsersList: {
         remote(state) {
             return axios.get(`${host}/admin/accounts`);
-        }
+        },
+
+        local(state) {
+            return state["usersList"];
+        },
+
+        success: AdminActions.getUsersListCompleted,
+        error: AdminActions.getUsersListErrored,
     }
 
 

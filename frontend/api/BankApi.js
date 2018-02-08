@@ -4,7 +4,7 @@ import { apihost as host } from "../constants";
 import babelPolyfill from "babel-polyfill";
 
 
-const transmogrifyBankObject = (bankObject) => {
+export const transmogrifyBankObject = (bankObject) => {
     if (! bankObject) {
         return bankObject;  // GIGO
     }

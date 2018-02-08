@@ -1,0 +1,11 @@
+@import "container.scss";
+
+.AdminSpecificUser {
+    @extend .content-container;
+}
+
+.EventList {
+    .__colKey {
+        width: 16em;
+    }
+}

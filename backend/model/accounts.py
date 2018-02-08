@@ -101,7 +101,7 @@ class AccountsReader(object):
                 }
             }, {
                 "$sort": {
-                    "created_at": pymongo.DESCENDING
+                    "created_at": pymongo.ASCENDING
                 }
             }
         ])

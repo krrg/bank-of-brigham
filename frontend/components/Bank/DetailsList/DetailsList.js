@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { accountTypes, accountTypesMap, TAccountList } from "../../../constants";
 import Accounting from "../../../lib/accounting";
 import { Link } from "react-router-dom";
@@ -8,7 +9,8 @@ import "./DetailsList.scss";
 export default class DetailsList extends React.Component {
 
     static propTypes = {
-        accounts: TAccountList
+        accounts: TAccountList.isRequired,
+        alternateTitle: PropTypes.string,
     }
 
     renderAccountNumber = (accountNumber) => {
@@ -90,10 +92,12 @@ export default class DetailsList extends React.Component {
     }
 
     render() {
+        const title = this.props.alternateTitle ? this.props.alternateTitle : "Details"
+
         return (
             <div className="DetailsList">
                 <div className="__header">
-                    <h2>Details</h2>
+                    <h2>{ title }</h2>
                 </div>
 
                 { accountTypes.map(this.renderTypeRow) }

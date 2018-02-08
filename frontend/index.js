@@ -58,6 +58,7 @@ const Index = () => {
                     <Route exact path="/admin" component={() => <Admin.Status />} />
                     <Route exact path="/admin/timings" component={() => <Admin.Timings />} />
                     <Route exact path="/admin/users" component={() => <Admin.Users /> }/>
+                    <Route exact path="/admin/users/:username" component={({match}) => <Admin.SpecificUser username={match.params.username}/>} />
                 </div>
             </div>
         </BrowserRouter>

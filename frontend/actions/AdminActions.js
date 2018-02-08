@@ -9,6 +9,10 @@ const AdminActions = AltInstance.generateActions(
     'get2faLoginEventsCompleted',
     'get2faLoginEventsErrored',
 
+    'getUsersList',
+    'getUsersListCompleted',
+    'getUsersListErrored'
+
 );
 
 export default AdminActions;

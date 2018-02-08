@@ -75,7 +75,7 @@ class EventsReader(object):
             query["username"] = username
 
         cursor = self.events.find(query)
-        cursor.sort('date', pymongo.DESCENDING)
+        cursor.sort('date', pymongo.ASCENDING)
         return cursor
 
     def get_2fa_logins(self, username=None):
@@ -90,7 +90,7 @@ class EventsReader(object):
             query["username"] = username
 
         cursor = self.events.find(query)
-        cursor.sort('date', pymongo.DESCENDING)
+        cursor.sort('date', pymongo.ASCENDING)
         return cursor
 
 
