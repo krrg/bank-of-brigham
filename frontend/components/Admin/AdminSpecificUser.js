@@ -59,12 +59,47 @@ export class EventList extends React.Component {
 
 }
 
-export class DailyLoginChart extends React.Component {
-
-    render() {
-
+const NumberRow = ({numbers, label, isHeaderRow}) => {
+    if (isHeaderRow) {
+        return (
+            <tr>
+                <th>{ label }</th>
+                { numbers.map((number, i) =>
+                    <th key={`bucket-${i}`} className="__bucket">
+                        { number }
+                    </th>
+                )}
+            </tr>
+        )
+    } else {
+        return (
+            <tr>
+                <td>{ label }</td>
+                { numbers.map((number, i) =>
+                    <td key={`bucket-${i}`} className="__bucket">
+                        { number }
+                    </td>
+                )}
+            </tr>
+        )
     }
+}
 
+const DailyLoginChart = ({buckets}) => {
+
+    return (
+        <div className="DailyLoginChart">
+            <table>
+                <thead>
+                    <NumberRow isHeaderRow={true} label="Day" numbers={_.range(1, buckets["2fa"].length + 1)} />
+                </thead>
+                <tbody>
+                    <NumberRow isHeaderRow={false} label="2fa Success" numbers={buckets["2fa"].map(b => b.length)} />
+                    <NumberRow isHeaderRow={false} label="PW Success" numbers={buckets["password"].map(b => b.length)} />
+                </tbody>
+            </table>
+        </div>
+    )
 }
 
 
@@ -85,7 +120,10 @@ export default class AdminSpecificUser extends React.Component {
     handleAdminStoreUpdated = (storeState) => {
         this.setState({
             user: AdminStore.getUserByUsername(this.getUsername()),
+            userDailyLoginSummary: AdminStore.getUserDailyLoginSummary(this.getUsername()),
         })
+
+        console.log(this.state.userDailyLoginSummary);
     }
 
     componentDidMount() {
@@ -109,6 +147,8 @@ export default class AdminSpecificUser extends React.Component {
                 <h1>User Details</h1>
                 <UsersList usersList={[this.state.user]} />
 
+
+
             </div>
         )
     }
@@ -127,8 +167,10 @@ export default class AdminSpecificUser extends React.Component {
                 </div>
                 { this.renderAccounts(this.state.user["bank"]) }
                 <div className="content-container">
+                    <DailyLoginChart buckets={this.state.userDailyLoginSummary} />
                     <EventList events={this.state.user["events"]}/>
                 </div>
+
             </div>
         )
     }
