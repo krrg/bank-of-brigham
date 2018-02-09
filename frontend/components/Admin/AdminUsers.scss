@@ -1,5 +1,13 @@
 @import "container.scss";
+@import "colors.scss";
 
 .AdminUsers {
     @extend .content-container;
+
+    td.__link {
+        a {
+            color: $darkHighlight;
+            text-decoration: underline;
+        }
+    }
 }

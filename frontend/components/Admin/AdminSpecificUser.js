@@ -59,6 +59,14 @@ export class EventList extends React.Component {
 
 }
 
+export class DailyLoginChart extends React.Component {
+
+    render() {
+
+    }
+
+}
+
 
 export default class AdminSpecificUser extends React.Component {
 

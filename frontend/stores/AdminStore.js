@@ -70,6 +70,12 @@ class AdminStore {
         return this.getState().usersMap[username]
     }
 
+    static getUserDailyLoginSummary(username) {
+        const user = this.getUserByUsername(username);
+
+
+    }
+
     static getPasswordLoginSuccesses() {
         const eventsPasswordLogin = this.getState().eventsPasswordLogin;
         return filterPasswordLoginSuccesses(eventsPasswordLogin);
@@ -101,13 +107,15 @@ class AdminStore {
     static getUsersListSummary() {
         return this.getState().usersList; // All users now come pre-summarized
     }
+
+
 }
 
 export const summarizeUser = (user) => {
     const username = user["username"];
     const secondFactor = user["2fa"];
     const events = user["events"];
-    const lastLoginAttempt = filterPasswordLoginBeginAttempts(events, username)[0];
+    const lastLoginAttempt = getLastLoginAttemptFromUser(user);
     const accountBalance = totalAccountBalances(user["bank"]);
 
     return {
@@ -116,6 +124,13 @@ export const summarizeUser = (user) => {
         "lastLoginAttempt": lastLoginAttempt,
         "accountBalance": accountBalance,
     }
+}
+
+const getLastLoginAttemptFromUser = (user /* this is the object, not the username */) => {
+    const username = user["username"]
+    const events = user["events"];
+
+    return filterPasswordLoginBeginAttempts(events, username)[0];
 }
 
 const totalAccountBalances = (accounts) => {

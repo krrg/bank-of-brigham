@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 export const UserRow = ({user}) => {
     return (
         <tr>
-            <td><Link to={`/admin/users/${user['username']}`}>{user["username"]}</Link></td>
+            <td className="__link"><Link to={`/admin/users/${user['username']}`}>{user["username"]}</Link></td>
             <td>{user["2fa"]}</td>
             <td>{user["lastLoginAttempt"] ? new Date(user["lastLoginAttempt"]["date"]["$date"]).toLocaleString() : <i>Never</i>}</td>
             <td>{Accounting.formatMoney(user["accountBalance"])}</td>
