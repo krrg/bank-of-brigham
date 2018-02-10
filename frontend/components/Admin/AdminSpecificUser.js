@@ -113,7 +113,7 @@ const DailyTimingsChart = ({timeDeltas}) => {
 
     return (
         <div className="DailyTimingsChart">
-            <h3>Time to authenticate</h3>
+            <h3>Time to authenticate</h3><p>(milliseconds)</p>
             <table>
                 <thead>
                     <NumberRow isHeaderRow={true} label="Day" numbers={_.range(1, timeDeltasPassword.length + 1)} />
