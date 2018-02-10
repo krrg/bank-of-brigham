@@ -89,6 +89,7 @@ const DailyLoginChart = ({buckets}) => {
 
     return (
         <div className="DailyLoginChart">
+            <h3>Number of Logins per Day</h3>
             <table>
                 <thead>
                     <NumberRow isHeaderRow={true} label="Day" numbers={_.range(1, buckets["2fa"].length + 1)} />
@@ -96,6 +97,45 @@ const DailyLoginChart = ({buckets}) => {
                 <tbody>
                     <NumberRow isHeaderRow={false} label="2fa Success" numbers={buckets["2fa"].map(b => b.length)} />
                     <NumberRow isHeaderRow={false} label="PW Success" numbers={buckets["password"].map(b => b.length)} />
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+const DailyTimingsChart = ({timeDeltas}) => {
+
+    const timeDeltasPassword = timeDeltas["password"];
+    const timeDeltas2fa = timeDeltas["2fa"];
+
+    const rowsPassword = _.maxBy(timeDeltasPassword, deltas => deltas.length).length;
+    const rows2fa = _.maxBy(timeDeltas2fa, deltas => deltas.length).length;
+
+    return (
+        <div className="DailyTimingsChart">
+            <h3>Time to authenticate</h3>
+            <table>
+                <thead>
+                    <NumberRow isHeaderRow={true} label="Day" numbers={_.range(1, timeDeltasPassword.length + 1)} />
+                </thead>
+                <tbody>
+                    { _.range(0, rowsPassword).map(i =>
+                        <NumberRow
+                            isHeaderRow={false}
+                            label={`PW-${i}`}
+                            key={`PW-${i}`}
+                            numbers={timeDeltasPassword.map(deltaArray => deltaArray[i])}
+                        />
+                    )}
+                    <tr><td></td></tr>
+                    { _.range(0, rows2fa).map(i =>
+                        <NumberRow
+                            isHeaderRow={false}
+                            label={`2fa-${i}`}
+                            key={`2fa-${i}`}
+                            numbers={timeDeltas2fa.map(deltaArray => deltaArray[i])}
+                        />
+                    )}
                 </tbody>
             </table>
         </div>
@@ -121,6 +161,7 @@ export default class AdminSpecificUser extends React.Component {
         this.setState({
             user: AdminStore.getUserByUsername(this.getUsername()),
             userDailyLoginSummary: AdminStore.getUserDailyLoginSummary(this.getUsername()),
+            userDailyLoginTimings: AdminStore.getUserDailyLoginTimings(this.getUsername()),
         })
 
         console.log(this.state.userDailyLoginSummary);
@@ -146,9 +187,6 @@ export default class AdminSpecificUser extends React.Component {
             <div>
                 <h1>User Details</h1>
                 <UsersList usersList={[this.state.user]} />
-
-
-
             </div>
         )
     }
@@ -168,7 +206,8 @@ export default class AdminSpecificUser extends React.Component {
                 { this.renderAccounts(this.state.user["bank"]) }
                 <div className="content-container">
                     <DailyLoginChart buckets={this.state.userDailyLoginSummary} />
-                    <EventList events={this.state.user["events"]}/>
+                    <DailyTimingsChart timeDeltas={this.state.userDailyLoginTimings} />
+                    <EventList events={this.state.user["events"]} />
                 </div>
 
             </div>

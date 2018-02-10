@@ -83,7 +83,6 @@ class AdminStore {
             return null;
         }
 
-
         const events_2fa = filter2faLoginSuccesses(user["events"]);
         const events_password = filterPasswordLoginSuccesses(user["events"]);
 
@@ -95,6 +94,32 @@ class AdminStore {
         return {
             "2fa": bucketedEvents[0],
             "password": bucketedEvents[1],
+        }
+    }
+
+    static getUserDailyLoginTimings(username) {
+        const user = this.getUserByUsername(username);
+        if (! user) {
+            return null;
+        }
+        const firstLoginAttempt = getFirstLoginAttemptFromUser(user);
+        if (! firstLoginAttempt) {
+            return null;
+        }
+        const firstLogin = firstLoginAttempt["date"]["$date"];
+
+        const events = user["events"];
+        const events_password_start = filterPasswordLoginBeginAttempts(events);
+        const events_password_end = filterPasswordLoginSuccesses(events);
+        const events_2fa_start = filter2faLoginBeginAttempts(events);
+        const events_2fa_end = filter2faLoginSuccesses(events);
+
+        const timeDeltasPassword = computeEventTimeDeltasByToken(events_password_start, events_password_end);
+        const timeDeltas2fa = computeEventTimeDeltasByProximity(events_2fa_start, events_2fa_end);
+
+        return {
+            "2fa": extractBucketList(timeDeltas2fa, firstLogin, 14),
+            "password": extractBucketList(timeDeltasPassword, firstLogin, 14),
         }
     }
 
@@ -187,7 +212,11 @@ const filterPasswordLoginOrphaned = (events) => {
 
 const filterPasswordLoginBeginAttempts = (events, username) => {
     return events.filter(event => {
-        return event["type"] === "begin_password" && event["username"] === username;
+        if (username) {
+            return event["type"] === "begin_password" && event["username"] === username;
+        } else {
+            return event["type"] === "begin_password";
+        }
     })
 }
 
@@ -195,6 +224,12 @@ const filter2faLoginSuccesses = (events) => {
     return events.filter(event => {
         return event["type"] === "complete_2fa";
     });
+}
+
+const filter2faLoginBeginAttempts = (events) => {
+    return events.filter(event => {
+        return event["type"] === "begin_2fa"
+    })
 }
 
 const sortEventsDescending = (events) => {
@@ -248,6 +283,62 @@ const extractBucketList = (bucketsMap, startDate, numberBuckets) => {
 
     return buckets;
 }
+
+const hashEventsByToken = (events) => {
+    return _.keyBy(events, event => event["token"]);
+}
+
+const computeEventTimeDeltasByToken = (eventGroupStart, eventGroupEnd) => {
+    const timeDeltasMap = {};
+
+    const startEvents = hashEventsByToken(eventGroupStart);
+    const endEvents = hashEventsByToken(eventGroupEnd);
+
+    for (const token in startEvents) {
+        if (token in endEvents) {
+            const startDate = startEvents[token]["date"]["$date"];
+            const endDate = endEvents[token]["date"]["$date"];
+            const delta = endDate - startDate;
+            const truncatedStart = truncateDate(startDate);
+
+            if (! timeDeltasMap[truncatedStart]) {
+                timeDeltasMap[truncatedStart] = [];
+            }
+            timeDeltasMap[truncatedStart].push(delta);
+        }
+    }
+
+    console.log("here is the time detlas map", timeDeltasMap);
+
+    return timeDeltasMap;
+}
+
+const computeEventTimeDeltasByProximity = (eventGroupsStart, eventGroupEnd) => {
+    /* This would be easier with a binary tree, but for amount of data we will have,
+       we'll suffer some minor inefficiency */
+    const timeDeltasMap = {};
+
+    const sortedStart = sortEventsAscending(eventGroupsStart);
+    const sortedEnd = sortEventsAscending(eventGroupEnd);
+
+    sortedStart.forEach(startEvent => {
+        const endEvent = _.find(sortedEnd, endEvent =>
+            endEvent["date"]["$date"] > startEvent["date"]["$date"]
+        )
+        const startDate = startEvent["date"]["$date"];
+        const endDate = endEvent["date"]["$date"];
+        const delta = endDate - startDate;
+        const truncatedStart = truncateDate(startDate);
+
+        if (! timeDeltasMap[truncatedStart]) {
+            timeDeltasMap[truncatedStart] = [];
+        }
+        timeDeltasMap[truncatedStart].push(delta);
+    });
+
+    return timeDeltasMap;
+}
+
 
 const AltAdminStoreStore = AltInstance.createStore(AdminStore, 'AdminStore');
 export default AltAdminStoreStore;
