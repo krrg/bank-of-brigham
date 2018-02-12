@@ -41,7 +41,7 @@ def require_full_authentication(route):
 def localhost_only(route):
     @functools.wraps(route)
     async def decorated_function(request, *args, **kwargs):
-        host, port = request.host.split(":")
+        host = request.host.split(":")[0]
         if host != "localhost":
             return sanic.response.text("Unauthorized", status=401)
         else:
