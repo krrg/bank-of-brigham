@@ -27,7 +27,7 @@ class Events(object):
         })
 
     async def begin_2fa(self, username, second_factor):
-        return await self.__log_2fa__(username, second_factor, "begin_2fa", token)
+        return await self.__log_2fa__(username, second_factor, "begin_2fa")
 
     async def complete_2fa(self, username, second_factor):
         return await self.__log_2fa__(username, second_factor, "complete_2fa")
