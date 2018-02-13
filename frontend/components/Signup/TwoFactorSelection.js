@@ -28,7 +28,7 @@ class TwoFactorSelection extends React.Component {
             }, {
                 displayText: "3",
                 shortName: "Backup",
-                key: "backup",
+                key: "codes",
             }, {
                 displayText: "4",
                 shortName: "U2F",

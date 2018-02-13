@@ -97,7 +97,7 @@ class SignupStore {
 
     handleSignupBackupCodes() {
         this.setState({
-            backupCodes: undefined
+            backupCodes: null,
         })
         if (! this.getInstance().isLoading()) {
             this.getInstance().enableBackupCodes();
