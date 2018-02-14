@@ -42,8 +42,6 @@ class SignupStore {
         const username = data[0];
         const password = data[1];
 
-        console.log("Signing up user with username and password", username, password);
-
         if (! this.getInstance().isLoading()) {
             this.getInstance().signup(username, password);
         }

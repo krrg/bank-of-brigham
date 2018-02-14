@@ -78,20 +78,26 @@ export const LoginSource = {
 
     loginU2F: {
         async remote(state) {
+
             const response = await axios.post(`${host}/u2f/beginverify`)
             const appId = response.data["appId"];
             const challenge = response.data["challenge"];
             const keys = response.data["registeredKeys"];
 
             const responseToChallenge = await new Promise((resolve, reject) => {
-                u2f.sign(appId, challenge, keys, (chromeResponse) => {
-                    // console.log("We got a signature people!", result);
-                    if (chromeResponse["errorCode"]) {
-                        reject(chromeResponse);
-                    } else {
-                        resolve(chromeResponse);
-                    }
-                })
+                const lookForU2f = () => {
+                    u2f.sign(appId, challenge, keys, (chromeResponse) => {
+                        // console.log("We got a signature people!", result);
+                        if (chromeResponse["errorCode"]) {
+                            console.error("We detected a problem: ", chromeResponse);
+                            setTimeout(lookForU2f, 0);
+                        } else {
+                            resolve(chromeResponse);
+                        }
+                    })
+                }
+
+                setTimeout(lookForU2f, 0);
             });
 
             return await axios.post(`${host}/u2f/completeverify`, responseToChallenge);

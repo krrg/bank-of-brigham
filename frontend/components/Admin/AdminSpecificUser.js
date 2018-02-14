@@ -154,7 +154,7 @@ export default class AdminSpecificUser extends React.Component {
     }
 
     getUsername = () => {
-        return this.props.username;
+        return decodeURIComponent(this.props.username);
     }
 
     handleAdminStoreUpdated = (storeState) => {

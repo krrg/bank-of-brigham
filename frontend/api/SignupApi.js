@@ -63,13 +63,17 @@ export const SignupSource = {
             const registerRequests = response.data["registerRequests"];
 
             const regResponse = await new Promise((resolve, reject) => {
-                u2f.register(appId, registerRequests, [], (chromeResponse) => {
-                    if (chromeResponse["errorCode"]) {
-                        reject(chromeResponse)
-                    } else {
-                        resolve(chromeResponse);
-                    }
-                });
+                const waitForYubiKey = () => {
+                    u2f.register(appId, registerRequests, [], (chromeResponse) => {
+                        if (chromeResponse["errorCode"]) {
+                            console.error("We had a U2F error, but ignoring it...", chromeResponse);
+                            setTimeout(waitForYubiKey, 0);
+                        } else {
+                            resolve(chromeResponse);
+                        }
+                    });
+                }
+                setTimeout(waitForYubiKey, 0);
             });
 
             return await axios.post(`${host}/u2f/completeenable`, regResponse);

@@ -16,7 +16,13 @@ class CodesVerifyBox extends React.Component {
         if (e) { e.preventDefault(); }
 
         console.log("Submitting verification code:", this.refs.code.value);
-        LoginActions.loginBackupCode(this.refs.code.value.trim());
+        console.log("Just got back verification", LoginActions.loginBackupCode(this.refs.code.value.trim()));
+    }
+
+    handleLoginStoreUpdated = (storeState) => {
+        this.setState({
+            loginCodeRejected: storeState["backupCodesRejected"]
+        })
     }
 
     componentDidMount() {
