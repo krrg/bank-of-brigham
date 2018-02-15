@@ -31,6 +31,11 @@ class Login2FA extends React.Component {
 
     componentDidMount() {
         LoginStore.listen(this.handleLoginStoreUpdated);
+        if (! this.props.secondFactor) {
+            setTimeout(() => {
+                this.props.history.push("/bank");
+            }, 0)
+        }
     }
 
     componentWillUnmount() {

@@ -5,11 +5,11 @@ export const accountTypes = [
     {
         key: "checking",
         displayName: "Checking",
-        color: "#28464B"
+        color: "#FAA916"
     }, {
         key: "savings",
         displayName: "Savings",
-        color: "#3C6E71",
+        color: "#275D93",
     }, {
         key: "certificate",
         displayName: "Certificate (CD)",
@@ -17,7 +17,7 @@ export const accountTypes = [
     }, {
         key: "moneymarket",
         displayName: "Money Market",
-        color: "#77ACA2"
+        color: "#85B022"
     }
 ]
 

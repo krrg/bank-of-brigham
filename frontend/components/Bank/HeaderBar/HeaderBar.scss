@@ -4,6 +4,10 @@
 
 .HeaderBar {
 
+    a {
+        text-decoration: none;
+    }
+
     @media print {
         margin-top: 2em;
 

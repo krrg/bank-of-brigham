@@ -22,6 +22,10 @@
 
         .TwoFactorButton {
 
+            a {
+                text-decoration: none;
+            }
+
             &:last-child {
                 margin-right: 0;
             }

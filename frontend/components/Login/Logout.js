@@ -1,5 +1,7 @@
 import React from "react";
 import LoginActions from "../../actions/LoginActions";
+import { Link } from "react-router-dom";
+import { Button } from "react-foundation";
 
 import "./Logout.scss";
 
@@ -12,7 +14,8 @@ export default class Logout extends React.Component {
     render() {
         return (
             <div className="Logout container">
-                <p>You have been logged out.</p>
+                <p>Thank you for using the Bank of Brigham.</p>
+                <Button><Link to="/">Login again</Link></Button>
             </div>
         )
     }

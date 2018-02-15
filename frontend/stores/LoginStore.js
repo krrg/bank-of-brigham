@@ -158,7 +158,7 @@ class LoginStore {
     }
 
     handleLoginTotpErrored(axiosError) {
-        this.setErrorMessageState("Unable to verify OTP");
+        this.setErrorMessageState("Unable to verify code");
     }
 
     handleLoginU2F() {

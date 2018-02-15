@@ -6,8 +6,8 @@ import "./ErrorWrapper.scss";
 export default class ErrorWrapper extends React.Component {
 
     static propTypes = {
-        isErrored: PropTypes.bool.isRequired,
-        message: PropTypes.string.isRequired,
+        isErrored: PropTypes.bool,
+        message: PropTypes.string,
     }
 
     renderErrorMessage = () => {
