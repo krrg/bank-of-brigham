@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import SmsVerifyBox from "./2fa/SmsVerifyBox";
 import CodesVerifyBox from "./2fa/CodesVerifyBox";
 import { TotpVerifyBoxWrapper } from "./2fa/TotpVerifyBox";
@@ -13,7 +13,7 @@ import "./Login.scss";
 class Login2FA extends React.Component {
 
     static propTypes = {
-        secondFactor: PropTypes.oneOf(["sms", "totp", "push", "codes", "u2f"]).isRequired,
+        secondFactor: PropTypes.oneOf(["sms", "totp", "push", "codes", "u2f"]),
     }
 
     constructor() {
@@ -29,13 +29,8 @@ class Login2FA extends React.Component {
         })
     }
 
-    componentDidMount() {
+    componentWillMount() {
         LoginStore.listen(this.handleLoginStoreUpdated);
-        if (! this.props.secondFactor) {
-            setTimeout(() => {
-                this.props.history.push("/bank");
-            }, 0)
-        }
     }
 
     componentWillUnmount() {
@@ -49,7 +44,7 @@ class Login2FA extends React.Component {
             case "totp": return <TotpVerifyBoxWrapper />;
             case "u2f": return <U2FVerifyBox />;
             case "push": return <PushVerifyBox />;
-            default: return <p>This 2FA method ({this.props.secondFactor}) not ready yet.</p>
+            default: return <p>Loading</p>;
         }
     }
 

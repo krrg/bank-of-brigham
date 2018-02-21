@@ -31,7 +31,7 @@ class BankIndex extends React.Component {
 
     componentDidMount() {
         BankStore.listen(this.handleBankStoreUpdated);
-        BankActions.getAccounts();
+        setTimeout(BankActions.getAccounts, 0);
     }
 
     componentWillUnmount() {

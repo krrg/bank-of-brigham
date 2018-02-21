@@ -50,7 +50,11 @@ class LoginRouterWrapper extends React.Component {
             if (this.state.authenticationLevel === "full") {
                 this.props.history.push("/bank");
             } else if (this.state.authenticationLevel === "password") {
-                this.props.history.push("/login/2");
+                if (this.state.secondFactor === null) {
+                    this.props.history.push("/bank");
+                } else {
+                    this.props.history.push("/login/2");
+                }
             } else {
                 this.props.history.push("/login/1");
             }

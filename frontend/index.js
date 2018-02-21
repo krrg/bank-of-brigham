@@ -45,6 +45,7 @@ const Index = () => {
                     <Route exact path="/create/3/totp" component={() => <TotpSignup />} />
                     <Route exact path="/create/3/u2f" component={() => <U2FSignup />} />
                     <Route exact path="/create/3/push" component={() => <PushSignup />} />
+                    <Route exact path="/create/3/passwords" component={() => <Redirect to="/bank" />} />
                 </div>
                 <div>
                     <Route path="/bank" component={() => <HeaderBar showLinks={true} link="/bank" />} />
