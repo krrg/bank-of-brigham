@@ -2,6 +2,7 @@ import os
 import os.path
 import base64
 import yaml
+import itertools
 
 def get_config_value(config_obj, key):
     if key in config_obj:
@@ -31,10 +32,10 @@ def read_stored_secrets(input_keys=None, generated_keys=None):
         pass
 
     result_config = {}
-    for key in input_keys:
-        result_config[key] = get_config_value(config_obj, key)
     for key in generated_keys:
         result_config[key] = generate_b64_secret(config_obj, key)
+    for key in input_keys:
+        result_config[key] = get_config_value(config_obj, key)
 
     os.makedirs(os.path.expanduser("~/.isrl/"), exist_ok=True)
     with open(config_path, 'w') as f:
