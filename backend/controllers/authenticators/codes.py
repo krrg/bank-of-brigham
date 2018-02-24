@@ -69,7 +69,7 @@ class BackupCodeVerification(object):
     @staticmethod
     async def enable_backup_codes(username):
         existing_tokens = await tokens_model.get_token_for(username)
-        if existing_tokens is not None:
+        if existing_tokens is not None and len(existing_tokens) >= 16:
             return existing_tokens
         code_list = BackupCodeVerification.generate_code_list()
         await tokens_model.store_token_for(username, code_list, expiring=False)
@@ -86,6 +86,6 @@ class BackupCodeVerification(object):
         ])
 
     @staticmethod
-    def generate_code_list(length=12):
+    def generate_code_list(length=16):
         return [BackupCodeVerification.generate_code() for i in range(length)]
 
