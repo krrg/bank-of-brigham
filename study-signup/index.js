@@ -141,7 +141,7 @@ const Index = () => {
                     To apply to participate in this study, please take this brief survey:<br />
                 </p>
                 <div className="__center horiz">
-                    <a className="__surveyLink" href="#">Take Eligibility Survey</a>
+                    <a className="__surveyLink" href="https://goo.gl/wdtaSY">Take Eligibility Survey</a>
                 </div>
 
 
