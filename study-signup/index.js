@@ -39,7 +39,7 @@ const Index = () => {
                 Participation in some groups will require you to receive text messages on your phone or use an app on your smartphone as part of the login process.
 
                 We have a limited capacity for each group.
-                To be apply for this study, you must fill out a brief survey.
+                To apply for this study, you must fill out a brief survey.
                 This survey will help us know which groups you may be eligible for.
             </p>
             <p>
