@@ -66,7 +66,7 @@ class TotpSignup extends React.Component {
         return (
             <div className="Step">
                 <h3>Step 1</h3>
-                <p>Download the <b>Google Authenticator</b> app to your Android device</p>
+                <p>Download the <b>Google Authenticator</b> app to your Android or iOS device</p>
                 { this.renderPlayLink() }
                 { this.state.appDownloaded ? null :
                      <Button className="nextButton __downloaded" onClick={this.handleNextButtonDownloadedClicked}>Next</Button>
@@ -90,7 +90,7 @@ class TotpSignup extends React.Component {
         return (
             <div className="Step">
                 <h3>Step 2</h3>
-                <p>Use the <b>Google Authenticator</b> app on your Android device to scan this QR code:</p>
+                <p>Use the <b>Google Authenticator</b> app to scan this QR code:</p>
                 { this.state.totpProvisioningUri ? this.renderQrCode() : <LoadingSpinner /> }
                 { this.state.qrCodeScanned ? null :
                      <Button className="nextButton __qrCodeScanned" onClick={this.handleNextButtonQrCodeScannedClicked}>Next</Button>
