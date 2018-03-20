@@ -12,6 +12,12 @@ const Index = () => {
                 <h2>2236 TMCB</h2>
             </div>
 
+            <div className="Warning">
+                <h2>Thank you for your interest in participating in this study!<br />
+                    Unfortunately we are not able to accept any more participants at this time.
+                </h2>
+            </div>
+
             <h3>Study Description</h3>
             <p>
                 We are conducting a study on how to improve the usability and security of websites.
@@ -137,12 +143,12 @@ const Index = () => {
                 </table>
 
 
-                <p>
+                {/* <p>
                     To apply to participate in this study, please take this brief survey:<br />
                 </p>
                 <div className="__center horiz">
                     <a className="__surveyLink" href="https://goo.gl/wdtaSY">Take Eligibility Survey</a>
-                </div>
+                </div> */}
 
 
 
