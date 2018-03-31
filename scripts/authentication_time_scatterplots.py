@@ -1,14 +1,15 @@
 
+
 class AuthenticationTimeExtractor(object):
 
     def __init__(self, db):
         self.db = db
 
     def extract_2fa_times(self, second_factor):
-        for delta_start, delta_2fa in self.extract_raw_2fa_times(second_factor):
+        for delta_start, delta_2fa, username in self.extract_raw_2fa_times(second_factor):
             ms_2fa = int(delta_2fa.total_seconds() * 1000)
             ms_start = int(delta_start.total_seconds() * 1000)
-            yield ms_start, ms_2fa
+            yield username, ms_start, ms_2fa
 
     def extract_raw_2fa_times(self, second_factor):
         for user in list(self.db.accounts.find({"2fa": second_factor})):
@@ -24,7 +25,7 @@ class AuthenticationTimeExtractor(object):
             }).sort('data', 1)
 
             for begin, end, first in self.generate_event_pairs_from_cursor(events_cursor):
-                yield begin["date"] - first, end["date"] - begin["date"]
+                yield begin["date"] - first, end["date"] - begin["date"], username
 
 
     def generate_event_pairs_from_cursor(self, events_cursor):
