@@ -12,13 +12,10 @@ if(!require("data.table"))###It may take a few minutes to download all of this.
 library(rmcorr)
 library(data.table)
 
-
-systems_under_test <- c("u2f", "codes", "sms", "push", "totp")
-
-correlate_2fa_system_data <- function(tfa_system_name) {
+lapply(c("u2f", "codes", "sms", "push", "totp"), function(tfa_system_name) {
 
     cat("\n################################\n")
-    cat("Repeated measures correlation for", tfa_system_name)
+    cat("rmcorr for", tfa_system_name)
 
     filename <- paste("./out/", tfa_system_name, ".csv", sep = "")
     tfa <- fread(filename, header = FALSE)
@@ -27,8 +24,6 @@ correlate_2fa_system_data <- function(tfa_system_name) {
     colnames(tfa) <- c("ID", "TSBS", "OAT")
     tfa <- as.data.frame(tfa)
 
-    # print(tfa)
-
     tfaRMC = rmcorr(participant  = as.factor(ID), measure1 = TSBS, measure2 = OAT, dataset = tfa)
     print(tfaRMC)
 
@@ -36,6 +31,4 @@ correlate_2fa_system_data <- function(tfa_system_name) {
     boxplot(tfa$OAT)
 
     cat("\n")
-}
-
-lapply(systems_under_test, correlate_2fa_system_data)
+})

@@ -1,26 +1,19 @@
 import pymongo
-from authentication_time_scatterplots import *
+from authentication_time import *
 from collections import deque
 import hashlib
 import base64
-
+import statistics
+import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
+
 client = pymongo.MongoClient()
 db = client.isrlauth
 
-def generate_scatter_plot_for(second_factor):
+def extract_authentication_times(second_factor):
     return list(AuthenticationTimeExtractor(db).extract_2fa_times(second_factor))
 
-    # outlier_cutoff = np.percentile([ p[1] for p in pairs ], 99)
-    # pairs = [ pair for pair in pairs if pair[1] <= outlier_cutoff ]
-
-    # plt.scatter(*zip(*pairs))
-    # plt.ylim(ymin=0)
-    # plt.savefig(f"{second_factor}.png")
-    # plt.close()
-
-    # return len(pairs)
 def anonymize_emails(rows, col_index):
     for row in rows:
         m = hashlib.new('sha1')
@@ -30,17 +23,29 @@ def anonymize_emails(rows, col_index):
         row[col_index] = base64.b32encode(m.digest()).decode("utf-8")
         yield row
 
-
-
-def main():
-    colors = deque(['r', 'g', 'b', 'c', 'm'])
-
+def compute_repeated_measures_corr():
     for second_factor in [ "totp", "push", "sms", "codes", "u2f" ]:
-        rows = generate_scatter_plot_for(second_factor)
+        rows = extract_authentication_times(second_factor)
         with open(f"./out/{second_factor}.csv", 'w') as f:
             for row in anonymize_emails(rows, 0):
                 f.write(",".join(map(str, row)))
                 f.write("\n")
+    subprocess.run(["Rscript", "repeated_measures_corr.R"])
+
+
+def compute_anova():
+    for second_factor in [ "totp", "push", "sms", "codes", "u2f"]:
+        rows = extract_authentication_times(second_factor)
+        auth_times = [ row[2] for row in rows ]
+        print("Mean auth time for ", second_factor, statistics.mean(auth_times))
+        print("Median auth time for ", second_factor, statistics.median(auth_times))
+
+
+
+def main():
+
+    compute_repeated_measures_corr()
+    compute_anova()
 
         # plt.scatter(*zip(*pairs), c=colors[0])
         # colors.popleft()
