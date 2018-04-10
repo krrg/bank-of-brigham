@@ -9,6 +9,10 @@ class AuthenticationTimeExtractor(object):
         for delta_start, delta_2fa, username in self.extract_raw_2fa_times(second_factor):
             ms_2fa = int(delta_2fa.total_seconds() * 1000)
             ms_start = int(delta_start.total_seconds() * 1000)
+            if ms_2fa > 1600000:
+                # Unfortunately this is such a bad outlier that it makes the graphs
+                #  quite badly proportioned.  Someone fell asleep for 30 minutes.
+                continue
             yield username, ms_start, ms_2fa
 
     def extract_raw_2fa_times(self, second_factor):
@@ -37,6 +41,7 @@ class AuthenticationTimeExtractor(object):
                     first_login_time = next_event["date"]
                     continue
                 yield event, next_event, first_login_time
+
 
 
 

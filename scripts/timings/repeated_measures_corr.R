@@ -12,18 +12,20 @@ if(!require("data.table"))###It may take a few minutes to download all of this.
 library(rmcorr)
 library(data.table)
 
-lapply(c("u2f", "codes", "sms", "push", "totp"), function(tfa_system_name) {
+tfa_data <- lapply(c("u2f", "codes", "sms", "push", "totp"), function(tfa_system_name) {
 
     cat("\n################################\n")
     cat("rmcorr for", tfa_system_name)
 
     filename <- paste("./out/", tfa_system_name, ".csv", sep = "")
     tfa <- fread(filename, header = FALSE)
-
-    # #Username, Time_Since_Beginning_Study, Observed_Authentication_Time
     colnames(tfa) <- c("ID", "TSBS", "OAT")
     tfa <- as.data.frame(tfa)
 
+})
+
+lapply(tfa_data, function(tfa) {
+    # #Username, Time_Since_Beginning_Study, Observed_Authentication_Time
     tfaRMC = rmcorr(participant  = as.factor(ID), measure1 = TSBS, measure2 = OAT, dataset = tfa)
     print(tfaRMC)
 
@@ -32,3 +34,15 @@ lapply(c("u2f", "codes", "sms", "push", "totp"), function(tfa_system_name) {
 
     cat("\n")
 })
+
+timings <- lapply(tfa_data, function(tfa) {
+  tfa$OAT
+})
+
+# print(">>>>>>>>>>>>> TIMINGS <<<<<<<<<<<<<<<")
+# print(timings)
+
+kruskal.test(timings)
+
+
+

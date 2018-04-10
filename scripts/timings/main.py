@@ -41,11 +41,32 @@ def compute_anova():
         print("Median auth time for ", second_factor, statistics.median(auth_times))
 
 
+def generate_boxwhisker_plot():
+
+    fig = plt.figure()
+    data = []
+
+    for second_factor in [ "totp", "push", "sms", "codes", "u2f"]:
+        rows = extract_authentication_times(second_factor)
+        auth_times = [ row[2] / 1000 for row in rows if row[2] < 160000]
+        data.append(auth_times)
+
+    subplot = fig.add_subplot(111)
+    subplot.boxplot(data, )
+    subplot.set_xticklabels([ "TOTP", "Push (Authy)", "SMS", "Printed Codes", "U2F"])
+    subplot.tick_params(axis='both', which='major', labelsize=24)
+
+    plt.xlabel("2FA System", fontsize=36)
+    plt.ylabel("Authentication time (seconds)", fontsize=36)
+    plt.show()
+
+
 
 def main():
 
+    # generate_boxwhisker_plot()
     compute_repeated_measures_corr()
-    compute_anova()
+    # compute_anova()
 
         # plt.scatter(*zip(*pairs), c=colors[0])
         # colors.popleft()
